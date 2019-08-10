@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;/*TODO: remove unessessary usigs*/
+using System.Threading.Tasks;
+
+//TODO: remove unessessary usigs
+//TODO: rename .csproj (projectname) from 'LineCountrr' to  LineCounter
+//TODO: oramte code (ctrl+k+d)
 
 namespace LineCounterr
 {
