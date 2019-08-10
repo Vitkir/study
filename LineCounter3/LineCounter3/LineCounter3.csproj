@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LineCounter2\LineCounter2\LineCounter2.csproj">
+      <Project>{e3677cb3-53ec-4c6d-829e-e58a0efc3f89}</Project>
+      <Name>LineCounter2</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
