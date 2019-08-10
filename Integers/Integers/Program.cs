@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//TODO: remove unnecessary usings
+//TODO: calculate result with arithmetic sum
+//TODO: all local variables should be lowercase
 namespace Integers
 {
     class Program
