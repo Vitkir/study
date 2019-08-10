@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LineCounter2
 {
@@ -10,27 +6,33 @@ namespace LineCounter2
     {
         static void Main(string[] args)
         {
-            int i;
-            int left;
-            int top;
+            int rowCount = ReadPositiveValue();
+            Draw(rowCount);
+            Console.ReadKey();
+        }
+
+        private static void Draw(int rowCount)
+        {
+            int asterixsCount = 1;
+            for (int i = 1; i <= rowCount; i++)
+            {
+                Console.SetCursorPosition(rowCount - i, i);
+                Console.WriteLine(value: new string('*', asterixsCount));
+                asterixsCount = asterixsCount + 2;
+            }
+        }
+
+        private static int ReadPositiveValue()
+        {
+            int value;
+            bool isInputValid;
             do
             {
-                bool Lines = int.TryParse(Console.ReadLine(), out i);
-                if (!Lines)
-                {
-                    Console.WriteLine("Enter num");
-
-                }
+                Console.WriteLine("Enter positive value");
+                isInputValid = !int.TryParse(Console.ReadLine(), out value);
             }
-            while (i <= 0);
-            int sum = 1;
-            for (int x = 1; x <= i; x++)
-            {
-                Console.SetCursorPosition(left = i - x, top = x);
-                Console.WriteLine(new string('*', sum));
-                sum = sum + 2;
-            }
-            Console.ReadKey();
+            while (isInputValid && value <= 0);
+            return value;
         }
     }
 
