@@ -21,19 +21,17 @@ namespace LineCounter2
                 isInputValid = !int.TryParse(Console.ReadLine(), out value);
                 Console.Clear();
             }
-            while (isInputValid && (value <=0));
+            while (isInputValid && (value <= 0));
             return value;
         }
 
-        public static void Draw(int rowCount)
+        public static void Draw(int rowCount, int shiftTriangle = 0)
         {
             int asterixsCount = 1;
             char space = '\0';
-            int spaceCount = 0;
             for (int i = 0; i < rowCount; i++)
             {
-                //Console.SetCursorPosition(rowCount - i,i);
-                spaceCount = rowCount + i;
+                int spaceCount = rowCount + shiftTriangle + i;
                 Console.WriteLine(value: new string('*', asterixsCount).PadLeft(spaceCount, space));
                 asterixsCount += 2;
             }

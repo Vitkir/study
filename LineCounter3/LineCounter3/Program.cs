@@ -14,14 +14,9 @@ namespace LineCounter3
 
         static void DrawTriangles(int trianglesCount)
         {
-            int topShift = 0;
-            int leftShift = trianglesCount - 1;
             for (int i = 1; i <= trianglesCount; i++)
             {
-                Console.SetCursorPosition(leftShift, topShift);
-                LineCounter2.DrawTriangle.Draw(i);
-                topShift += i;
-                leftShift -= 1;
+                LineCounter2.DrawTriangle.Draw(i, trianglesCount - i);
             }
         }
     }
