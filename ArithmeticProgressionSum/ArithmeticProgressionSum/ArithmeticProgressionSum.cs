@@ -8,10 +8,12 @@ namespace ArithmeticProgressionSum
         {
             int inputValue = ReadValidValue();
             Console.WriteLine(inputValue);
-            int sum1 = ProgressionSumStep3(inputValue);
-            int sum2 = ProgressionSumStep5(inputValue);
-            int sum3 = sum1 + sum2;
-            Console.WriteLine("Sum of numbers less than {0}, divisible 3 or 5 = {1}", inputValue, sum3);
+            int sum1 = ProgressionSum(inputValue, 3);
+            int sum2 = ProgressionSum(inputValue, 5);
+            int sum3 = ProgressionSum(inputValue, 15);
+
+            int sum4 = sum1 + sum2 - sum3;
+            Console.WriteLine("Sum of numbers less than {0}, divisible 3 or 5 = {1}", inputValue, sum4);
             Console.ReadKey();
         }
 
@@ -29,20 +31,11 @@ namespace ArithmeticProgressionSum
             return validValue;
         }
 
-        public static int ProgressionSumStep3(int value)
+        public static int ProgressionSum(int value, int step)
         {
-            int elementsSum;
-            int elementsCount = value / 3;
-            int maxValue = elementsCount * 3;
-            return elementsSum = ((0 + maxValue) * elementsCount) / 2;
-        }
-
-        public static int ProgressionSumStep5(int value)
-        {
-            int elementsSum;
-            int elementsCount = value / 5;
-            int maxValue = elementsCount * 5;
-            return elementsSum = ((0 + maxValue) * elementsCount) / 2;
+            int elementsCount = (value % step != 0 ? value / step : value / step - 1);
+            int maxValue = elementsCount * step;
+            return ((step + maxValue) * elementsCount) / 2;
         }
     }
 }
