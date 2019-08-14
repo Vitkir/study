@@ -12,6 +12,8 @@ namespace SumNotNegativeValue
             Console.WriteLine("Sum not negative value = " + SumNotNegativeValue(array));
             Console.ReadKey();
         }
+
+		//TODO: rename. Make void
         static int[] ArrayFilling(int[] array, Random random)
         {
             for (var i = 0; i < array.Length; i++)
