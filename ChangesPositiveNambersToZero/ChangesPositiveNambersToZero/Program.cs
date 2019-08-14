@@ -15,6 +15,8 @@ namespace ChangesPositiveNambersToZero
             Print(array2);
             Console.ReadKey();
         }
+
+		//TODO: rename, make void
         static int[,,] ArrayFilling(int[,,] array, Random random)
         {
             for (int i = 0; i < array.GetLength(0); i++)
@@ -45,6 +47,7 @@ namespace ChangesPositiveNambersToZero
             return array;
         }
 
+		//TODO: do string represintation of array. Methd shoul return string value. Use StringBuilder
         static void Print(int[,,] array)
         {
             Console.WriteLine();

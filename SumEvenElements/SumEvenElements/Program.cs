@@ -16,6 +16,8 @@ namespace SumEvenElements
             Console.WriteLine("\n Sum even elements: " + SumEvenElements(array));
             Console.ReadKey();
         }
+
+		//TODO: rename, make void
         static int[,] ArrayFilling(int[,] array, Random random)
         {
             for (int i = 0; i < array.GetLength(0); i++)
@@ -24,6 +26,8 @@ namespace SumEvenElements
             }
             return array;
         }
+
+		//TODO: rename
         static int SumEvenElements(int[,] array)
         {
             int sum = 0;
