@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SumEvenElements
 {
@@ -12,23 +9,21 @@ namespace SumEvenElements
         {
             int[,] array = new int[3, 3];
             Random random = new Random();
-            Print(ArrayFilling(array, random));
-            Console.WriteLine("\n Sum even elements: " + SumEvenElements(array));
+            FillArrayRandomNumbers(array, random);
+            Print(array);
+            Console.WriteLine(" Sum even elements: " + SumsArrayElementsAtEvenPositions(array));
             Console.ReadKey();
         }
 
-		//TODO: rename, make void
-        static int[,] ArrayFilling(int[,] array, Random random)
+        static void FillArrayRandomNumbers(int[,] array, Random random)
         {
             for (int i = 0; i < array.GetLength(0); i++)
             {
                 for (int j = 0; j < array.GetLength(1); j++) array[i, j] = random.Next(1, 40);
             }
-            return array;
         }
 
-		//TODO: rename
-        static int SumEvenElements(int[,] array)
+        static int SumsArrayElementsAtEvenPositions(int[,] array)
         {
             int sum = 0;
             for (int i = 0; i < array.GetLength(0); i++)
@@ -42,13 +37,15 @@ namespace SumEvenElements
         }
         static void Print(int[,] array)
         {
+            StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < array.GetLength(0); i++)
             {
                 for (int j = 1; j < array.GetLength(1); j++)
                 {
-                    Console.Write("{0,3}", array[i, j]);
+                    stringBuilder.Append(array[i, j] + " ");
                 }
-                Console.WriteLine();
+                Console.WriteLine(stringBuilder);
+                stringBuilder.Clear();
             }
         }
     }
