@@ -9,7 +9,7 @@ namespace ArraySort
         {
             int[] array = new int[10];
             Random random = new Random();
-            Console.WriteLine("Unsorted array: {0}", string.Join(", ", ArrayFilling(array, random)));
+            Console.WriteLine("Unsorted array: {0}", string.Join(", ", FillArray(array, random)));
             int maxValue = MaxValue(array);
             Console.WriteLine("Max value array: " + maxValue);
             int minValue = MinValue(array, maxValue);
@@ -18,7 +18,7 @@ namespace ArraySort
             Console.ReadKey();
         }
 
-        static int[] ArrayFilling(int[] unsortedArray, Random random)
+        static int[] FillArray(int[] unsortedArray, Random random)
         {
             for (var i = 0; i < unsortedArray.Length; i++)
             {
@@ -29,22 +29,28 @@ namespace ArraySort
 
         static int MaxValue(int[] array)
         {
-            int MaxValue = 0;
+            int maxValue = 0;
             foreach (int value in array)
             {
-                if (value > MaxValue) MaxValue = value;
+                if (value > maxValue)
+                {
+                    maxValue = value;
+                }
             }
-            return MaxValue;
+            return maxValue;
         }
 
         static int MinValue(int[] array, int MaxValue)
         {
-            int MinValue = MaxValue;
+            int minValue = MaxValue;
             foreach (int value in array)
             {
-                if (value < MinValue) MinValue = value;
+                if (value < minValue)
+                {
+                    minValue = value;
+                }
             }
-            return MinValue;
+            return minValue;
         }
 
         static void Swap(ref int e1, ref int e2)
