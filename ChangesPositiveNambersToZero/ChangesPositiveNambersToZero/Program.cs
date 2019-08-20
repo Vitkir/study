@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace ChangesPositiveNambersToZero
 {
@@ -9,15 +10,14 @@ namespace ChangesPositiveNambersToZero
             int arraySize = 2;
             int[,,] array = new int[arraySize, arraySize, arraySize];
             Random random = new Random();
-            int[,,] array1 = ArrayFilling(array, random);
-            Print(array1);
-            int[,,] array2 = ChangePositiveValueFromArray(array);
-            Print(array2);
+            ArrayFilling(array, random);
+            Print(array);
+            ChangePositiveValueFromArray(array);
+            Print(array);
             Console.ReadKey();
         }
 
-		//TODO: rename, make void
-        static int[,,] ArrayFilling(int[,,] array, Random random)
+        static void ArrayFilling(int[,,] array, Random random)
         {
             for (int i = 0; i < array.GetLength(0); i++)
             {
@@ -29,10 +29,9 @@ namespace ChangesPositiveNambersToZero
                     }
                 }
             }
-            return array;
         }
 
-        static int[,,] ChangePositiveValueFromArray(int[,,] array)
+        static void ChangePositiveValueFromArray(int[,,] array)
         {
             for (int i = 0; i < array.GetLength(0); i++)
             {
@@ -44,17 +43,16 @@ namespace ChangesPositiveNambersToZero
                     }
                 }
             }
-            return array;
         }
 
-		//TODO: do string represintation of array. Methd shoul return string value. Use StringBuilder
         static void Print(int[,,] array)
         {
-            Console.WriteLine();
+            StringBuilder stringBuilder = new StringBuilder();
             foreach (int i in array)
             {
-                Console.Write(i + " ");
+                stringBuilder.Append(i + " ");
             }
+            Console.WriteLine(stringBuilder);
         }
     }
 }
