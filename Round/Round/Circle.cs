@@ -5,11 +5,8 @@ namespace Round
     internal class Circle
     {
         private int r;
-        private double length;
 
-        public int X { get; set; }
-
-        public int Y { get; set; }
+        public Point Center { get; set; }
 
         public int Radius
         {
@@ -28,15 +25,8 @@ namespace Round
         {
             get
             {
-                return length = Radius * 2 * Math.PI;
+                return Radius * 2 * Math.PI;
             }
-        }
-
-        public Circle()
-        {
-            X = 0;
-            Y = 0;
-            r = Radius;
         }
     }
 }

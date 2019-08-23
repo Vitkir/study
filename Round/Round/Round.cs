@@ -11,9 +11,14 @@ namespace Round
                 return Math.PI * Radius * Radius;
             }
         }
+
         public override string ToString()
         {
-            return string.Format("Center [{0}, {1}];{5}Radius: {2};{5}Length: {3};{5}Area: {4}.", X.ToString(), Y.ToString(), Radius.ToString(), Length.ToString(), Area.ToString(), Environment.NewLine);
+            Console.Clear();
+            return string.Format("Round:{5}Center [{0}, {1}];{5}Radius: {2};{5}Length: {3};{5}Area: {4}.",
+                Center.X.ToString(), Center.Y.ToString(),
+                Radius.ToString(), Length.ToString(),
+                Area.ToString(), Environment.NewLine);
         }
     }
 }
