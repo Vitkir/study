@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Round;
 
 namespace Triangle
@@ -12,9 +8,7 @@ namespace Triangle
         static void Main(string[] args)
         {
             var triangle = GetTriangleFromConsole();
-            Console.WriteLine(triangle);
             ChangeTrianglesPoint(triangle);
-            Console.ReadKey();
         }
 
         private static void PointListShow()
@@ -61,31 +55,34 @@ namespace Triangle
 
         private static Triangle ChangeTrianglesPoint(Triangle triangle)
         {
-            PointListShow();
             ConsoleKeyInfo input;
-            input = GetConsoleKey();
-            switch (input.KeyChar)
+            do
             {
-                case '1':
-                    triangle.A = GetPointFromConsole();
-                    break;
-                case '2':
-                    triangle.B = GetPointFromConsole();
-                    break;
-                case '3':
-                    triangle.C = GetPointFromConsole();
-                    break;
+                Console.WriteLine(triangle);
+                PointListShow();
+                input = GetConsoleKey();
+                switch (input.KeyChar)
+                {
+                    case '1':
+                        triangle.A = GetPointFromConsole();
+                        break;
+                    case '2':
+                        triangle.B = GetPointFromConsole();
+                        break;
+                    case '3':
+                        triangle.C = GetPointFromConsole();
+                        break;
+                }
             }
-
-            Console.WriteLine(triangle);
+            while (input.Key != ConsoleKey.Escape);
             return triangle;
         }
 
-        enum TrianglePoint
+        private enum trianglepoint
         {
-            A = 1,
-            B,
-            C
+            a = 1,
+            b,
+            c
         }
     }
 }

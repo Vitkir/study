@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Round;
 
 namespace Triangle
@@ -31,7 +27,7 @@ namespace Triangle
             {
                 b = value;
                 AB = new Line(AB.FirstPoint, B);
-                BC = new Line(B, AB.SecondPoint);
+                BC = new Line(B, BC.SecondPoint);
             }
         }
 
@@ -42,7 +38,7 @@ namespace Triangle
             {
                 c = value;
                 AC = new Line(AC.FirstPoint, C);
-                BC = new Line(AC.FirstPoint, C);
+                BC = new Line(BC.FirstPoint, C);
             }
         }
 
