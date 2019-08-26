@@ -78,7 +78,7 @@ namespace Triangle
             return triangle;
         }
 
-        private enum trianglepoint
+        private enum TrianglePoint
         {
             a = 1,
             b,

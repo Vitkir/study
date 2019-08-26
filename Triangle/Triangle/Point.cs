@@ -17,10 +17,5 @@ namespace Round
         {
             return !(p1 == p2);
         }
-
-        //public override string ToString()
-        //{
-        //    return string.Format("Points [x,y]: [{0},{1}", X.ToString(), Y.ToString());
-        //}
     }
 }
