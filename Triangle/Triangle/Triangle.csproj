@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6FA60841-AF54-4053-82B3-180E8F2C5732}</ProjectGuid>
+    <ProjectGuid>{C0F7FCD6-9603-4E97-9243-92397FB4A667}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Round</RootNamespace>
-    <AssemblyName>Round</AssemblyName>
+    <RootNamespace>Triangle</RootNamespace>
+    <AssemblyName>Triangle</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -44,11 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Figure.cs" />
+    <Compile Include="Line.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Circle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Round.cs" />
+    <Compile Include="Triangle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -16,12 +16,15 @@ namespace Round
             Console.WriteLine("Create new Round. Set coordinates [x,y] and radius.");
             return new Round()
             {
-                Center = new Point
+                circle = new Circle
                 {
-                    X = GetValueForConsole(),
-                    Y = GetValueForConsole()
-                },
-                Radius = GetPositiveValueForConsole()
+                    Center = new Point
+                    {
+                        X = GetValueForConsole(),
+                        Y = GetValueForConsole()
+                    },
+                    Radius = GetPositiveValueForConsole()
+                }
             };
         }
 

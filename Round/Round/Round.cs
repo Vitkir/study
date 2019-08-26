@@ -2,13 +2,29 @@
 
 namespace Round
 {
-    internal class Round : Circle
+    internal class Round : Figure
     {
-        public double Area
+        public Circle circle;
+
+        override public Point Point
+        {
+            get => circle.Center;
+            set => circle.Center = value;
+        }
+
+        override public double Area
         {
             get
             {
-                return Math.PI * Radius * Radius;
+                return Math.PI * circle.Radius * circle.Radius;
+            }
+        }
+
+        override public double Perimeter
+        {
+            get
+            {
+                return circle.Length;
             }
         }
 
@@ -16,8 +32,8 @@ namespace Round
         {
             Console.Clear();
             return string.Format("Round:{5}Center [{0}, {1}];{5}Radius: {2};{5}Length: {3};{5}Area: {4}.",
-                Center.X.ToString(), Center.Y.ToString(),
-                Radius.ToString(), Length.ToString(),
+                circle.Center.X.ToString(), circle.Center.Y.ToString(),
+                circle.Radius.ToString(), circle.Length.ToString(),
                 Area.ToString(), Environment.NewLine);
         }
     }
