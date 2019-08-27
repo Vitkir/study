@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace User
 {
     class User
     {
         private DateTime birthday;
+        private int age;
 
         public string Name { get; set; }
 
@@ -20,7 +17,14 @@ namespace User
         {
             get
             {
-                return DateTime.Today.Year - Birthday.Year;
+                DateTime dateNow = DateTime.Now;
+                age = dateNow.Year - Birthday.Year;
+                if (dateNow.Month < Birthday.Month ||
+                    (dateNow.Month == Birthday.Month && dateNow.Day < Birthday.Day))
+                {
+                    age--;
+                }
+                return age;
             }
         }
 
@@ -47,12 +51,16 @@ namespace User
             Patronymic = patr;
             Birthday = date;
         }
+
         public override string ToString()
         {
-            return string.Format($"{SurName} {Name} {Patronymic}" +
-                                  "{0}{1}" +
-                                  "{0}{2}",
-                                  Environment.NewLine, Birthday.ToString("dd.MM.yyyy"), Age.ToString());
+            return string.Format("SurName: {1}{0}" +
+                                 "Name: {2}{0}" +
+                                 "Patronymic: {3}{0}" +
+                                 "Birthday: {4}{0}" +
+                                 "Age: {5}",
+                                  Environment.NewLine, SurName.ToString(), Name.ToString(), Patronymic.ToString(),
+                                  Birthday.ToString("dd.MM.yyyy"), Age.ToString());
         }
     }
 }
