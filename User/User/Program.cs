@@ -8,9 +8,9 @@ namespace User
     {
         static void Main()
         {
-            var users = new List<User>();
-            GetUserOptions(users);
-        }
+			var users = new List<User>();
+			GetUserOptions(users);
+		}
 
         static string GetTextFromConsole()
         {

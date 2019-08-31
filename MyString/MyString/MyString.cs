@@ -63,14 +63,6 @@ namespace MyString
 			return !(str1 >= str2);
 		}
 
-		public static bool Contains(MyString str1, MyString str2)
-		{
-			for (int i = 0; i < str2.String.Length - str1.String.Length; i++)
-			{
-				return true;
-			}
-		}
-
 		public MyString(char[] str)
 		{
 			String = str;
