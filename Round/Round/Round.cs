@@ -4,7 +4,7 @@ namespace Round
 {
 	public class Round
 	{
-		private int r;
+		private double r;
 
 		public struct Point
 		{
@@ -14,16 +14,16 @@ namespace Round
 
 		public Point Center { get; set; }
 
-		public int Radius
+		public double Radius
 		{
 			get => r;
 			set
 			{
-				if (value <= 0)
+				if (value > 0)
 				{
-					throw new ArgumentException("Radius should be positive");
+					r = value;
 				}
-				r = value;
+				throw new ArgumentException("Radius should be positive");
 			}
 		}
 
@@ -35,6 +35,26 @@ namespace Round
 		public double Area
 		{
 			get => Math.PI * Radius * Radius;
+		}
+
+		public static bool operator >(Round r1, Round r2)
+		{
+			return r1.Radius > r2.Radius;
+		}
+
+		public static bool operator <(Round r1, Round r2)
+		{
+			return r1.Radius < r2.Radius;
+		}
+
+		public static bool operator ==(Round r1, Round r2)
+		{
+			return r1.Radius == r2.Radius;
+		}
+
+		public static bool operator !=(Round r1, Round r2)
+		{
+			return r1.Radius != r2.Radius;
 		}
 
 		public override string ToString()

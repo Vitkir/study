@@ -2,7 +2,7 @@
 
 namespace Round
 {
-	class Program
+	public class Program
 	{
 		public static void Main()
 		{
@@ -11,7 +11,7 @@ namespace Round
 			Console.ReadKey();
 		}
 
-		private static Round GetRoundForConsole()
+		public static Round GetRoundForConsole()
 		{
 			Console.WriteLine("Create new Round. Set coordinates [x,y] and radius.");
 			return new Round()
@@ -25,7 +25,7 @@ namespace Round
 			};
 		}
 
-		private static int GetValueForConsole()
+		public static int GetValueForConsole()
 		{
 			int value;
 			Console.WriteLine("Set value");
@@ -37,7 +37,7 @@ namespace Round
 			return value;
 		}
 
-		private static int GetPositiveValueForConsole()
+		public static int GetPositiveValueForConsole()
 		{
 			int positiveValue;
 			while ((positiveValue = GetValueForConsole()) <= 0)
