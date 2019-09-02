@@ -1,9 +1,8 @@
 ﻿using System;
-using Round;
 
 namespace Triangle
 {
-    internal struct Line
+	internal struct Line
     {
         public Point FirstPoint { get; set; }
 
