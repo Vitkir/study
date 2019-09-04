@@ -2,7 +2,7 @@
 
 namespace Graphics
 {
-	internal struct Point
+	internal struct Point : IConsoleOutput
 	{
 		public double X { get; set; }
 
@@ -17,5 +17,14 @@ namespace Graphics
 		{
 			return !(p1 == p2);
 		}
+
+		public static Point operator +(Point p1, Point p2)
+		{
+		}
+
+	public string OutputsToConsole()
+	{
+		return string.Format($"Point [x,y]: [{X},{Y}]");
 	}
+}
 }

@@ -2,13 +2,11 @@
 
 namespace Graphics
 {
-	class Ring
+	class Ring : IConsoleOutput
 	{
-		private Graphics.Round inner;
-		private Graphics.Round outer;
+		private Round inner;
+		private Round outer;
 		private double thickness;
-
-		public Graphics.Round.Point Center { get; set; }
 
 		public double Thickness
 		{
@@ -20,7 +18,7 @@ namespace Graphics
 			}
 		}
 
-		public Graphics.Round Inner
+		public Round Inner
 		{
 			get => inner;
 			set
@@ -30,7 +28,7 @@ namespace Graphics
 			}
 		}
 
-		public Graphics.Round Outer
+		public Round Outer
 		{
 			get => outer;
 			set
@@ -57,29 +55,29 @@ namespace Graphics
 			get => Outer.Length + Inner.Length;
 		}
 
-		public Ring(Graphics.Round inner, Graphics.Round outer)
+		public Ring(Round inner, Round outer)
 		{
 			if (inner.Radius < outer.Radius)
 			{
-				Center = outer.Center = inner.Center;
+				outer.Center = inner.Center;
 				Inner = inner;
 				Outer = outer;
 			}
 		}
 
-		public override string OutputsToConsole()
+		public string OutputsToConsole()
 		{
 			return string.Format("Ring: Inner radius: {1}{0}" +
-										"Outer radius{2}{0}" +
-										"Thickness{3}{0}" +
-										"Area{4}{0}" +
-										"Sum inner and outer lengths",
-										Environment.NewLine,
-										Inner.Radius,
-										Outer.Radius,
-										Thickness,
-										Area,
-										SumLength);
+								"Outer radius{2}{0}" +
+								"Thickness{3}{0}" +
+								"Area{4}{0}" +
+								"Sum inner and outer lengths",
+								Environment.NewLine,
+								Inner.Radius,
+								Outer.Radius,
+								Thickness,
+								Area,
+								SumLength);
 		}
 	}
 }

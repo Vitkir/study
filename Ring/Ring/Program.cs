@@ -1,5 +1,5 @@
 ﻿
-namespace Ring
+namespace Graphics
 {
 	class Program
 	{

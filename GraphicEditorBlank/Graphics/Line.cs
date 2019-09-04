@@ -2,7 +2,7 @@
 
 namespace Graphics
 {
-	internal struct Line
+	internal struct Line : IConsoleOutput
 	{
 		public Point FirstPoint { get; set; }
 
@@ -12,8 +12,7 @@ namespace Graphics
 		{
 			get
 			{
-				return Math.Sqrt(Math.Pow((SecondPoint.X - FirstPoint.X), 2) + 
-								 Math.Pow((SecondPoint.Y - FirstPoint.Y), 2));
+				return Math.Sqrt(Math.Pow((SecondPoint.X - FirstPoint.X), 2) + Math.Pow((SecondPoint.Y - FirstPoint.Y), 2));
 			}
 		}
 
@@ -38,6 +37,17 @@ namespace Graphics
 			{
 				throw new ArgumentException("Line cannot be created");
 			}
+		}
+
+		public string OutputsToConsole()
+		{
+			return string.Format("Line:{0}Coordinates:[x,y]" +
+								"{0}First point: [{1},{2}]" +
+								"{0}Second point[{3},{4}]" +
+								"{0}Length: {5}", Environment.NewLine,
+								FirstPoint.X, FirstPoint.Y,
+								SecondPoint.X, SecondPoint.Y,
+								Length);
 		}
 	}
 }

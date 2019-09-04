@@ -12,14 +12,12 @@ namespace User
 			GetUserOptions(users);
 		}
 
-		static string GetTextFromConsole()
-		{
-			return Console.ReadLine();
-		}
+		static string GetTextFromConsole() => Console.ReadLine();
 
 		static DateTime GetDateTimeFromConsole()
 		{
 			DateTime date;
+			Console.WriteLine("Enter date formate: dd MM yyyy");
 			while (!DateTime.TryParseExact(GetTextFromConsole(), "dd MM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
 			{
 				Console.WriteLine("Incorrect dates format");
@@ -27,10 +25,7 @@ namespace User
 			return date;
 		}
 
-		private static ConsoleKeyInfo GetInputFromConsole()
-		{
-			return Console.ReadKey();
-		}
+		private static ConsoleKeyInfo GetInputFromConsole() => Console.ReadKey();
 
 		private static int GetUsersIndexFromConsole()
 		{

@@ -2,7 +2,7 @@
 
 namespace Graphics
 {
-	internal class Triangle
+	internal class Triangle : IConsoleOutput
 	{
 		private Point a;
 		private Point b;
@@ -88,7 +88,7 @@ namespace Graphics
 			}
 		}
 
-		public override string OutputsToConsole()
+		public string OutputsToConsole()
 		{
 			return string.Format("Triangle:{0}Length AB={1}{0}Length BC={2}{0}Length AC={3}{0}" +
 								"Perimeter = {4}{0}Area ={5}{0}" +

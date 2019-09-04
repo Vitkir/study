@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Round
+namespace Graphics
 {
 	public class Program
 	{

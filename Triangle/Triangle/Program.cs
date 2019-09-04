@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Triangle
+namespace Graphics
 {
 	internal class Program
 	{

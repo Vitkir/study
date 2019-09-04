@@ -2,7 +2,7 @@
 
 namespace Graphics
 {
-	public class Round
+	public class Round : IConsoleOutput
 	{
 		private double r;
 
@@ -57,17 +57,16 @@ namespace Graphics
 			return r1.Radius != r2.Radius;
 		}
 
-		public override string OutputsToConsole()
+		public string OutputsToConsole()
 		{
-			Console.Clear();
-			return string.Format(
-				"Round:{5}Center x,y: [{0}, {1}];{5}Radius: {2};{5}Length: {3};{5}Area: {4}.",
-				Center.X.ToString(),
-				Center.Y.ToString(),
-				Radius.ToString(),
-				Length.ToString(),
-				Area.ToString(),
-				Environment.NewLine);
+			return string.Format("Round:{5}Center x,y: [{0}, {1}];{5}" +
+								"Radius: {2};{5}Length: {3};{5}Area: {4}.",
+								Center.X.ToString(),
+								Center.Y.ToString(),
+								Radius.ToString(),
+								Length.ToString(),
+								Area.ToString(),
+								Environment.NewLine);
 		}
 	}
 }
