@@ -26,6 +26,7 @@ namespace Graphics
 			return l1.Length > l2.Length;
 		}
 
+
 		public Line(Point p1, Point p2)
 		{
 			if (p1 != p2)

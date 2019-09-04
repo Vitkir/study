@@ -15,19 +15,22 @@ namespace Graphics
 			set
 			{
 				a = value;
-				A = AB.FirstPoint;
-				A = AD.FirstPoint;
+				if (value != c)
+				{
+					A = AB.FirstPoint;
+					A = AD.FirstPoint;
+				}
+				throw new ArgumentException("Point C cannot be equals point A.");
 			}
 		}
 
 		public Point B
 		{
-			get
-			{
-			return b=
-			}
+			get => b;
 			private set
 			{
+				b.X = a.X;
+				b.Y = c.Y;
 				B = AB.SecondPoint;
 				B = BC.FirstPoint;
 			}
@@ -36,11 +39,15 @@ namespace Graphics
 		public Point C
 		{
 			get => c;
-			private set
+			set
 			{
 				c = value;
-				C = BC.SecondPoint;
-				C = CD.FirstPoint;
+				if (value != a)
+				{
+					C = BC.SecondPoint;
+					C = CD.FirstPoint;
+				}
+				throw new ArgumentException("Point C cannot be equals point A.");
 			}
 		}
 
@@ -49,6 +56,8 @@ namespace Graphics
 			get => d;
 			private set
 			{
+				d.X = c.X;
+				d.Y = a.Y;
 				D = CD.SecondPoint;
 				D = AD.SecondPoint;
 			}
@@ -62,19 +71,47 @@ namespace Graphics
 
 		public Line AD { get; set; }
 
-		public Rectangle(Point p1, Point p2)
+		public double Perimeter
 		{
-			if (p1 != p2)
+			get
 			{
-				A = p1;
-				C = p2;
+				return AB.Length + BC.Length +
+						CD.Length + AD.Length;
 			}
-			else throw new ArgumentException("Uncrrected coordinates point C. Point C equals point A.");
+		}
+
+		public double Area
+		{
+			get => AB.Length * BC.Length;
+		}
+
+		public Rectangle(Point a, Point c)
+		{
+			A = a;
+			C = c;
+			B = new Point();
+			D = new Point();
+			AB = new Line();
+			BC = new Line();
+			CD = new Line();
+			AD = new Line();
 		}
 
 		public string OutputsToConsole()
 		{
-			return string.Format("");
+			return string.Format("Rectangle [A,B,C,D]:" +
+								"{0}AB:{1}" +
+								"{0}BC:{2}" +
+								"{0}CD:{3}" +
+								"{0}AD{4}{0}" +
+								"Perimeter:{5}{0}" +
+								"Area:{6}", Environment.NewLine,
+								AB.Length,
+								BC.Length,
+								CD.Length,
+								AD.Length,
+								Perimeter,
+								Area);
 		}
 	}
 }
