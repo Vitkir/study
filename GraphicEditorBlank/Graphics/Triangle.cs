@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace Graphics
+namespace GraphicEditorBlank
 {
-	internal class Triangle : IConsoleOutput
+	public class Triangle : IPrintable
 	{
+		protected string FigureName => "Triangle";
 		private Point a;
 		private Point b;
 		private Point c;
@@ -76,21 +77,17 @@ namespace Graphics
 
 			AC = new Line(A, C);
 
-			if (AB.Length + BC.Length > AC.Length &&
-				AB.Length + AC.Length > BC.Length &&
-				BC.Length + AC.Length > AB.Length)
-			{
-
-			}
-			else
+			if (AB.Length + BC.Length <= AC.Length &&
+				AB.Length + AC.Length <= BC.Length &&
+				BC.Length + AC.Length <= AB.Length)
 			{
 				throw new ArgumentException("Objet cannot be created");
 			}
 		}
 
-		public string OutputsToConsole()
+		public string printable()
 		{
-			return string.Format("Triangle:{0}Length AB={1}{0}Length BC={2}{0}Length AC={3}{0}" +
+			return string.Format("{12}:{0}Length AB={1}{0}Length BC={2}{0}Length AC={3}{0}" +
 								"Perimeter = {4}{0}Area ={5}{0}" +
 								"Point A: {6};{7}{0}" +
 								"Point B: {8};{9}{0}" +
@@ -99,7 +96,8 @@ namespace Graphics
 				AC.Length.ToString(), Perimeter.ToString(), Area.ToString(),
 				A.X.ToString(), A.Y.ToString(),
 				B.X.ToString(), B.Y.ToString(),
-				C.X.ToString(), C.Y.ToString());
+				C.X.ToString(), C.Y.ToString(),
+				FigureName.ToString());
 		}
 	}
 }

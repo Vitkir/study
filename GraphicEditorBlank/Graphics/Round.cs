@@ -1,20 +1,25 @@
 ﻿using System;
 
-namespace Graphics
+namespace GraphicEditorBlank
 {
 	public class Round : Circle
 	{
 		protected override string FigureName => "Round";
+
 		public double Area
 		{
 			get => Math.PI * Radius * Radius;
 		}
 
-		public override string OutputsToConsole()
+		public Round(Point center, double radius) : base(center, radius)
+		{
+		}
+
+		public override string printable()
 		{
 			return string.Format("{1}{0}Area: {2}.",
 								Environment.NewLine,
-								base.OutputsToConsole(),
+								base.printable(),
 								Area.ToString());
 		}
 	}

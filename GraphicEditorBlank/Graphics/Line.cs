@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Graphics
+namespace GraphicEditorBlank
 {
-	internal struct Line : IConsoleOutput
+	public struct Line : IPrintable
 	{
 		public Point FirstPoint { get; set; }
 
@@ -40,15 +40,15 @@ namespace Graphics
 			}
 		}
 
-		public string OutputsToConsole()
+		public string printable()
 		{
 			return string.Format("Line:{0}Coordinates:[x,y]" +
 								"{0}First point: [{1},{2}]" +
 								"{0}Second point[{3},{4}]" +
 								"{0}Length: {5}", Environment.NewLine,
-								FirstPoint.X, FirstPoint.Y,
-								SecondPoint.X, SecondPoint.Y,
-								Length);
+								FirstPoint.X.ToString(), FirstPoint.Y.ToString(),
+								SecondPoint.X.ToString(), SecondPoint.Y.ToString(),
+								Length.ToString());
 		}
 	}
 }

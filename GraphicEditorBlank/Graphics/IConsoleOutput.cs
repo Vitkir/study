@@ -1,7 +1,7 @@
-﻿namespace Graphics
+﻿namespace GraphicEditorBlank
 {
-	interface IConsoleOutput
+	public interface IPrintable
 	{
-		string OutputsToConsole();
+		string printable();
 	}
 }

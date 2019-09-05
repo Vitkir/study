@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Graphics
+namespace GraphicEditorBlank
 {
-	public class Circle : IConsoleOutput
+	public class Circle : IPrintable
 	{
 		protected virtual string FigureName => "Circle";
 		private double r;
@@ -14,11 +14,11 @@ namespace Graphics
 			get => r;
 			set
 			{
-				r = value;
 				if (value < 0)
 				{
 					throw new ArgumentException("Radius should be positive");
 				}
+				r = value;
 			}
 		}
 
@@ -46,7 +46,14 @@ namespace Graphics
 		{
 			return r1.Radius != r2.Radius;
 		}
-		public virtual string OutputsToConsole()
+
+		public Circle(Point center, double radius)
+		{
+			Center = center;
+			Radius = radius;
+		}
+
+		public virtual string printable()
 		{
 			return string.Format("{5}:" +
 								"{0}Center x,y: [{1}, {2}]" +
@@ -56,7 +63,7 @@ namespace Graphics
 								Center.Y.ToString(),
 								Radius.ToString(),
 								Length.ToString(),
-								FigureName);
+								FigureName.ToString());
 		}
 	}
 }

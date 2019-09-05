@@ -1,9 +1,9 @@
-﻿using System;
-
-namespace Graphics
+﻿namespace GraphicEditorBlank
 {
-	public struct Point : IConsoleOutput
+	public struct Point : IPrintable
 	{
+		private static string FigureName => "Point";
+
 		public double X { get; set; }
 
 		public double Y { get; set; }
@@ -18,9 +18,15 @@ namespace Graphics
 			return !(p1 == p2);
 		}
 
-		public string OutputsToConsole()
+		public Point(double x, double y)
 		{
-			return string.Format($"Point [x,y]: [{X},{Y}]");
+			X = x;
+			Y = y;
+		}
+
+		public string printable()
+		{
+			return string.Format($"{FigureName} [x,y]: [{X},{Y}]");
 		}
 	}
 }

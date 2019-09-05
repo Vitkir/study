@@ -51,21 +51,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Rectangle\Rectangle\Rectangle.csproj">
-      <Project>{f5b2c160-be9b-42dd-a30d-cd1fac75bd8c}</Project>
-      <Name>Rectangle</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Ring\Ring\Ring.csproj">
-      <Project>{5db7b045-329f-4d5e-a12b-4275d16bf7e5}</Project>
-      <Name>Ring</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Round\Round\Round.csproj">
-      <Project>{6fa60841-af54-4053-82b3-180e8f2c5732}</Project>
-      <Name>Round</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Triangle\Triangle\Triangle.csproj">
-      <Project>{c0f7fcd6-9603-4e97-9243-92397fb4a667}</Project>
-      <Name>Triangle</Name>
+    <ProjectReference Include="..\Graphics\Graphics.csproj">
+      <Project>{bee6d1b9-b6be-4e7d-9e77-d76bb980c316}</Project>
+      <Name>Graphics</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

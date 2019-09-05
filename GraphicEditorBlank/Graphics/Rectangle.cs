@@ -1,65 +1,33 @@
 ﻿using System;
 
-namespace Graphics
+namespace GraphicEditorBlank
 {
-	class Rectangle : IConsoleOutput
+	public class Rectangle : IPrintable
 	{
-		private Point a;
 		private Point b;
-		private Point c;
 		private Point d;
 
-		public Point A
-		{
-			get => a;
-			set
-			{
-				a = value;
-				if (value != c)
-				{
-					A = AB.FirstPoint;
-					A = AD.FirstPoint;
-				}
-				throw new ArgumentException("Point C cannot be equals point A.");
-			}
-		}
+		public Point A { get; set; }
 
 		public Point B
 		{
 			get => b;
 			private set
 			{
-				b.X = a.X;
-				b.Y = c.Y;
-				B = AB.SecondPoint;
-				B = BC.FirstPoint;
+				b.X = A.X;
+				b.Y = C.Y;
 			}
 		}
 
-		public Point C
-		{
-			get => c;
-			set
-			{
-				c = value;
-				if (value != a)
-				{
-					C = BC.SecondPoint;
-					C = CD.FirstPoint;
-				}
-				throw new ArgumentException("Point C cannot be equals point A.");
-			}
-		}
+		public Point C { get; set; }
 
 		public Point D
 		{
 			get => d;
 			private set
 			{
-				d.X = c.X;
-				d.Y = a.Y;
-				D = CD.SecondPoint;
-				D = AD.SecondPoint;
+				d.X = C.X;
+				d.Y = A.Y;
 			}
 		}
 
@@ -87,17 +55,21 @@ namespace Graphics
 
 		public Rectangle(Point a, Point c)
 		{
+			if (a == c)
+			{
+				throw new ArgumentException("Point C cannot be equals point A.");
+			}
 			A = a;
 			C = c;
 			B = new Point();
 			D = new Point();
-			AB = new Line();
-			BC = new Line();
-			CD = new Line();
-			AD = new Line();
+			AB = new Line(A, B);
+			BC = new Line(B, C);
+			CD = new Line(C, D);
+			AD = new Line(A, D);
 		}
 
-		public string OutputsToConsole()
+		public string printable()
 		{
 			return string.Format("Rectangle [A,B,C,D]:" +
 								"{0}AB:{1}" +
@@ -106,12 +78,12 @@ namespace Graphics
 								"{0}AD{4}{0}" +
 								"Perimeter:{5}{0}" +
 								"Area:{6}", Environment.NewLine,
-								AB.Length,
-								BC.Length,
-								CD.Length,
-								AD.Length,
-								Perimeter,
-								Area);
+								AB.Length.ToString(),
+								BC.Length.ToString(),
+								CD.Length.ToString(),
+								AD.Length.ToString(),
+								Perimeter.ToString(),
+								Area.ToString());
 		}
 	}
 }
