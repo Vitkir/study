@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Graphics
+namespace GraphicEditorBlank
 {
 	internal struct Line
 	{
