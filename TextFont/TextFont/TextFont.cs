@@ -24,7 +24,6 @@ namespace TextFont
             Underline = 4
         }
 
-		//TODO: extra method to remove
         public static ConsoleKeyInfo EnterText()
         {
             var input = Console.ReadKey();
