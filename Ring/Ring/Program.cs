@@ -1,5 +1,5 @@
 ﻿
-namespace Graphics
+namespace GraphicEditorBlank
 {
 	class Program
 	{

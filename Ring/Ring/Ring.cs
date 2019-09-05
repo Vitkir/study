@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace Graphics
+namespace GraphicEditorBlank
 {
 	class Ring
 	{
-		private Graphics.Round inner;
-		private Graphics.Round outer;
+		private GraphicEditorBlank.Round inner;
+		private GraphicEditorBlank.Round outer;
 		private double thickness;
 
-		public Graphics.Round.Point Center { get; set; }
+		public GraphicEditorBlank.Round.Point Center { get; set; }
 
 		public double Thickness
 		{
@@ -20,7 +20,7 @@ namespace Graphics
 			}
 		}
 
-		public Graphics.Round Inner
+		public GraphicEditorBlank.Round Inner
 		{
 			get => inner;
 			set
@@ -30,7 +30,7 @@ namespace Graphics
 			}
 		}
 
-		public Graphics.Round Outer
+		public GraphicEditorBlank.Round Outer
 		{
 			get => outer;
 			set
@@ -57,7 +57,7 @@ namespace Graphics
 			get => Outer.Length + Inner.Length;
 		}
 
-		public Ring(Graphics.Round inner, Graphics.Round outer)
+		public Ring(GraphicEditorBlank.Round inner, GraphicEditorBlank.Round outer)
 		{
 			if (inner.Radius < outer.Radius)
 			{
