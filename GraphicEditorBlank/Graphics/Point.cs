@@ -1,4 +1,4 @@
-﻿namespace GraphicEditorBlank
+﻿namespace Graphics
 {
 	public struct Point : IPrintable
 	{

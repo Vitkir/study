@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphicEditorBlank
+namespace Graphics
 {
 	public struct Line : IPrintable
 	{

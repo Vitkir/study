@@ -1,7 +1,4 @@
-﻿
-using System.Collections.Generic;
-
-namespace GraphicEditorBlank
+﻿namespace GraphicEditorBlank
 {
 	class Program
 	{
