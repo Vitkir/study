@@ -2,12 +2,7 @@
 
 namespace GameTemplate
 {
-	class NonPlayerCharacter : Object, IMoving, IInteracting
+	class NonPlayerCharacter : MobileObject
 	{
-		public Point Move()
-		{
-			return Coordinates;
-		}
-		public bool Interact() => false;
 	}
 }
