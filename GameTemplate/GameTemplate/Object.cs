@@ -1,14 +1,9 @@
-﻿using static GameTemplate.Map;
+﻿using System.Drawing;
 
 namespace GameTemplate
 {
-	class Object : IInteracting
+	class Object
 	{
-		public double Length { get; }
-		public double Width { get; }
-
 		public Point Coordinates { get; set; }
-
-		public bool Interact() => false;
 	}
 }

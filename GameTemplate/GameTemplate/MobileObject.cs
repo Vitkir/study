@@ -1,19 +1,24 @@
-﻿using static GameTemplate.Map;
+﻿using System.Drawing;
 
 namespace GameTemplate
 {
-	class MobileObject : Object, IMoving
+	class MobileObject : Object, ICharacter
 	{
+		public string Name { get; set; }
+
 		public double Health { get; set; }
 
 		public double Speed { get; set; }
 
 		public double Strength { get; set; }
 
-		public Point Move() => Coordinates;
+		public double Damage { get; set; }
 
-		public double SetDamage() => Health;
+		public void TakeItem(Item bonus) { }
 
-		public double GetDamage() => Health;
+		public virtual Point Move() => Coordinates;
+		public virtual Point Move(bool move) => Coordinates;
+
+		public bool Live() => true;
 	}
 }

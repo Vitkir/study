@@ -1,6 +1,6 @@
 ﻿namespace GameTemplate
 {
-	class Bonus : Object
+	interface IPlayerCharacter
 	{
 	}
 }
