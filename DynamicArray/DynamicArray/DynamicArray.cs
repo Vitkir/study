@@ -1,23 +1,44 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace DynamicArray
 {
-	class DynamicArray<T>
+	class DynamicArray<T> : IEnumerable<T>, IEnumerator<T>
 	{
 		T[] array;
-		int count;
+		int position = -1;
+
+		public T this[int i]
+		{
+			get => array[i];
+			set => array[i] = value;
+		}
+
+		public int Length { get; set; }
+
+		public int Capacity => array.Length;
+
+		public T Current
+		{
+			get
+			{
+				if (position == -1 || position >= Capacity)
+					throw new InvalidOperationException();
+				return array[position];
+			}
+		}
+
+		object IEnumerator.Current => throw new NotImplementedException();
 
 		public DynamicArray()
 		{
 			array = new T[8];
-			count = 0;
 		}
 
 		public DynamicArray(int capacity)
 		{
 			array = new T[capacity];
-			count = 0;
 		}
 
 		static int CountCollection(IEnumerable<T> collection)
@@ -32,29 +53,30 @@ namespace DynamicArray
 
 		public DynamicArray(IEnumerable<T> collection)
 		{
-			count = CountCollection(collection);
-			array = new T[count];
-			int index = 0;
+			var capacity = CountCollection(collection);
+			Length = capacity;
+			array = new T[capacity];
+			int i = 0;
 			foreach (var item in collection)
 			{
-				array[index] = item;
-				index++;
+				array[i] = item;
+				i++;
 			}
 		}
 
 		public void Add(T input)
 		{
-			if (count == array.Length - 1)
+			if (Length == Capacity)
 			{
 				IncreaseArray();
 			}
-			array[count] = input;
-			count++;
+			array[Length] = input;
+			Length++;
 		}
 
 		public void IncreaseArray()
 		{
-			var newCapacity = array.Length * 2;
+			var newCapacity = Capacity * 2;
 			var newArray = new T[newCapacity];
 			int index = 0;
 			foreach (var item in array)
@@ -80,9 +102,9 @@ namespace DynamicArray
 
 		public void AddRange(IEnumerable<T> collection)
 		{
-			int capacity = array.Length - 1;
+			int capacity = Capacity;
 			int exponent = 1;
-			while (capacity < count + CountCollection(collection))
+			while (capacity < Length + CountCollection(collection))
 			{
 				capacity = capacity * 2;
 				exponent++;
@@ -90,21 +112,44 @@ namespace DynamicArray
 			IncreaseArray(exponent);
 			foreach (var item in collection)
 			{
-				array[count] = item;
-				count++;
+				array[Length - 1] = item;
+				Length++;
 			}
 		}
 
-		public bool Remove(int index)
-		{
-			if (index > array.Length - 1)
-			{
-				result = false;
-			}
-			for (int i = 0; index + 1 == count; i++)
-			{
+		//public bool Remove(int index)
+		//{
+		//	for (int i = 0; index < Length - 1; i++)
+		//	{
+		//		array[index] = array[index + 1];
+		//		index++;
+		//	}
+		//	array[index] = default;
+		//}
 
-			}
+		public IEnumerator<T> GetEnumerator()
+		{
+
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Dispose()
+		{
+		}
+
+		public bool MoveNext()
+		{
+			position++;
+			return (position < Capacity);
+		}
+
+		public void Reset()
+		{
+			position = -1;
 		}
 	}
 }
