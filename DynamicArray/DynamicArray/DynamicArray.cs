@@ -7,7 +7,7 @@ namespace DynamicArray
 	class DynamicArray<T> : IEnumerable<T>, IEnumerator<T>
 	{
 		T[] array;
-		int position = -1;
+		private int position = -1;
 
 		public T this[int i]
 		{
@@ -23,7 +23,7 @@ namespace DynamicArray
 		{
 			get
 			{
-				if (position == -1 || position >= Capacity)
+				if (position <= -1 || position >= Capacity)
 					throw new InvalidOperationException();
 				return array[position];
 			}
@@ -41,16 +41,6 @@ namespace DynamicArray
 			array = new T[capacity];
 		}
 
-		static int CountCollection(IEnumerable<T> collection)
-		{
-			int count = 0;
-			foreach (var item in collection)
-			{
-				count++;
-			}
-			return count;
-		}
-
 		public DynamicArray(IEnumerable<T> collection)
 		{
 			var capacity = CountCollection(collection);
@@ -64,40 +54,14 @@ namespace DynamicArray
 			}
 		}
 
-		public void Add(T input)
+		public void Add(T value)
 		{
 			if (Length == Capacity)
 			{
 				IncreaseArray();
 			}
-			array[Length] = input;
+			array[Length] = value;
 			Length++;
-		}
-
-		public void IncreaseArray()
-		{
-			var newCapacity = Capacity * 2;
-			var newArray = new T[newCapacity];
-			int index = 0;
-			foreach (var item in array)
-			{
-				array[index] = newArray[index];
-				index++;
-			}
-			array = newArray;
-		}
-
-		public void IncreaseArray(int exponent)
-		{
-			var newCapacity = array.Length * (int)Math.Pow(2, exponent);
-			var newArray = new T[newCapacity];
-			int index = 0;
-			foreach (var item in array)
-			{
-				array[index] = newArray[index];
-				index++;
-			}
-			array = newArray;
 		}
 
 		public void AddRange(IEnumerable<T> collection)
@@ -106,50 +70,115 @@ namespace DynamicArray
 			int exponent = 1;
 			while (capacity < Length + CountCollection(collection))
 			{
-				capacity = capacity * 2;
+				capacity *= 2;
 				exponent++;
 			}
 			IncreaseArray(exponent);
+			position += Length;
 			foreach (var item in collection)
 			{
-				array[Length - 1] = item;
-				Length++;
+				MoveNext();
+				array[position] = item;
 			}
+			Reset();
 		}
 
-		//public bool Remove(int index)
-		//{
-		//	for (int i = 0; index < Length - 1; i++)
-		//	{
-		//		array[index] = array[index + 1];
-		//		index++;
-		//	}
-		//	array[index] = default;
-		//}
+		public bool Insert(int index, T value)
+		{
+			if (index < 0 || index >= Capacity)
+			{
+				throw new ArgumentOutOfRangeException();
+			}
+			if (Length == Capacity)
+			{
+				IncreaseArray();
+			}
+			for (int i = Length - 1; i > index; i--)
+			{
+				array[i] = array[i - 1];
+			}
+			array[index] = value;
+			return true;
+		}
+
+		public bool Remove(int index)
+		{
+			if (index < 0 || index > Length - 1)
+			{
+				return false;
+			}
+			for (int i = index; i < Length - 1; i++)
+			{
+				array[i] = array[i + 1];
+			}
+			array[Length - 1] = default;
+			Length -= 1;
+			return true;
+		}
 
 		public IEnumerator<T> GetEnumerator()
 		{
-
+			return ((IEnumerable<T>)array).GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			throw new NotImplementedException();
+			return ((IEnumerable<T>)array).GetEnumerator();
 		}
 
 		public void Dispose()
 		{
+			throw new NotImplementedException();
 		}
 
 		public bool MoveNext()
 		{
-			position++;
-			return (position < Capacity);
+			if (position < Capacity - 1)
+			{
+				position++;
+				return true;
+			}
+			return false;
 		}
 
 		public void Reset()
 		{
 			position = -1;
+		}
+
+		private int CountCollection(IEnumerable<T> collection)
+		{
+			int count = 0;
+			foreach (var item in collection)
+			{
+				count++;
+			}
+			return count;
+		}
+
+		private void IncreaseArray()
+		{
+			var newCapacity = Capacity * 2;
+			var newArray = new T[newCapacity];
+			ChangeArray(newArray, 0);
+		}
+
+		private void IncreaseArray(int exponent)
+		{
+			var newCapacity = array.Length * (int)Math.Pow(2, exponent);
+			var newArray = new T[newCapacity];
+			ChangeArray(newArray, 0);
+		}
+
+		private int ChangeArray(T[] newArray, int index)
+		{
+			foreach (var item in array)
+			{
+				newArray[index] = array[index];
+				index++;
+			}
+			array = newArray;
+			return index;
 		}
 	}
 }
