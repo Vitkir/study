@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 namespace DynamicArray
 {
-	class DynamicArray<T> : IEnumerable<T>, IEnumerator<T>
+	class DynamicArray<T> : IEnumerable<T>, IEnumerator<T>, ICloneable
 	{
 		T[] array;
 		private int position = -1;
+		private int capacity;
 
 		public T this[int i]
 		{
@@ -17,15 +18,30 @@ namespace DynamicArray
 
 		public int Length { get; set; }
 
-		public int Capacity => array.Length;
+		public int Capacity
+		{
+			get => capacity;
+			set
+			{
+				if (value < 1)
+				{
+					throw new ArgumentException();
+				}
+				capacity = value;
+			}
+		}
 
 		public T Current
 		{
 			get
 			{
-				if (position <= -1 || position >= Capacity)
-					throw new InvalidOperationException();
-				return array[position];
+				if (position > -1 && position < Capacity)
+					return array[position];
+				else if (position < 0 && position >= -Math.Abs(Capacity))
+				{
+					return array[Capacity - Math.Abs(position)];
+				}
+				throw new InvalidOperationException();
 			}
 		}
 
@@ -33,19 +49,21 @@ namespace DynamicArray
 
 		public DynamicArray()
 		{
-			array = new T[8];
+			Capacity = 8;
+			array = new T[Capacity];
 		}
 
 		public DynamicArray(int capacity)
 		{
 			array = new T[capacity];
+			Capacity = array.Length;
 		}
 
 		public DynamicArray(IEnumerable<T> collection)
 		{
-			var capacity = CountCollection(collection);
-			Length = capacity;
-			array = new T[capacity];
+			Capacity = CountCollection(collection);
+			Length = Capacity;
+			array = new T[Capacity];
 			int i = 0;
 			foreach (var item in collection)
 			{
@@ -54,11 +72,18 @@ namespace DynamicArray
 			}
 		}
 
+		public DynamicArray(DynamicArray<T> array)
+		{
+			this.array = new T[array.Capacity];
+			Capacity = array.Capacity;
+			Length = Capacity;
+		}
+
 		public void Add(T value)
 		{
 			if (Length == Capacity)
 			{
-				IncreaseArray();
+				ChangeArray();
 			}
 			array[Length] = value;
 			Length++;
@@ -73,7 +98,7 @@ namespace DynamicArray
 				capacity *= 2;
 				exponent++;
 			}
-			IncreaseArray(exponent);
+			ChangeArray(exponent);
 			position += Length;
 			foreach (var item in collection)
 			{
@@ -81,6 +106,20 @@ namespace DynamicArray
 				array[position] = item;
 			}
 			Reset();
+		}
+
+		public void ChangeCapacity(int newCapacity)
+		{
+			var newArray = new T[newCapacity];
+			if (newCapacity > Capacity)
+				IncreaseArray(newArray);
+			ReduceArray(newArray);
+		}
+
+		public Array ToArray()
+		{
+			Array array = (Array)Clone();
+			return array;
 		}
 
 		public bool Insert(int index, T value)
@@ -91,7 +130,7 @@ namespace DynamicArray
 			}
 			if (Length == Capacity)
 			{
-				IncreaseArray();
+				ChangeArray();
 			}
 			for (int i = Length - 1; i > index; i--)
 			{
@@ -146,6 +185,52 @@ namespace DynamicArray
 			position = -1;
 		}
 
+		public object Clone()
+		{
+			DynamicArray<T> arrayClone = new DynamicArray<T>(array);
+			return arrayClone;
+		}
+
+		private void ChangeArray()
+		{
+			var newCapacity = Capacity * 2;
+			var newArray = new T[newCapacity];
+			IncreaseArray(newArray);
+		}
+
+		private void ChangeArray(int exponent)
+		{
+			var newCapacity = array.Length * (int)Math.Pow(2, exponent);
+			var newArray = new T[newCapacity];
+			IncreaseArray(newArray);
+		}
+
+		private int IncreaseArray(T[] newArray)
+		{
+			var index = 0;
+			foreach (var item in array)
+			{
+				newArray[index] = array[index];
+				index++;
+			}
+			array = newArray;
+			Capacity = array.Length;
+			return index;
+		}
+
+		private int ReduceArray(T[] newArray)
+		{
+			var index = 0;
+			foreach (var item in newArray)
+			{
+				newArray[index] = array[index];
+				index++;
+			}
+			array = newArray;
+			Capacity = array.Length;
+			return index;
+		}
+
 		private int CountCollection(IEnumerable<T> collection)
 		{
 			int count = 0;
@@ -154,31 +239,6 @@ namespace DynamicArray
 				count++;
 			}
 			return count;
-		}
-
-		private void IncreaseArray()
-		{
-			var newCapacity = Capacity * 2;
-			var newArray = new T[newCapacity];
-			ChangeArray(newArray, 0);
-		}
-
-		private void IncreaseArray(int exponent)
-		{
-			var newCapacity = array.Length * (int)Math.Pow(2, exponent);
-			var newArray = new T[newCapacity];
-			ChangeArray(newArray, 0);
-		}
-
-		private int ChangeArray(T[] newArray, int index)
-		{
-			foreach (var item in array)
-			{
-				newArray[index] = array[index];
-				index++;
-			}
-			array = newArray;
-			return index;
 		}
 	}
 }
