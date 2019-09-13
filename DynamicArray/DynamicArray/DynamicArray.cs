@@ -7,7 +7,7 @@ namespace DynamicArray
 	class DynamicArray<T> : IEnumerable<T>, IEnumerator<T>, ICloneable
 	{
 		T[] array;
-		private int position = -1;
+		protected int position = -1;
 		private int capacity;
 
 		public T this[int i]
@@ -64,11 +64,11 @@ namespace DynamicArray
 			Capacity = CountCollection(collection);
 			Length = Capacity;
 			array = new T[Capacity];
-			int i = 0;
+			int index = 0;
 			foreach (var item in collection)
 			{
-				array[i] = item;
-				i++;
+				array[index] = item;
+				index++;
 			}
 		}
 
@@ -99,13 +99,12 @@ namespace DynamicArray
 				exponent++;
 			}
 			ChangeArray(exponent);
-			position += Length;
+			var index = Length;
 			foreach (var item in collection)
 			{
-				MoveNext();
 				array[position] = item;
+				index++;
 			}
-			Reset();
 		}
 
 		public void ChangeCapacity(int newCapacity)
@@ -118,7 +117,6 @@ namespace DynamicArray
 
 		public Array ToArray()
 		{
-			Array array = (Array)Clone();
 			return array;
 		}
 
@@ -170,7 +168,7 @@ namespace DynamicArray
 			throw new NotImplementedException();
 		}
 
-		public bool MoveNext()
+		public virtual bool MoveNext()
 		{
 			if (position < Capacity - 1)
 			{
