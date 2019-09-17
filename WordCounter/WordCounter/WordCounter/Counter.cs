@@ -1,26 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WordCounter
 {
 	class Counter
 	{
+		private Regex regex;
+		private Dictionary<string, int> words;
+
 		public string String { get; set; }
 
-		public int Count { get; private set; }
+		public Counter()
+		{
+			regex = new Regex(@"\W");
+		}
 
-		//public string[] Words => String.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+		public Dictionary<string, int> ProcessString()
+		{
+			string[] words = String.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var word in words)
+			{
+				if (this.words.ContainsKey(word))
+				{
+					this.words[word]++;
+				}
+				else
+				{
+					this.words.Add(word, 1);
+				}
+			}
+			return this.words;
+		}
 
 		private void ConvertStringToLowercase() => String.ToLower();
 
-		private void RemoveCommas() => String.Replace(',', ' ');
-
-		public void CountWords()
+		private void RemoveSeparators()
 		{
-			Count = String.Split(new string[] { String }, StringSplitOptions.None).Count() - 1;
+			String = regex.Replace(String, " ");
 		}
 	}
 }
