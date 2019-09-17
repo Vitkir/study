@@ -8,13 +8,18 @@ namespace Counter
 		static void Main()
 		{
 			var list = new List<int>(10);
+			FillList(list);
+			Print(list);
+			DeleteEverySecond(list);
+			Console.ReadKey();
+		}
+
+		private static void FillList(List<int> list)
+		{
 			for (int i = 1; i <= list.Capacity; i++)
 			{
 				list.Add(i);
 			}
-			Print(list);
-			DeleteEverySecond(list);
-			Console.ReadKey();
 		}
 
 		static void DeleteEverySecond(List<int> list)
@@ -31,6 +36,7 @@ namespace Counter
 
 		static void Print(List<int> list)
 		{
+			Console.WriteLine("List:");
 			foreach (var item in list)
 			{
 				Console.WriteLine(item.ToString());
