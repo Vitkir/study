@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WordCounter
 {
@@ -10,19 +6,23 @@ namespace WordCounter
 	{
 		static void Main()
 		{
-			
+			var counter = GetCounter();
+			counter.ProcessString();
+			Print(counter);
+			Console.ReadKey();
 		}
 
-		public Counter GetCounter()
+		static public Counter GetCounter()
 		{
 			return new Counter()
 			{
 				Text = Console.ReadLine(),
 			};
 		}
-		public void Print(Counter counter)
+
+		static public void Print(Counter counter)
 		{
-			foreach (var item in counter.words)
+			foreach (var item in counter.Words)
 			{
 				Console.WriteLine(item.Key.ToString() + " - " + item.Value.ToString());
 			}
