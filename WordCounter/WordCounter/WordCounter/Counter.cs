@@ -8,37 +8,49 @@ namespace WordCounter
 	class Counter
 	{
 		private Regex regex;
-		private Dictionary<string, int> words;
 
-		public string String { get; set; }
+		public Dictionary<string, int> words { get; private set; }
+
+		public string Text { get; set; }
 
 		public Counter()
 		{
 			regex = new Regex(@"\W");
+			words = new Dictionary<string, int>();
 		}
 
 		public Dictionary<string, int> ProcessString()
 		{
-			string[] words = String.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-			foreach (var word in words)
+			ConvertStringToLowercase();
+			RemoveSeparators();
+			string[] arrayWords = Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var word in arrayWords)
 			{
-				if (this.words.ContainsKey(word))
+				if (words.ContainsKey(word))
 				{
-					this.words[word]++;
+					words[word]++;
 				}
 				else
 				{
-					this.words.Add(word, 1);
+					words.Add(word, 1);
 				}
 			}
-			return this.words;
+			return words;
 		}
 
-		private void ConvertStringToLowercase() => String.ToLower();
+		private void ConvertStringToLowercase() => Text.ToLower();
 
 		private void RemoveSeparators()
 		{
-			String = regex.Replace(String, " ");
+			Text = regex.Replace(Text, " ");
 		}
+
+		//public void Print()
+		//{
+		//	foreach (var item in words)
+		//	{
+		//		Console.WriteLine(item.Key.ToString() + " - " + item.Value.ToString());
+		//	}
+		//}
 	}
 }

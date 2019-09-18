@@ -10,6 +10,22 @@ namespace WordCounter
 	{
 		static void Main()
 		{
+			
+		}
+
+		public Counter GetCounter()
+		{
+			return new Counter()
+			{
+				Text = Console.ReadLine(),
+			};
+		}
+		public void Print(Counter counter)
+		{
+			foreach (var item in counter.words)
+			{
+				Console.WriteLine(item.Key.ToString() + " - " + item.Value.ToString());
+			}
 		}
 	}
 }
