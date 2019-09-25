@@ -24,7 +24,7 @@
 			Y = y;
 		}
 
-		public string printable()
+		public string Printable()
 		{
 			return string.Format($"{FigureName} [x,y]: [{X},{Y}]");
 		}

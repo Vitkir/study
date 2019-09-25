@@ -4,40 +4,70 @@ namespace Graphics
 {
 	public class Rectangle : IPrintable
 	{
+		private Point a;
 		private Point b;
+		private Point c;
 		private Point d;
+		private Line ab;
+		private Line bc;
+		private Line cd;
+		private Line ad;
 
-		public Point A { get; set; }
+		private Exception exception = new ArgumentException("Point C cannot be equals point A, C.X cannot be equals A.X, C.Y cannot be equals A.Y.");
 
-		public Point B
+		public Point A
 		{
-			get => b;
-			private set
+			get => a;
+			set
 			{
-				b.X = A.X;
-				b.Y = C.Y;
+				if (value.X == c.X || value.Y == c.Y)
+				{
+					throw exception;
+				}
+				a = value;
+				b.X = a.X;
+				d.Y = a.Y;
+				ab.FirstPoint = a;
+				ab.SecondPoint = b;
+				ad.FirstPoint = a;
+				ad.SecondPoint = d;
+				bc.FirstPoint = b;
+				cd.SecondPoint = d;
 			}
 		}
 
-		public Point C { get; set; }
+		public Point B => b;
 
-		public Point D
+		public Point C
 		{
-			get => d;
-			private set
+			get => c;
+			set
 			{
-				d.X = C.X;
-				d.Y = A.Y;
+				if (value.X == a.X || value.Y == a.Y)
+				{
+					throw exception;
+				}
+				c = value;
+				b.Y = c.Y;
+				d.X = a.X;
+				bc.FirstPoint = b;
+				bc.SecondPoint = c;
+				cd.FirstPoint = c;
+				cd.SecondPoint = d;
+				ab.SecondPoint = b;
+				ad.SecondPoint = d;
 			}
 		}
 
-		public Line AB { get; set; }
+		public Point D => d;
 
-		public Line BC { get; set; }
+		public Line AB => ab;
 
-		public Line CD { get; set; }
+		public Line BC => bc;
 
-		public Line AD { get; set; }
+		public Line CD => cd;
+
+		public Line AD => ad;
 
 		public double Perimeter
 		{
@@ -55,21 +85,21 @@ namespace Graphics
 
 		public Rectangle(Point a, Point c)
 		{
-			if (a == c)
+			if (a.X == c.X || a.Y == c.Y)
 			{
-				throw new ArgumentException("Point C cannot be equals point A.");
+				throw exception;
 			}
 			A = a;
 			C = c;
-			B = new Point();
-			D = new Point();
-			AB = new Line(A, B);
-			BC = new Line(B, C);
-			CD = new Line(C, D);
-			AD = new Line(A, D);
+			b = new Point(A.X, C.Y);
+			d = new Point(C.X, A.Y);
+			ab = new Line(A, B);
+			bc = new Line(B, C);
+			cd = new Line(C, D);
+			ad = new Line(A, D);
 		}
 
-		public string printable()
+		public string Printable()
 		{
 			return string.Format("Rectangle [A,B,C,D]:" +
 								"{0}AB:{1}" +

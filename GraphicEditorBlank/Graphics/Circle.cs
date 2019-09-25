@@ -53,7 +53,7 @@ namespace Graphics
 			Radius = radius;
 		}
 
-		public virtual string printable()
+		public virtual string Printable()
 		{
 			return string.Format("{5}:" +
 								"{0}Center x,y: [{1}, {2}]" +

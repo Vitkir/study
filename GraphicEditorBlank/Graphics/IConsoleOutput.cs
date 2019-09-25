@@ -2,6 +2,6 @@
 {
 	public interface IPrintable
 	{
-		string printable();
+		string Printable();
 	}
 }

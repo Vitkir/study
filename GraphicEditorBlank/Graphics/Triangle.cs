@@ -8,15 +8,19 @@ namespace Graphics
 		private Point a;
 		private Point b;
 		private Point c;
+		private Line ab;
+		private Line bc;
+		private Line ac;
 
 		public Point A
 		{
 			get => a;
 			set
 			{
+				CheckNotBelongToOneLine(value, b, c);
 				a = value;
-				AB = new Line(A, AB.SecondPoint);
-				AC = new Line(A, AC.SecondPoint);
+				ac.FirstPoint = a;
+				ab.FirstPoint = a;
 			}
 		}
 
@@ -25,9 +29,10 @@ namespace Graphics
 			get => b;
 			set
 			{
+				CheckNotBelongToOneLine(a, value, c);
 				b = value;
-				AB = new Line(AB.FirstPoint, B);
-				BC = new Line(B, BC.SecondPoint);
+				ab.SecondPoint = b;
+				bc.FirstPoint = b;
 			}
 		}
 
@@ -36,17 +41,18 @@ namespace Graphics
 			get => c;
 			set
 			{
+				CheckNotBelongToOneLine(a, b, value);
 				c = value;
-				AC = new Line(AC.FirstPoint, C);
-				BC = new Line(BC.FirstPoint, C);
+				bc.SecondPoint = c;
+				ac.SecondPoint = c;
 			}
 		}
 
-		public Line AB { get; set; }
+		public Line AB => ab;
 
-		public Line BC { get; set; }
+		public Line BC => bc;
 
-		public Line AC { get; set; }
+		public Line AC => ac;
 
 		public double Perimeter
 		{
@@ -71,11 +77,11 @@ namespace Graphics
 			B = p2;
 			C = p3;
 
-			AB = new Line(A, B);
+			ab = new Line(A, B);
 
-			BC = new Line(B, C);
+			bc = new Line(B, C);
 
-			AC = new Line(A, C);
+			ac = new Line(A, C);
 
 			if (AB.Length + BC.Length <= AC.Length &&
 				AB.Length + AC.Length <= BC.Length &&
@@ -85,7 +91,7 @@ namespace Graphics
 			}
 		}
 
-		public string printable()
+		public string Printable()
 		{
 			return string.Format("{12}:{0}Length AB={1}{0}Length BC={2}{0}Length AC={3}{0}" +
 								"Perimeter = {4}{0}Area ={5}{0}" +
@@ -98,6 +104,11 @@ namespace Graphics
 				B.X.ToString(), B.Y.ToString(),
 				C.X.ToString(), C.Y.ToString(),
 				FigureName.ToString());
+		}
+		private void CheckNotBelongToOneLine(Point a, Point b, Point c)
+		{
+			if ((c.X - a.X) / (b.X - a.X) == (c.X - a.Y) / (b.Y - a.Y))
+				throw new ArgumentException("Points cannot belong to one line.");
 		}
 	}
 }

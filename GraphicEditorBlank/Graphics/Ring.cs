@@ -20,16 +20,16 @@ namespace Graphics
 
 		public Ring(Round inner, double radius)
 		{
-			Inner = inner;
-			Outer = new Round(inner.Center,radius);
-
 			if (inner.Radius >= Outer.Radius)
 			{
-				throw new ArgumentException("Ring cannot be create.");
+				throw new ArgumentException("Outer radius must be greater inner radius.");
 			}
+
+			Inner = inner;
+			Outer = new Round(inner.Center, radius);
 		}
 
-		public string printable()
+		public string Printable()
 		{
 			return string.Format("Ring:{0}Coordinates of center [x,y]:" +
 								"Inner radius: {3}{0}" +

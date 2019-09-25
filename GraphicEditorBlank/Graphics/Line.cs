@@ -40,7 +40,7 @@ namespace Graphics
 			}
 		}
 
-		public string printable()
+		public string Printable()
 		{
 			return string.Format("Line:{0}Coordinates:[x,y]" +
 								"{0}First point: [{1},{2}]" +

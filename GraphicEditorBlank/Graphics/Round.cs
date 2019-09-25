@@ -15,11 +15,11 @@ namespace Graphics
 		{
 		}
 
-		public override string printable()
+		public override string Printable()
 		{
 			return string.Format("{1}{0}Area: {2}.",
 								Environment.NewLine,
-								base.printable(),
+								base.Printable(),
 								Area.ToString());
 		}
 	}
