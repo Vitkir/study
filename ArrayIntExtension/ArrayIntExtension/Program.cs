@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace ArrayIntExtension
+namespace ArrayExtension
 {
 	class Program
 	{
 		static void Main()
 		{
-			int[] vs = { 2, 5, 6, 8, 1, 3, 6 };
-			int sumItem = vs.SumArrayElements();
-			Console.WriteLine(sumItem.ToString());
+			string str = "+9";
+			Console.WriteLine(str.IsPositiveInteger().ToString());
 			Console.ReadKey();
 		}
 	}
