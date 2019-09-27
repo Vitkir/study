@@ -1,10 +1,16 @@
-﻿namespace ArraySorting
-{
-	public delegate int Compare<T>(T item1, T item2);
+﻿using System.Threading;
 
-	public static class ArrayExtensionMethod
+namespace ArraySorting
+{
+
+	public class ArraySort<T>
 	{
-		static void StoogeSort<T>(T[] array, int startIndex, int endIndex, Compare<T> compare)
+		public delegate int Compare(T item1, T item2);
+		public delegate void Print(T[] array);
+
+		public static event Print printToConsole;
+
+		private static void StoogeSort(T[] array, int startIndex, int endIndex, Compare compare)
 		{
 			if (compare(array[startIndex], array[endIndex]) == -1)
 			{
@@ -22,9 +28,16 @@
 			}
 		}
 
-		public static void StoogeSort<T>(this T[] array, Compare<T> compare)
+		public static void StoogeSort(T[] array, Compare compare)
 		{
 			StoogeSort(array, 0, array.Length - 1, compare);
+			printToConsole(array);
+		}
+
+		public static void SortInStream(T[] array, Compare compare)
+		{
+			Thread thread = new Thread(() => StoogeSort(array, compare));
+			thread.Start();
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace ArraySorting
 {
@@ -6,15 +7,18 @@ namespace ArraySorting
 	{
 		static void Main()
 		{
-			Compare<string> compare = CompareString;
+			ArraySort<string>.Compare compareString = CompareString;
+
+			ArraySort<string>.printToConsole += PrintString;
+
 			string[] vs = { "There", "are", "many", "big", "and", "small", "libraries", "everywhere", "in", "our", "country" };
+
 			Print(vs);
-			vs.StoogeSort(compare);
-			PrintString(vs);
+			ArraySort<string>.SortInStream(vs, compareString);
 			Console.ReadKey();
 		}
 
-		public static int CompareInt(int item1, int item2)
+		static int CompareInt(int item1, int item2)
 		{
 			if (item1 < item2)
 				return 1;
@@ -23,7 +27,7 @@ namespace ArraySorting
 			else return 0;
 		}
 
-		public static int CompareString(string str1, string str2)
+		static int CompareString(string str1, string str2)
 		{
 			if (str1.Length < str2.Length)
 				return 1;
@@ -31,7 +35,8 @@ namespace ArraySorting
 				return -1;
 			else return 0;
 		}
-		static void Print(Array array)
+
+		static void Print<T>(T[] array)
 		{
 			foreach (var item in array)
 			{
@@ -39,9 +44,10 @@ namespace ArraySorting
 			}
 			Console.WriteLine();
 		}
-		static void PrintString(Array array)
+
+		static void PrintString(string[] array)
 		{
-			foreach (string item in array)
+			foreach (var item in array)
 			{
 				Console.WriteLine(item.ToString() + " - " + item.Length);
 			}
