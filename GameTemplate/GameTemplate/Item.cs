@@ -2,6 +2,6 @@
 {
 	class Item : Object, IBonus
 	{
-		public double Parametr { get; private set; }
+		public double Parameter { get; private set; }
 	}
 }

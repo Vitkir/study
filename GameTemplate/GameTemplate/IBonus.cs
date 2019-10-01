@@ -2,7 +2,7 @@
 {
 	interface IBonus
 	{
-		double Parametr { get; }
+		double Parameter { get; }
 		
 	}
 }
