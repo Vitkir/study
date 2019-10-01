@@ -35,17 +35,19 @@ namespace DynamicArray
 		{
 			get
 			{
-				if (position > -1 && position < Capacity)
-					return array[position];
-				else if (position < 0 && position >= -Math.Abs(Capacity))
+				if (position > -1 && position < Length)
 				{
-					return array[Capacity - Math.Abs(position)];
+					return array[position];
 				}
-				throw new InvalidOperationException();
+				else if (position < 0 && position >= -Length)
+				{
+					return array[Length + position];
+				}
+				throw new IndexOutOfRangeException();
 			}
 		}
 
-		object IEnumerator.Current => throw new NotImplementedException();
+		object IEnumerator.Current => Current;
 
 		public DynamicArray()
 		{
@@ -56,7 +58,7 @@ namespace DynamicArray
 		public DynamicArray(int capacity)
 		{
 			array = new T[capacity];
-			Capacity = array.Length;
+			Capacity = capacity;
 		}
 
 		public DynamicArray(IEnumerable<T> collection)
@@ -92,18 +94,20 @@ namespace DynamicArray
 		public void AddRange(IEnumerable<T> collection)
 		{
 			int capacity = Capacity;
-			int exponent = 1;
-			while (capacity < Length + CountCollection(collection))
+			int exponent = 0;
+			int newLength = Length + CountCollection(collection);
+			if (capacity < newLength)
 			{
-				capacity *= 2;
-				exponent++;
+				while (capacity < newLength)
+				{
+					capacity *= 2;
+					exponent++;
+				}
+				ChangeArray(exponent);
 			}
-			ChangeArray(exponent);
-			var index = Length;
 			foreach (var item in collection)
 			{
-				array[position] = item;
-				index++;
+				Add(item);
 			}
 		}
 
@@ -155,26 +159,26 @@ namespace DynamicArray
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			return ((IEnumerable<T>)array).GetEnumerator();
+			return this;
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return ((IEnumerable<T>)array).GetEnumerator();
+			return GetEnumerator();
 		}
 
 		public void Dispose()
 		{
-			throw new NotImplementedException();
 		}
 
 		public virtual bool MoveNext()
 		{
-			if (position < Capacity - 1)
+			if (position < Length - 1)
 			{
 				position++;
 				return true;
 			}
+			Reset();
 			return false;
 		}
 
