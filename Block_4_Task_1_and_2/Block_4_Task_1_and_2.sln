@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AverageWordLength", "AverageWordLength\AverageWordLength.csproj", "{00AEF1F3-C696-46F8-BF32-BFC83D8B18DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Block_4_Task_1_and_2", "Block_4_Task_1_and_2\Block_4_Task_1_and_2.csproj", "{00AEF1F3-C696-46F8-BF32-BFC83D8B18DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
