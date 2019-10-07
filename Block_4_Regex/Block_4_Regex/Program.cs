@@ -8,8 +8,7 @@ namespace Block_4_Regex
 		static void Main()
 		{
 			string text = Console.ReadLine();
-			var emails = StringSearch.GetEmail(text);
-			PrintCollection(emails);
+			PrintNumberToConsole(text, StringSearch.IsNumber);
 			Console.ReadKey();
 		}
 
@@ -18,6 +17,14 @@ namespace Block_4_Regex
 			foreach (var item in emails)
 			{
 				Console.WriteLine(item.ToString());
+			}
+		}
+
+		private static void PrintNumberToConsole(string text, Func<string, bool> isNumber)
+		{
+			if (isNumber(text))
+			{
+				Console.WriteLine(text + " is number");
 			}
 		}
 	}
