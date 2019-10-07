@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Block_4_Regex
 {
@@ -8,12 +9,16 @@ namespace Block_4_Regex
 		{
 			string text = Console.ReadLine();
 			var emails = StringSearch.GetEmail(text);
+			PrintCollection(emails);
+			Console.ReadKey();
+		}
+
+		private static void PrintCollection(MatchCollection emails)
+		{
 			foreach (var item in emails)
 			{
 				Console.WriteLine(item.ToString());
 			}
-			//Console.WriteLine(StringSearch.GetEmail(text));
-			Console.ReadKey();
 		}
 	}
 }
