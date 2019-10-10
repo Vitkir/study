@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Block_4_Regex
@@ -7,9 +9,6 @@ namespace Block_4_Regex
 	{
 		static void Main()
 		{
-			string text = Console.ReadLine();
-			PrintNumberToConsole(text, StringSearch.IsNumber);
-			Console.ReadKey();
 		}
 
 		private static void PrintCollection(MatchCollection emails)
