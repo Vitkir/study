@@ -1,15 +1,19 @@
-﻿namespace WorkWithFile
+﻿using System;
+
+namespace Block4Task9
 {
 	class Program
 	{
 		static void Main(string[] args)
 		{
-			FileManager manager = new FileManager();
+			Watcher manager = new Watcher();
 			if (args[0] == "y")
 			{
-				manager.ObservationMode = true;
+				manager.EnableObservation = true;
 			}
 			manager.WatchDirectory();
+			Console.WriteLine("Press <Escape> to exit.");
+			while (Console.ReadKey().Key != ConsoleKey.Escape) ;
 		}
 	}
 }
