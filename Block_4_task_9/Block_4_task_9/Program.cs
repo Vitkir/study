@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Block4Task9
 {
@@ -6,12 +7,11 @@ namespace Block4Task9
 	{
 		static void Main(string[] args)
 		{
-			Watcher manager = new Watcher();
+			DirectoryWatcher manager = new DirectoryWatcher();
 			if (args[0] == "y")
 			{
-				manager.EnableObservation = true;
+				manager.Watcher.EnableRaisingEvents = true;
 			}
-			manager.WatchDirectory();
 			Console.WriteLine("Press <Escape> to exit.");
 			while (Console.ReadKey().Key != ConsoleKey.Escape) ;
 		}
