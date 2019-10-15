@@ -9,6 +9,8 @@ namespace Block_4_Regex
 	{
 		static void Main()
 		{
+			string text = Console.ReadLine();
+			PrintCollection(StringSearch.GetEmail(text));
 		}
 
 		private static void PrintCollection(MatchCollection emails)

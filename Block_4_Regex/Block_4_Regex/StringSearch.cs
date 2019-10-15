@@ -4,7 +4,8 @@ namespace Block_4_Regex
 {
 	static class StringSearch
 	{
-		static readonly Regex validDate = new Regex("(0[1-9]|[1-2][0-9]|3[0,1])-(0[1-9]|1[1,2])-(000[1-9]|[0-9])");
+		//TODO email delete, number correct. task 4.7, 4.8.
+		static readonly Regex validDate = new Regex("(?:0[1-9]|[1-2][0-9]|3[0,1])-(?:0[1-9]|1[1,2])-((?!0000)[0-9]{4})");
 		static readonly Regex htmlTag = new Regex(@"<[^>]+>");
 		static readonly Regex email = new Regex(@"(\s[^\D\W][\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)");
 		static readonly Regex number = new Regex(@"^([+-]?[0-9]+(\.[0-9]+)?)$|^([+-]?[0-9]+(\.[0-9]+)e([+-]?[0-9]+))$");

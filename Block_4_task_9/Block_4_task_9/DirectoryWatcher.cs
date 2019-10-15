@@ -3,17 +3,49 @@ using System.IO;
 
 namespace Block4Task9
 {
-	class DirectoryWatcher
+	internal class DirectoryWatcher
 	{
-		public FileSystemWatcher Watcher { get; private set; }
+		private static readonly string dateFormate = "dd-MM-yyyy HH-mm-ss";
+		private static readonly string workFolderPath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\WorkFolder";
+		private static readonly string backupFolderPath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\Backup";
+		private static readonly string logPath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\log.txt";
+		private static readonly string DateTimeNow = DateTime.Now.ToString(dateFormate);
 
-		private readonly string workFolderPath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\WorkFolder";
-		private readonly string backupFolderPath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\Backup";
-		private readonly string logPath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\log.txt";
-		private readonly string DateTimeNow = DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss");
+		public FileSystemWatcher Watcher { get; private set; }
 
 		private readonly Func<string, string> LastWriteTime = filePath => File.GetLastWriteTime(filePath).ToString();
 		private readonly Func<FileSystemEventArgs, string> FolderName = e => e.Name.Replace(".txt", "");
+
+		public string RestoreFile(DateTime dateTime, string directoryName)
+		{
+			if (DirectoryExist(directoryName))
+			{
+				string pathToDirectory = Path.Combine(backupFolderPath, directoryName);
+				DirectoryInfo directory = new DirectoryInfo(pathToDirectory);
+				FileInfo[] files = directory.GetFiles();
+				Array.Sort(files, delegate (FileInfo f1, FileInfo f2)
+				 {
+					 return f2.CreationTime.CompareTo(f1.CreationTime);
+				 });
+				foreach (var file in files)
+				{
+					if (file.CreationTime >= dateTime)
+					{
+					}
+					file.CopyTo(Path.Combine(workFolderPath, string.Concat(directoryName, ".txt")), true);
+					string log = $"File {file.Name} recovered. Last changed {File.GetLastWriteTime(file.FullName)}";
+					CreateLog(log);
+				}
+				return "file restored";
+			}
+			else return "No backups";
+		}
+
+		public bool DirectoryExist(string fName)
+		{
+			string path = Path.Combine(workFolderPath, fName, string.Concat(fName, ".txt"));
+			return Directory.Exists(path);
+		}
 
 		public DirectoryWatcher()
 		{
@@ -58,16 +90,13 @@ namespace Block4Task9
 
 		private void SaveBackup(FileSystemEventArgs e)
 		{
-			string fileName = string.Concat(FolderName(e),
-				string.Format("({0})", Directory.GetFiles(backupFolderPath, FolderName(e)).Length.ToString()), ".txt");
+			int count = Directory.GetFiles(Path.Combine(backupFolderPath, FolderName(e))).Length;
+			string fileName = $"{FolderName(e)}({count.ToString()})" + ".txt";
 			if (!Directory.Exists(Path.Combine(backupFolderPath, FolderName(e))))
 			{
 				Directory.CreateDirectory(Path.Combine(backupFolderPath, FolderName(e)));
 			}
-			if (!File.Exists(Path.Combine(backupFolderPath, FolderName(e), fileName)))
-			{
-				File.Copy(e.FullPath, Path.Combine(backupFolderPath, FolderName(e), fileName));
-			}
+			File.Copy(e.FullPath, Path.Combine(backupFolderPath, FolderName(e), fileName));
 		}
 
 		private void CreateLog(string log)
