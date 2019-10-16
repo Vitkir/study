@@ -1,27 +1,29 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Block4Task9
 {
 	internal class DirectoryWatcher
 	{
-		private static readonly string dateFormate = "dd-MM-yyyy HH-mm-ss";
-		private static readonly string workFolderPath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\WorkFolder";
-		private static readonly string backupFolderPath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\Backup";
+		private static readonly string dateTimeFormate = "dd-MM-yyyy HH-mm-ss";
+		private static readonly string pathRootWorkDirectory = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\WorkFolder";
+		private static readonly string pathRootBackupDirectory = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\Backup";
 		private static readonly string logPath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\log.txt";
-		private static readonly string DateTimeNow = DateTime.Now.ToString(dateFormate);
+		private static readonly string DateTimeNow = DateTime.Now.ToString(dateTimeFormate);
 
 		public FileSystemWatcher Watcher { get; private set; }
 
 		private readonly Func<string, string> LastWriteTime = filePath => File.GetLastWriteTime(filePath).ToString();
-		private readonly Func<FileSystemEventArgs, string> FolderName = e => e.Name.Replace(".txt", "");
+		private readonly Func<FileSystemEventArgs, string> fileDirectoryPath = e => e.Name.Replace(".txt", "");
 
-		public string RestoreFile(DateTime dateTime, string directoryName)
+		public void RestoreFile(DateTime recoveryTime, string directoryName)
 		{
-			if (DirectoryExist(directoryName))
+			string pathBackupDirectory = Path.Combine(pathRootBackupDirectory, directoryName);
+			if (Directory.Exists(pathBackupDirectory))
 			{
-				string pathToDirectory = Path.Combine(backupFolderPath, directoryName);
-				DirectoryInfo directory = new DirectoryInfo(pathToDirectory);
+				DirectoryInfo directory = new DirectoryInfo(pathBackupDirectory);
 				FileInfo[] files = directory.GetFiles();
 				Array.Sort(files, delegate (FileInfo f1, FileInfo f2)
 				 {
@@ -29,27 +31,20 @@ namespace Block4Task9
 				 });
 				foreach (var file in files)
 				{
-					if (file.CreationTime >= dateTime)
+					if (file.CreationTime <= recoveryTime)
 					{
+						file.CopyTo(Path.Combine(pathRootWorkDirectory, string.Concat(directoryName, ".txt")), true);
+						CreateLog($"File {file.Name} recovered. Last changed {File.GetLastWriteTime(file.FullName)}");
+						CreateLog("file restored");
 					}
-					file.CopyTo(Path.Combine(workFolderPath, string.Concat(directoryName, ".txt")), true);
-					string log = $"File {file.Name} recovered. Last changed {File.GetLastWriteTime(file.FullName)}";
-					CreateLog(log);
 				}
-				return "file restored";
 			}
-			else return "No backups";
-		}
-
-		public bool DirectoryExist(string fName)
-		{
-			string path = Path.Combine(workFolderPath, fName, string.Concat(fName, ".txt"));
-			return Directory.Exists(path);
+			else CreateLog("No backups");
 		}
 
 		public DirectoryWatcher()
 		{
-			Watcher = new FileSystemWatcher(workFolderPath, "*.txt");
+			Watcher = new FileSystemWatcher(pathRootWorkDirectory, "*.txt");
 			Watcher.IncludeSubdirectories = true;
 			Watcher.NotifyFilter = NotifyFilters.CreationTime
 											| NotifyFilters.LastWrite
@@ -77,26 +72,29 @@ namespace Block4Task9
 		private void OnChanged(object sender, FileSystemEventArgs e)
 		{
 			string log = LastWriteTime(e.FullPath) + " File changed at " + e.FullPath;
-			SaveBackup(e);
 			CreateLog(log);
+			SaveBackup(e);
 		}
 
 		private void OnRenamed(object sender, RenamedEventArgs e)
 		{
 			string log = LastWriteTime(e.FullPath) + $" File at {e.OldFullPath} renamed to {e.Name}";
-			SaveBackup(e);
 			CreateLog(log);
+			SaveBackup(e);
 		}
 
 		private void SaveBackup(FileSystemEventArgs e)
 		{
-			int count = Directory.GetFiles(Path.Combine(backupFolderPath, FolderName(e))).Length;
-			string fileName = $"{FolderName(e)}({count.ToString()})" + ".txt";
-			if (!Directory.Exists(Path.Combine(backupFolderPath, FolderName(e))))
+			FileInfo originalFile = new FileInfo(e.FullPath);
+			string backupFullPath = Path.Combine(pathRootBackupDirectory, fileDirectoryPath(e));
+			if (!Directory.Exists(backupFullPath))
 			{
-				Directory.CreateDirectory(Path.Combine(backupFolderPath, FolderName(e)));
+				Directory.CreateDirectory(backupFullPath);
 			}
-			File.Copy(e.FullPath, Path.Combine(backupFolderPath, FolderName(e), fileName));
+			int count = Directory.GetFiles(backupFullPath).Length;
+			string fileName = $"{count.ToString()}-{originalFile.Name}";
+			originalFile.CopyTo(Path.Combine(backupFullPath, fileName));
+			CreateLog("Backup saved");
 		}
 
 		private void CreateLog(string log)

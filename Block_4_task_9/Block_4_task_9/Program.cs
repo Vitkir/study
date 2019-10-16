@@ -23,7 +23,7 @@ namespace Block4Task9
 					DateTime userTime = GetDateTimeFromConsole();
 					Console.WriteLine("Enter file name");
 					string fname = Console.ReadLine();
-					Console.WriteLine(manager.RestoreFile(userTime, fname));
+					manager.RestoreFile(userTime, fname);
 					Console.WriteLine("Press <Escape> to exit.");
 				}
 			}
