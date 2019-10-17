@@ -59,41 +59,49 @@ namespace Block4Task9
 
 		private void OnCreated(object sender, FileSystemEventArgs e)
 		{
-			string log = File.GetCreationTime(e.FullPath) + " File created at " + e.FullPath;
-			CreateLog(log);
+			CreateLog(File.GetCreationTime(e.FullPath) + " File created at " + e.FullPath);
+			SaveBackup(e);
 		}
 
 		private void OnDeleted(object sender, FileSystemEventArgs e)
 		{
-			string log = string.Format("{0} : File deleted at {1}", DateTimeNow, e.FullPath);
-			CreateLog(log);
+			CreateLog(string.Format("{0} : File deleted at {1}", DateTimeNow, e.FullPath));
 		}
 
 		private void OnChanged(object sender, FileSystemEventArgs e)
 		{
-			string log = LastWriteTime(e.FullPath) + " File changed at " + e.FullPath;
-			CreateLog(log);
-			SaveBackup(e);
+			FileInfo originalFile = new FileInfo(e.FullPath);
+			DirectoryInfo backupDirectory = new DirectoryInfo(Path.Combine(pathRootBackupDirectory, fileDirectoryPath(e)));
+			FileInfo[] backups = backupDirectory.GetFiles();
+
+			var files = from file in backups
+						where file.LastWriteTime == originalFile.LastWriteTime
+						select file;
+
+			if (files.Count() == 0)
+			{
+				CreateLog(LastWriteTime(e.FullPath) + " File changed at " + e.FullPath);
+				SaveBackup(e);
+			}
 		}
 
 		private void OnRenamed(object sender, RenamedEventArgs e)
 		{
-			string log = LastWriteTime(e.FullPath) + $" File at {e.OldFullPath} renamed to {e.Name}";
-			CreateLog(log);
+			CreateLog(LastWriteTime(e.FullPath) + $" File at {e.OldFullPath} renamed to {e.Name}");
 			SaveBackup(e);
 		}
 
 		private void SaveBackup(FileSystemEventArgs e)
 		{
 			FileInfo originalFile = new FileInfo(e.FullPath);
-			string backupFullPath = Path.Combine(pathRootBackupDirectory, fileDirectoryPath(e));
-			if (!Directory.Exists(backupFullPath))
+			DirectoryInfo backupDirectory = new DirectoryInfo(Path.Combine(pathRootBackupDirectory, fileDirectoryPath(e)));
+			if (!backupDirectory.Exists)
 			{
-				Directory.CreateDirectory(backupFullPath);
+				backupDirectory.Create();
 			}
-			int count = Directory.GetFiles(backupFullPath).Length;
-			string fileName = $"{count.ToString()}-{originalFile.Name}";
-			originalFile.CopyTo(Path.Combine(backupFullPath, fileName));
+			int count = backupDirectory.GetFiles().Length;
+			string fileName = $"({count.ToString()}){originalFile.Name}";
+			originalFile.CopyTo(Path.Combine(backupDirectory.FullName, fileName));
 			CreateLog("Backup saved");
 		}
 
