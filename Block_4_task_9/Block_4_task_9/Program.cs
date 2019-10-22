@@ -19,11 +19,11 @@ namespace Block4Task9
 			{
 				while (Console.ReadKey().Key != ConsoleKey.Escape)
 				{
-					Console.WriteLine("Enter rollback datetime");
-					DateTime userTime = GetDateTimeFromConsole();
-					Console.WriteLine("Enter file name");
-					string fname = Console.ReadLine();
-					manager.RestoreFile(userTime, fname);
+					//Console.WriteLine("Enter rollback datetime");
+					//DateTime userTime = GetDateTimeFromConsole();
+					//Console.WriteLine("Enter file name");
+					//string fname = Console.ReadLine();
+					manager.RestoreFile(DateTime.ParseExact("17-10-2019 15-04-45", "dd-MM-yyyy HH-mm-ss",CultureInfo.InvariantCulture), "Новый текстовый документ.txt");
 					Console.WriteLine("Press <Escape> to exit.");
 				}
 			}
@@ -31,14 +31,18 @@ namespace Block4Task9
 
 		private static DateTime GetDateTimeFromConsole()
 		{
-			DateTime userTime = DateTime.Now;
+			DateTime userTime = default;
 			try
 			{
 				userTime = DateTime.ParseExact(Console.ReadLine(), "dd-MM-yyyy HH-mm", CultureInfo.InvariantCulture);
 			}
+			catch (ArgumentNullException)
+			{
+				Console.WriteLine("ArgumentNullException");
+			}
 			catch (FormatException)
 			{
-				Console.WriteLine("");
+				Console.WriteLine("FormatException");
 			}
 			return userTime;
 		}
