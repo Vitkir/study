@@ -1,19 +1,14 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Block4Task9
 {
-	internal class DirectoryWatcher
+	class DirectoryWatcher
 	{
 		public FileSystemWatcher Watcher { get; private set; }
 
-		//todo datetime
-		private static readonly string dateTimeFormate = "dd.MM.yyyy HH:mm:ss";
 		private static readonly string pathRootWorkDirectory = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\WorkFolder";
 		private static readonly string pathRootBackupDirectory = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\Backup";
-		private static readonly string DateTimeNow = DateTime.Now.ToString(dateTimeFormate);
 
 		DirectoryInfo rootWorkDirectory;
 		DirectoryInfo rootBackupDirectory;
@@ -21,17 +16,17 @@ namespace Block4Task9
 
 		FileInfo currentLog;
 
-		private Func<string, string> LastWriteTime = filePath => File.GetLastWriteTime(filePath).ToString();
-		private Func<FileSystemEventArgs, string> fileDirectoryPath = e => e.Name.Replace(".txt", "");
-
-		public void RestoreFile(DateTime recoveryTime, string relativeFilePath)
+		public void RestoreFile(DateTime recoveryTime)
 		{
 
 		}
 
 		public DirectoryWatcher()
 		{
-			Watcher = new FileSystemWatcher(pathRootWorkDirectory, "*.txt");
+			rootWorkDirectory = new DirectoryInfo(pathRootWorkDirectory);
+			rootBackupDirectory = new DirectoryInfo(pathRootBackupDirectory);
+
+			Watcher = new FileSystemWatcher(pathRootWorkDirectory);
 			Watcher.IncludeSubdirectories = true;
 			Watcher.NotifyFilter = NotifyFilters.CreationTime
 											| NotifyFilters.LastWrite
@@ -43,8 +38,6 @@ namespace Block4Task9
 			Watcher.Changed += OnChanged;
 			Watcher.Renamed += OnRenamed;
 
-			rootWorkDirectory = new DirectoryInfo(pathRootWorkDirectory);
-			rootBackupDirectory = new DirectoryInfo(pathRootBackupDirectory);
 			CreateCheckpoint();
 		}
 
@@ -55,8 +48,7 @@ namespace Block4Task9
 			currentLog = new FileInfo(Path.Combine(currentBackupDirectory.FullName, "Log.txt"));
 			using (currentLog.Create())
 				CopyDirectory(rootWorkDirectory.FullName, Path.Combine(currentBackupDirectory.FullName, rootWorkDirectory.Name));
-			LogItem log = new LogItem(DateTime.Now, rootWorkDirectory.FullName, currentBackupDirectory.FullName);
-			CreateFileEntry(log);
+			CreateLogEntry(new LogItem(rootWorkDirectory.FullName, currentBackupDirectory.FullName));
 		}
 
 		private void CopyDirectory(string sourceDirectory, string destinationDirectory)
@@ -70,38 +62,56 @@ namespace Block4Task9
 					+ sourceDirectory);
 			}
 
-			DirectoryInfo[] dirs = currentDirectory.GetDirectories();
 			if (!Directory.Exists(destinationDirectory))
 			{
 				Directory.CreateDirectory(destinationDirectory);
 			}
 
-			FileInfo[] files = currentDirectory.GetFiles();
-			foreach (FileInfo file in files)
+			foreach (FileInfo file in currentDirectory.GetFiles())
 			{
-				string temppath = Path.Combine(destinationDirectory, file.Name);
-				file.CopyTo(temppath, false);
+				file.CopyTo(Path.Combine(destinationDirectory, file.Name), false);
 			}
 
-			foreach (DirectoryInfo subdir in dirs)
+			foreach (DirectoryInfo subDirectories in currentDirectory.GetDirectories())
 			{
-				string temppath = Path.Combine(destinationDirectory, subdir.Name);
-				CopyDirectory(subdir.FullName, temppath);
+				CopyDirectory(subDirectories.FullName, Path.Combine(destinationDirectory, subDirectories.Name));
 			}
-
 		}
 
-		private void CreateFileEntry(LogItem log)
+		private void CopyFile(FileSystemEventArgs e)
 		{
-			using (StreamWriter sw = new StreamWriter(currentLog.FullName))
+			string backupPath = string.Concat(Path.Combine(currentBackupDirectory.FullName, currentBackupDirectory.GetFiles().Length.ToString()), ".txt");
+
+			File.Copy(e.FullPath, backupPath);
+			CreateLogEntry(new LogItem(e.FullPath, backupPath));
+		}
+
+		private void CreateBackup(FileSystemEventArgs e)
+		{
+			//todo extract path
+			if (File.GetAttributes(e.FullPath).HasFlag(FileAttributes.Directory))
 			{
-				sw.Write(log);
+				string backupPath = Path.Combine(currentBackupDirectory.FullName, currentBackupDirectory.GetDirectories().Length.ToString());
+				CopyDirectory(e.FullPath, backupPath);
+				CreateLogEntry(new LogItem(e.FullPath, backupPath));
+			}
+			else
+			{
+				CopyFile(e);
+			}
+		}
+
+		private void CreateLogEntry(LogItem log)
+		{
+			using (StreamWriter newEntry = File.AppendText(currentLog.FullName))
+			{
+				newEntry.Write(log.ToString());
 			}
 		}
 
 		private void OnCreated(object sender, FileSystemEventArgs e)
 		{
-			SaveBackup(e);
+			CreateBackup(e);
 		}
 
 		private void OnDeleted(object sender, FileSystemEventArgs e)
@@ -110,17 +120,20 @@ namespace Block4Task9
 
 		private void OnChanged(object sender, FileSystemEventArgs e)
 		{
-			SaveBackup(e);
+			try
+			{
+				Watcher.EnableRaisingEvents = false;
+				CreateBackup(e);
+			}
+			finally
+			{
+				Watcher.EnableRaisingEvents = true;
+			}
 		}
 
 		private void OnRenamed(object sender, RenamedEventArgs e)
 		{
-			SaveBackup(e);
-		}
-
-		private void SaveBackup(FileSystemEventArgs e)
-		{
-
+			CreateBackup(e);
 		}
 	}
 }

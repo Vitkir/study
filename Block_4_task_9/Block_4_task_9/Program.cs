@@ -23,7 +23,7 @@ namespace Block4Task9
 					//DateTime userTime = GetDateTimeFromConsole();
 					//Console.WriteLine("Enter file name");
 					//string fname = Console.ReadLine();
-					manager.RestoreFile(DateTime.ParseExact("17-10-2019 15-04-45", "dd-MM-yyyy HH-mm-ss",CultureInfo.InvariantCulture), "Новый текстовый документ.txt");
+					manager.RestoreFile(DateTime.ParseExact("17-10-2019 15-04-45", "dd-MM-yyyy HH-mm-ss",CultureInfo.InvariantCulture));
 					Console.WriteLine("Press <Escape> to exit.");
 				}
 			}

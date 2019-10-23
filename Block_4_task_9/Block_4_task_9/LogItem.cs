@@ -11,9 +11,9 @@ namespace Block4Task9
 
 		public string Backup { get; set; }
 
-		public LogItem(DateTime logTime, string source, string backup)
+		public LogItem(string source, string backup)
 		{
-			LogTime = logTime;
+			LogTime = DateTime.Now;
 			Source = source;
 			Backup = backup;
 		}
