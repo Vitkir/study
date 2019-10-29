@@ -44,7 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DirectoryWatcher.cs" />
+    <Compile Include="LogItemChanged.cs" />
     <Compile Include="LogItem.cs" />
+    <Compile Include="LogItemDeleted.cs" />
+    <Compile Include="LogItemRenamed.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
