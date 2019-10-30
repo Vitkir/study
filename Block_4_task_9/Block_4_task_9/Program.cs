@@ -19,11 +19,7 @@ namespace Block4Task9
 			{
 				while (Console.ReadKey().Key != ConsoleKey.Escape)
 				{
-					//Console.WriteLine("Enter rollback datetime");
-					//DateTime userTime = GetDateTimeFromConsole();
-					//Console.WriteLine("Enter file name");
-					//string fname = Console.ReadLine();
-					manager.RestoreDirectory(DateTime.ParseExact("17-10-2019 15-04-45", "dd-MM-yyyy HH-mm-ss",CultureInfo.InvariantCulture));
+					manager.RestoreDirectory(DateTime.ParseExact("30.10.2019 11:54", "dd.MM.yyyy HH:mm",CultureInfo.InvariantCulture));
 					Console.WriteLine("Press <Escape> to exit.");
 				}
 			}

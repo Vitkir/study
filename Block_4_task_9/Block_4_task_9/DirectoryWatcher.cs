@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -40,23 +41,27 @@ namespace Block4Task9
 							  select directory.FullName;
 			string lastCheckpointPath = checkpoints.Last();
 
-			var logEntries = ReadLog(currentLogFile.FullName, recoveryTime);
+			var logItems = ReadLog(Path.Combine(lastCheckpointPath, logName), recoveryTime);
 
-			foreach (var entry in logEntries)
+			foreach (var logItem in logItems)
 			{
-				LogEntriesType logEntryType;
-				Enum.TryParse(entry.GetType().ToString(), out logEntryType);
-				switch (logEntryType)
+				switch (logItem)
 				{
-					case LogEntriesType.LogItemChanged:
-						//todo name
-						var obj = (LogItemChanged)entry;
+					case LogItemChanged logItemChanged:
+						Copy(logItemChanged.BackupPath, logItemChanged.SourcePath);
 						break;
-					case LogEntriesType.LogItemDeleted:
+					case LogItemDeleted logItemDeleted:
+						File.Delete(logItemDeleted.Path);
 						break;
-					case LogEntriesType.LogItemRenamed:
-						break;
-					default:
+					case LogItemRenamed logItemRenamed:
+						if (File.GetAttributes(logItemRenamed.OldPath).HasFlag(FileAttributes.Directory))
+						{
+							Directory.Move(logItemRenamed.OldPath, logItemRenamed.NewPath);
+						}
+						else
+						{
+							File.Move(logItemRenamed.OldPath, logItemRenamed.NewPath);
+						}
 						break;
 				}
 			}
@@ -66,6 +71,10 @@ namespace Block4Task9
 		{
 			rootWorkDirectory = new DirectoryInfo(pathRootWorkDirectory);
 			rootBackupDirectory = new DirectoryInfo(pathRootBackupDirectory);
+			if (!rootWorkDirectory.Exists)
+			{
+				rootWorkDirectory.Create();
+			}
 			Watcher = new FileSystemWatcher(pathRootWorkDirectory);
 			Watcher.IncludeSubdirectories = true;
 			Watcher.NotifyFilter = NotifyFilters.CreationTime
@@ -88,13 +97,12 @@ namespace Block4Task9
 			currentLogFile = new FileInfo(Path.Combine(currentBackupDirectory.FullName, logName));
 			currentLogFile.Create().Close();
 			CopyDirectory(rootWorkDirectory.FullName, Path.Combine(currentBackupDirectory.FullName, rootWorkDirectory.Name));
-			WriteLogEntry(new LogItemChanged(rootWorkDirectory.FullName, currentBackupDirectory.FullName));
+			WriteLogEntry(new LogItemChanged(rootWorkDirectory.FullName, Path.Combine(currentBackupDirectory.FullName, rootWorkDirectory.Name)));
 		}
 
 		private void CopyDirectory(string sourceDirectory, string destinationDirectory)
 		{
 			DirectoryInfo currentDirectory = new DirectoryInfo(sourceDirectory);
-
 			if (!currentDirectory.Exists)
 			{
 				throw new DirectoryNotFoundException(
@@ -118,21 +126,17 @@ namespace Block4Task9
 			}
 		}
 
-		private void Copy(string path)
+		private void Copy(string sourcePath, string destPath)
 		{
-			if (File.GetAttributes(path).HasFlag(FileAttributes.Directory))
+			if (File.GetAttributes(sourcePath).HasFlag(FileAttributes.Directory))
 			{
-				string destDirectoryPath = Path.Combine(currentBackupDirectory.FullName, currentBackupDirectory.GetDirectories().Length.ToString());
-
-				CopyDirectory(path, destDirectoryPath);
-				WriteLogEntry(new LogItemChanged(path, destDirectoryPath));
+				CopyDirectory(sourcePath, destPath);
+				WriteLogEntry(new LogItemChanged(sourcePath, destPath));
 			}
 			else
 			{
-				string destFilePath = Path.Combine(currentBackupDirectory.FullName, currentBackupDirectory.GetFiles().Length.ToString() + filesExtension);
-
-				File.Copy(path, destFilePath);
-				WriteLogEntry(new LogItemChanged(path, destFilePath));
+				File.Copy(sourcePath, destPath,true);
+				WriteLogEntry(new LogItemChanged(sourcePath, destPath));
 			}
 		}
 
@@ -154,7 +158,7 @@ namespace Block4Task9
 				{
 					LogEntriesType logEntryType;
 					Enum.TryParse(line, out logEntryType);
-					DateTime dateTime = DateTime.Parse(line);
+					DateTime dateTime = DateTime.ParseExact(log.ReadLine().Replace("Log time: ", ""), "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 					if (dateTime > recoveryTime)
 					{
 						return logEntries;
@@ -178,12 +182,24 @@ namespace Block4Task9
 			return logEntries;
 		}
 
+		private string CreateDestPath(FileSystemEventArgs e)
+		{
+			if (File.GetAttributes(e.FullPath).HasFlag(FileAttributes.Directory))
+			{
+				return Path.Combine(currentBackupDirectory.FullName, currentBackupDirectory.GetDirectories().Length.ToString());
+			}
+			else
+			{
+				return Path.Combine(currentBackupDirectory.FullName, currentBackupDirectory.GetFiles().Length.ToString() + filesExtension);
+			}
+		}
+
 		private void OnCreated(object sender, FileSystemEventArgs e)
 		{
 			try
 			{
 				Watcher.EnableRaisingEvents = false;
-				Copy(e.FullPath);
+				Copy(e.FullPath, CreateDestPath(e));
 			}
 			finally
 			{
@@ -201,7 +217,7 @@ namespace Block4Task9
 			try
 			{
 				Watcher.EnableRaisingEvents = false;
-				Copy(e.FullPath);
+				Copy(e.FullPath, CreateDestPath(e));
 			}
 			finally
 			{
