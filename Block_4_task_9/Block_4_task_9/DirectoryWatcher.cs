@@ -10,11 +10,11 @@ namespace Block4Task9
 	{
 		public FileSystemWatcher Watcher { get; private set; }
 
-		private const string filesExtension = ".txt";
-		private const string logName = "Log.txt";
-
 		private static readonly string pathRootWorkDirectory = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\WorkFolder";
 		private static readonly string pathRootBackupDirectory = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\Backup";
+
+		private const string filesExtension = ".txt";
+		private const string logName = "Log.txt";
 
 		DirectoryInfo rootWorkDirectory;
 		DirectoryInfo rootBackupDirectory;
@@ -31,8 +31,14 @@ namespace Block4Task9
 
 		public void RestoreDirectory(DateTime recoveryTime)
 		{
-			//todo try catch
-			rootWorkDirectory.Delete(true);
+			try
+			{
+				rootWorkDirectory.Delete(true);
+			}
+			catch (UnauthorizedAccessException e)
+			{
+				throw new UnauthorizedAccessException(e.Message, e);
+			}
 			DirectoryInfo[] directories = rootBackupDirectory.GetDirectories();
 
 			var checkpoints = from directory in directories
@@ -54,7 +60,7 @@ namespace Block4Task9
 						File.Delete(logItemDeleted.Path);
 						break;
 					case LogItemRenamed logItemRenamed:
-						if (File.GetAttributes(logItemRenamed.OldPath).HasFlag(FileAttributes.Directory))
+						if (IsDirectory(logItemRenamed.OldPath))
 						{
 							Directory.Move(logItemRenamed.OldPath, logItemRenamed.NewPath);
 						}
@@ -86,11 +92,9 @@ namespace Block4Task9
 			Watcher.Deleted += OnDeleted;
 			Watcher.Changed += OnChanged;
 			Watcher.Renamed += OnRenamed;
-
-			CreateCheckpoint();
 		}
 
-		private void CreateCheckpoint()
+		public void CreateCheckpoint()
 		{
 			currentBackupDirectory = new DirectoryInfo(Path.Combine(pathRootBackupDirectory, rootBackupDirectory.GetDirectories().Length.ToString()));
 			currentBackupDirectory.Create();
@@ -128,15 +132,13 @@ namespace Block4Task9
 
 		private void Copy(string sourcePath, string destPath)
 		{
-			if (File.GetAttributes(sourcePath).HasFlag(FileAttributes.Directory))
+			if (IsDirectory(sourcePath))
 			{
 				CopyDirectory(sourcePath, destPath);
-				WriteLogEntry(new LogItemChanged(sourcePath, destPath));
 			}
 			else
 			{
-				File.Copy(sourcePath, destPath,true);
-				WriteLogEntry(new LogItemChanged(sourcePath, destPath));
+				File.Copy(sourcePath, destPath, true);
 			}
 		}
 
@@ -184,7 +186,7 @@ namespace Block4Task9
 
 		private string CreateDestPath(FileSystemEventArgs e)
 		{
-			if (File.GetAttributes(e.FullPath).HasFlag(FileAttributes.Directory))
+			if (IsDirectory(e.FullPath))
 			{
 				return Path.Combine(currentBackupDirectory.FullName, currentBackupDirectory.GetDirectories().Length.ToString());
 			}
@@ -194,12 +196,18 @@ namespace Block4Task9
 			}
 		}
 
+		private static bool IsDirectory(string path)
+		{
+			return File.GetAttributes(path).HasFlag(FileAttributes.Directory);
+		}
+
 		private void OnCreated(object sender, FileSystemEventArgs e)
 		{
 			try
 			{
 				Watcher.EnableRaisingEvents = false;
 				Copy(e.FullPath, CreateDestPath(e));
+				WriteLogEntry(new LogItemChanged(e.FullPath, CreateDestPath(e)));
 			}
 			finally
 			{
@@ -218,6 +226,7 @@ namespace Block4Task9
 			{
 				Watcher.EnableRaisingEvents = false;
 				Copy(e.FullPath, CreateDestPath(e));
+				WriteLogEntry(new LogItemChanged(e.FullPath, CreateDestPath(e)));
 			}
 			finally
 			{
