@@ -10,12 +10,12 @@ namespace Block_4_Regex
 		static void Main()
 		{
 			string text = Console.ReadLine();
-			PrintCollection(StringSearch.GetEmail(text));
+			PrintCollection(StringSearch.GetTime(text));
 		}
 
-		private static void PrintCollection(MatchCollection emails)
+		private static void PrintCollection(MatchCollection collection)
 		{
-			foreach (var item in emails)
+			foreach (var item in collection)
 			{
 				Console.WriteLine(item.ToString());
 			}
