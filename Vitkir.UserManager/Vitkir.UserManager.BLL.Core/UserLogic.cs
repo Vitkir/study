@@ -10,26 +10,25 @@ namespace Vitkir.UserManager.BLL.Logic
 		private UserDAO userDAO;
 		private List<User> users;
 
-		public bool Add(string name = "jo", DateTime birthday = default)
+		public int AddUser(User user)
 		{
-			User user = new User(name, birthday);
-			return userDAO.Add(user) != 0 ? true : false;
+			return userDAO.AddUser(user) != 0 ? user.Id : 0;
 		}
 
-		public bool Delete(int id)
+		public bool DeleteUser(int id)
 		{
-			users.Remove()
-			return UserCache.Delete(id) != 0 ? true : false;
+			users.Remove(new User() { Id = id });
+			return userDAO.DeleteUser(id) != 0 ? true : false;
 		}
 
-		public IEnumerable<User> Get(int id)
+		public User GetUser(int id)
 		{
-			return UserCache.Get(id);
+			return users.Find(user => user.Id == id);
 		}
 
-		public IEnumerable<User> GetAll()
+		public User[] GetUsers()
 		{
-			return UserCache.GetAll();
+			return users.ToArray();
 		}
 
 		public UserLogic()

@@ -2,7 +2,7 @@
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class User
+	public class User : IEquatable<User>
 	{
 		public int Id { get; set; }
 
@@ -24,6 +24,10 @@ namespace Vitkir.UserManager.Common.Entities
 				return age;
 			}
 		}
+		public User()
+		{
+
+		}
 
 		public User(string name, DateTime birthday)
 		{
@@ -35,6 +39,25 @@ namespace Vitkir.UserManager.Common.Entities
 		{
 			return string.Format("ID: {0} : Name: {1} : Birthday: {2} : Age: {3}",
 				Id.ToString(), Name.ToString(), Birthday.ToString("dd.MM.yyyy"), Age.ToString());
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null) return false;
+			User objAsUser = obj as User;
+			if (objAsUser == null) return false;
+			else return Equals(objAsUser);
+		}
+
+		public override int GetHashCode()
+		{
+			return Id;
+		}
+
+		public bool Equals(User other)
+		{
+			if (other == null) return false;
+			return Id.Equals(other.Id);
 		}
 	}
 }

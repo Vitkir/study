@@ -8,7 +8,7 @@ namespace Vitkir.UserManager.DAL.File
 		private const string path = @"C:\Users\User\Desktop\Learning\xt_2016\Task_6\users.txt";
 		private int counter;
 
-		public int Add(User user)
+		public int AddUser(User user)
 		{
 			user.Id = ++counter;
 			var userJson = user.ToString();
@@ -17,6 +17,21 @@ namespace Vitkir.UserManager.DAL.File
 				streamWriter.WriteLine(userJson);
 			}
 			return user.Id;
+		}
+
+		public int DeleteUser(int id)
+		{
+
+		}
+
+		public User GetUser()
+		{
+
+		}
+
+		public User[] GetUsers()
+		{
+
 		}
 	}
 }

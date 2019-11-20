@@ -57,8 +57,8 @@
       <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>
       <Name>Vitkir.UserManager.Common.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Vitkir.UserManager.DAL.DAO\Vitkir.UserManager.DAL.File.csproj">
-      <Project>{8ce673b7-3cb5-4bb0-b4db-2c9834ad91e6}</Project>
+    <ProjectReference Include="..\Vitkir.UserManager.DAL.File\Vitkir.UserManager.DAL.File.csproj">
+      <Project>{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}</Project>
       <Name>Vitkir.UserManager.DAL.File</Name>
     </ProjectReference>
   </ItemGroup>

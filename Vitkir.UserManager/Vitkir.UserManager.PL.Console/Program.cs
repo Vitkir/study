@@ -1,5 +1,6 @@
 ﻿using System;
 using Vitkir.UserManager.BLL.Logic;
+using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.PL.Console
 {
@@ -7,20 +8,20 @@ namespace Vitkir.UserManager.PL.Console
 	{
 		static void Main(string[] args)
 		{
-			var userLogic = new UserLogic();
-			userLogic.Add();
+			var userLogic = GetUserLogic();
 		}
 
 		private static UserLogic userLogic;
 
-		private enum ItemList
+		public enum ItemList
 		{
-			Award,
+			Award = 1,
 			User,
 		}
+
 		public enum ActionList
 		{
-			Create,
+			Create = 1,
 			Delete,
 			Assign,
 			Get,
@@ -28,26 +29,30 @@ namespace Vitkir.UserManager.PL.Console
 			Exit,
 		}
 
-		public static string CreateUser(string name, DateTime birthday)
+		public static void CreateUser(string name, DateTime birthday)
 		{
-			return userLogic.Add(name, birthday) ? "Success" : "Unsuccessful";
+			System.Console.WriteLine(userLogic.AddUser(new User(name, birthday)) != 0 ? "success" : "unsuccessful");
 		}
 
-		public static string DeleteUser(int id)
+		public static void DeleteUser(int id)
 		{
-			return userLogic.Delete(id) ? "Success" : "Unsuccessful";
+			System.Console.WriteLine(userLogic.DeleteUser(id) ? "success" : "unsuccessful");
 		}
 
 		public static void GetUser(int id)
 		{
-			userLogic.Get(id);
+			System.Console.WriteLine(userLogic.GetUser(id).ToString());
 		}
 
-
-
-		public static void PrintToConsole(string text)
+		public static void GetAllUsers()
 		{
-			System.Console.WriteLine(text);
+			var users = userLogic.GetUsers();
+			for (int i = 0; i < users.Length; i++)
+			{
+				System.Console.WriteLine(users[i].ToString());
+			}
 		}
+
+		public static UserLogic GetUserLogic() => new UserLogic();
 	}
 }

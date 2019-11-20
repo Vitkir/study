@@ -11,16 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vitkir.UserManager.BLL.Logi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vitkir.UserManager.Common.Entities", "Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj", "{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vitkir.UserManager.DAL.File", "Vitkir.UserManager.DAL.DAO\Vitkir.UserManager.DAL.File.csproj", "{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71} = {2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vitkir.UserManager.PL.Console", "Vitkir.UserManager.PL.Console\Vitkir.UserManager.PL.Console.csproj", "{F5CC5017-5D2A-4B89-969D-57A9EECDC058}"
 	ProjectSection(ProjectDependencies) = postProject
 		{52234B5D-4264-404C-AB38-BF3D73BA9A78} = {52234B5D-4264-404C-AB38-BF3D73BA9A78}
 		{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71} = {2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vitkir.UserManager.DAL.File", "Vitkir.UserManager.DAL.File\Vitkir.UserManager.DAL.File.csproj", "{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,14 +33,14 @@ Global
 		{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F5CC5017-5D2A-4B89-969D-57A9EECDC058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F5CC5017-5D2A-4B89-969D-57A9EECDC058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5CC5017-5D2A-4B89-969D-57A9EECDC058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5CC5017-5D2A-4B89-969D-57A9EECDC058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
