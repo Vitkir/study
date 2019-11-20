@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vitkir.UserManager.CommonEntities
+namespace Vitkir.UserManager.Common.Entities
 {
 	public class Award
 	{

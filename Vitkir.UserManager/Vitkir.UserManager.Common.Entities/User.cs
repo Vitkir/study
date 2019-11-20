@@ -1,16 +1,14 @@
 ﻿using System;
 
-namespace Vitkir.UserManager.CommonEntities
+namespace Vitkir.UserManager.Common.Entities
 {
 	public class User
 	{
 		public int Id { get; set; }
 
-		public string Name { get; private set; }
+		public string Name { get; }
 
-		public DateTime Birthday { get; private set; }
-
-		public static int Counter { get; private set; }
+		public DateTime Birthday { get; }
 
 		public int Age
 		{
@@ -31,17 +29,12 @@ namespace Vitkir.UserManager.CommonEntities
 		{
 			Name = name;
 			Birthday = birthday;
-			Counter++;
 		}
 
 		public override string ToString()
 		{
-			return string.Format("ID: {1}{0}" +
-								"Name: {2}{0}" +
-								"Birthday: {3}{0}" +
-								"Age: {4}{0}",
-								 Environment.NewLine, Id.ToString(), Name.ToString(),
-								 Birthday.ToString("dd.MM.yyyy"), Age.ToString());
+			return string.Format("ID: {0} : Name: {1} : Birthday: {2} : Age: {3}",
+				Id.ToString(), Name.ToString(), Birthday.ToString("dd.MM.yyyy"), Age.ToString());
 		}
 	}
 }

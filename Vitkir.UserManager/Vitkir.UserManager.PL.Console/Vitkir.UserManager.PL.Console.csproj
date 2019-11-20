@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E82945AC-93E9-4ADE-8EB8-020AF38DAD8D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Vitkir.UserManager.DAL.Abstract</RootNamespace>
-    <AssemblyName>Vitkir.UserManager.DAL.Abstract</AssemblyName>
+    <ProjectGuid>{F5CC5017-5D2A-4B89-969D-57A9EECDC058}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Vitkir.UserManadger.PL.Console</RootNamespace>
+    <AssemblyName>Vitkir.UserManadger.PL.Console</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,13 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDAO.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vitkir.UserManager.Entities\Vitkir.UserManager.CommonEntities.csproj">
-      <Project>{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}</Project>
-      <Name>Vitkir.UserManager.CommonEntities</Name>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vitkir.UserManager.BLL.Core\Vitkir.UserManager.BLL.Logic.csproj">
+      <Project>{52234b5d-4264-404c-ab38-bf3d73ba9a78}</Project>
+      <Name>Vitkir.UserManager.BLL.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
+      <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>
+      <Name>Vitkir.UserManager.Common.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

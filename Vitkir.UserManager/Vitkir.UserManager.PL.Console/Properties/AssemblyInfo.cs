@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Vitkir.UserManager.Entities")]
+[assembly: AssemblyTitle("Vitkir.UserManadger.PL.Console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Vitkir.UserManager.Entities")]
+[assembly: AssemblyProduct("Vitkir.UserManadger.PL.Console")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2cde2477-15ae-4dd0-8bd2-01c65be99a71")]
+[assembly: Guid("f5cc5017-5d2a-4b89-969d-57a9eecdc058")]
 
 // Version information for an assembly consists of the following four values:
 //

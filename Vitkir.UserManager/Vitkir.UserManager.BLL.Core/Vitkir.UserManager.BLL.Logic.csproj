@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{52234B5D-4264-404C-AB38-BF3D73BA9A78}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Vitkir.UserManager.BLL.Core</RootNamespace>
     <AssemblyName>Vitkir.UserManager.BLL.Core</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserCache.cs" />
     <Compile Include="UserLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -51,13 +53,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vitkir.UserManager.DAL.Abstract\Vitkir.UserManager.DAL.Interface.csproj">
-      <Project>{E82945AC-93E9-4ADE-8EB8-020AF38DAD8D}</Project>
-      <Name>Vitkir.UserManager.DAL.Interface</Name>
+    <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
+      <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>
+      <Name>Vitkir.UserManager.Common.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Vitkir.UserManager.Entities\Vitkir.UserManager.CommonEntities.csproj">
-      <Project>{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}</Project>
-      <Name>Vitkir.UserManager.CommonEntities</Name>
+    <ProjectReference Include="..\Vitkir.UserManager.DAL.DAO\Vitkir.UserManager.DAL.File.csproj">
+      <Project>{8ce673b7-3cb5-4bb0-b4db-2c9834ad91e6}</Project>
+      <Name>Vitkir.UserManager.DAL.File</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

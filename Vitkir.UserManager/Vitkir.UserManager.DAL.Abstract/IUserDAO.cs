@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vitkir.UserManager.CommonEntities;
+﻿using System.Collections.Generic;
+using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.Abstract
 {
-    public interface IDAO
+	public interface IUserDAO
     {
 		int Create(User user);
 
