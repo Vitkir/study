@@ -24,6 +24,7 @@ namespace Vitkir.UserManager.Common.Entities
 				return age;
 			}
 		}
+
 		public User()
 		{
 
@@ -37,7 +38,7 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return string.Format("ID: {0} : Name: {1} : Birthday: {2} : Age: {3}",
+			return string.Format("{0}:{1}:{2}:{3}",
 				Id.ToString(), Name.ToString(), Birthday.ToString("dd.MM.yyyy"), Age.ToString());
 		}
 

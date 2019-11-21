@@ -8,33 +8,37 @@ namespace Vitkir.UserManager.BLL.Logic
 	public class UserLogic
 	{
 		private UserDAO userDAO;
-		private List<User> users;
+		private Dictionary<int, User> usersCache;
 
-		public int AddUser(User user)
+		public User CreateUser(User user)
 		{
-			return userDAO.AddUser(user) != 0 ? user.Id : 0;
+			var createdUser = userDAO.CreateUser(user);
+			usersCache.Add(createdUser.Id, createdUser);
+			return createdUser;
 		}
 
 		public bool DeleteUser(int id)
 		{
-			users.Remove(new User() { Id = id });
-			return userDAO.DeleteUser(id) != 0 ? true : false;
+			usersCache.Remove(id);
+			return userDAO.DeleteUser(id);
 		}
 
 		public User GetUser(int id)
 		{
-			return users.Find(user => user.Id == id);
+			return usersCache[id];
 		}
 
 		public User[] GetUsers()
 		{
-			return users.ToArray();
+
+			return usersCache.
 		}
 
 		public UserLogic()
 		{
 			userDAO = new UserDAO();
-			users = new List<User>();
+			usersCache = userDAO.GetUsers();
+
 		}
 	}
 }

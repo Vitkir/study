@@ -31,7 +31,8 @@ namespace Vitkir.UserManager.PL.Console
 
 		public static void CreateUser(string name, DateTime birthday)
 		{
-			System.Console.WriteLine(userLogic.AddUser(new User(name, birthday)) != 0 ? "success" : "unsuccessful");
+			var user = new User(name, birthday);
+			System.Console.WriteLine(userLogic.CreateUser(user) != null ? "success" : "unsuccessful");
 		}
 
 		public static void DeleteUser(int id)
