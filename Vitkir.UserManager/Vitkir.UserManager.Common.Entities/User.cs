@@ -2,7 +2,7 @@
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class User : IEquatable<User>
+	public class User : IEquatable<User>, ICloneable
 	{
 		public int Id { get; set; }
 
@@ -38,8 +38,8 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return string.Format("{0}:{1}:{2}:{3}",
-				Id.ToString(), Name.ToString(), Birthday.ToString("dd.MM.yyyy"), Age.ToString());
+			return string.Format("{0}:{1}:{2}",
+				Id.ToString(), Name.ToString(), Birthday.ToString("dd.MM.yyyy"));
 		}
 
 		public override bool Equals(object obj)
@@ -59,6 +59,11 @@ namespace Vitkir.UserManager.Common.Entities
 		{
 			if (other == null) return false;
 			return Id.Equals(other.Id);
+		}
+
+		public object Clone()
+		{
+			return new User(Name, Birthday) { Id = Id };
 		}
 	}
 }

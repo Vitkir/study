@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using Vitkir.UserManager.Common.Entities;
 
@@ -9,17 +11,22 @@ namespace Vitkir.UserManager.DAL.File
 {
 	public class UserDAO
 	{
-		private const string UsersFilePath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_6\users.txt";
-		private const string IndexerFilePath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_6\Indexer.txt";
-		private int counter;
+		private const string usersFilePath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_6\users.txt";
+		private const string tmpFilePath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_6\tmp.txt";
+		private int lastId;
+
+		public UserDAO()
+		{
+			lastId = GetLastId();
+		}
 
 		public User CreateUser(User user)
 		{
-			user.Id = ++counter;
+			user.Id = ++lastId;
 			var userItem = user.ToString();
 			long currentPosition;
 
-			using (FileStream fileStream = new FileStream(UsersFilePath, FileMode.Append))
+			using (FileStream fileStream = new FileStream(usersFilePath, FileMode.Append))
 			{
 				currentPosition = fileStream.Position;
 
@@ -28,7 +35,7 @@ namespace Vitkir.UserManager.DAL.File
 					streamWriter.WriteLine(userItem);
 				}
 			}
-			using (StreamReader streamReader = new StreamReader(UsersFilePath))
+			using (StreamReader streamReader = new StreamReader(usersFilePath))
 			{
 				streamReader.BaseStream.Position = currentPosition;
 				userItem = streamReader.ReadLine();
@@ -36,45 +43,56 @@ namespace Vitkir.UserManager.DAL.File
 			return ParseString(userItem);
 		}
 
-		public bool DeleteUser(int id)
+		public bool UpdateFile(Dictionary<int, User> usersCache)
 		{
-			var lines = System.IO.File.ReadLines(UsersFilePath);
-			int currentId;
-			int separator;
-			foreach (var line in lines)
+			System.IO.File.Create(tmpFilePath).Dispose();
+			using (StreamWriter streamWriter = new StreamWriter(tmpFilePath))
 			{
-				separator = line.IndexOf(':');
-				currentId = int.Parse(line.Substring(0, separator - 1));
-				if (currentId == id)
+				foreach (var pair in usersCache)
 				{
-					line.Insert(0, "\\");
-					return true;
+					streamWriter.WriteLine(pair.Value.ToString());
 				}
 			}
-			return false;
-		}
-
-		public User GetUser(int id)
-		{
-
+			System.IO.File.Delete(usersFilePath);
+			System.IO.File.Move(tmpFilePath, usersFilePath);
+			return true;
 		}
 
 		public Dictionary<int, User> GetUsers()
 		{
-			var lines = System.IO.File.ReadAllLines(UsersFilePath);
+			var lines = System.IO.File.ReadAllLines(usersFilePath);
 			Dictionary<int, User> users = new Dictionary<int, User>();
 
 			for (int i = 0; i < lines.Length; i++)
 			{
+				if (lines[i].Contains("\\")) continue;
 				var user = ParseString(lines[i]);
 				users.Add(user.Id, user);
 			}
 			return users;
 		}
 
-		private bool CreateUserIndex()
+		private int GetLastId()
 		{
-			return true;
+			string currentLine = default;
+			int currentId = default;
+			using (StreamReader streamReader = new StreamReader(usersFilePath))
+			{
+				currentLine = streamReader.ReadLine();
+				while (!string.IsNullOrEmpty(currentLine))
+				{
+					if (currentLine.Contains("\\")) continue;
+					currentId = ParseId(currentLine);
+					currentLine = streamReader.ReadLine();
+				}
+			}
+			return currentId;
+		}
+
+		private static int ParseId(string currentLine)
+		{
+			var separator = currentLine.IndexOf(':');
+			return int.Parse(currentLine.Substring(0, separator));
 		}
 
 		public User ParseString(string userItem)

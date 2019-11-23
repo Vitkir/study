@@ -37,7 +37,7 @@ namespace Vitkir.UserManager.PL.Console
 
 		public static void DeleteUser(int id)
 		{
-			System.Console.WriteLine(userLogic.DeleteUser(id) ? "success" : "unsuccessful");
+			System.Console.WriteLine(userLogic.DeleteUserFromCache(id) ? "success" : "unsuccessful");
 		}
 
 		public static void GetUser(int id)
@@ -48,7 +48,7 @@ namespace Vitkir.UserManager.PL.Console
 		public static void GetAllUsers()
 		{
 			var users = userLogic.GetUsers();
-			for (int i = 0; i < users.Length; i++)
+			for (int i = 0; i < users.Count; i++)
 			{
 				System.Console.WriteLine(users[i].ToString());
 			}
