@@ -8,9 +8,9 @@ namespace Vitkir.UserManager.BLL.Logic
 {
 	public class UserLogic
 	{
-		private UserDAO userDAO;
-		private Dictionary<int, User> usersCache;
-		private Dictionary<int, User> deletedUsersCache;
+		private readonly UserDAO userDAO;
+		private readonly Dictionary<int, User> usersCache;
+		private readonly Dictionary<int, User> deletedUsersCache;
 
 		public User CreateUser(User user)
 		{
@@ -26,15 +26,15 @@ namespace Vitkir.UserManager.BLL.Logic
 			return true;
 		}
 
-		public bool DeleteUserFromCache(int id)
+		public int DeleteUserFromCache(int id)
 		{
 			if (usersCache.ContainsKey(id))
 			{
 				deletedUsersCache[id] = usersCache[id];
 				usersCache.Remove(id);
-				return true;
+				return id;
 			}
-			return false;
+			return 0;
 		}
 
 		public User GetUser(int id)

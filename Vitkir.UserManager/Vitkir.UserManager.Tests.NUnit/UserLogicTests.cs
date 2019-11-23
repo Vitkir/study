@@ -41,6 +41,7 @@ namespace Vitkir.UserManager.Tests.NUnit
 			var testUsers = userLogic.GetUsers();
 			Assert.AreNotEqual(users[1].Id, testUsers[1].Id, "createdUser update couset source user update.");
 		}
+
 		[TestMethod]
 		public void UpdateUserDAO()
 		{
@@ -53,8 +54,6 @@ namespace Vitkir.UserManager.Tests.NUnit
 			{
 				Assert.Fail("method dont work");
 			}
-
 		}
-
 	}
 }

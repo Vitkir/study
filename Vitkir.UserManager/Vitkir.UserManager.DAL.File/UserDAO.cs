@@ -22,6 +22,10 @@ namespace Vitkir.UserManager.DAL.File
 
 		public User CreateUser(User user)
 		{
+			if (!System.IO.File.Exists(usersFilePath))
+			{
+				System.IO.File.Create(usersFilePath).Dispose();
+			}
 			user.Id = ++lastId;
 			var userItem = user.ToString();
 			long currentPosition;
@@ -35,6 +39,7 @@ namespace Vitkir.UserManager.DAL.File
 					streamWriter.WriteLine(userItem);
 				}
 			}
+
 			using (StreamReader streamReader = new StreamReader(usersFilePath))
 			{
 				streamReader.BaseStream.Position = currentPosition;
