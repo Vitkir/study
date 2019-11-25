@@ -31,7 +31,6 @@ namespace Vitkir.UserManager.PL.Console
 
 		public static void CreateUser()
 		{
-			//todo
 			System.Console.WriteLine("Input name");
 			var pattern = new Regex("^[a-z]{1,15}$");
 			var name = System.Console.ReadLine();
@@ -86,7 +85,7 @@ namespace Vitkir.UserManager.PL.Console
 			int id;
 			id = GetIdFromConsole();
 			var returned = userLogic.DeleteUserFromCache(id);
-			System.Console.WriteLine(returned != 0 ? "User: " + returned.ToString() + "deleted" : "unsuccessful");
+			System.Console.WriteLine(returned != 0 ? "User id " + returned.ToString() + " deleted" : "unsuccessful");
 		}
 
 		public static void GetUser()
@@ -117,31 +116,34 @@ namespace Vitkir.UserManager.PL.Console
 				System.Console.Write("Select action :>");
 				input = System.Console.ReadKey().KeyChar;
 				System.Console.WriteLine(Environment.NewLine);
-				menu = (Menu)Enum.Parse(typeof(Menu), input.ToString());
-				switch (menu)
+				if (char.IsDigit(input))
 				{
-					case Menu.Create:
-						CreateUser();
-						break;
-					case Menu.Update:
-						UpdateDatabase();
-						break;
-					case Menu.Delete:
-						DeleteUser();
-						break;
-					case Menu.Get:
-						GetUser();
-						break;
-					case Menu.GetAll:
-						GetAllUsers();
-						break;
-					case Menu.ConsoleClearing:
-						System.Console.Clear();
-						ShowUserOptions();
-						break;
-					case Menu.Exit:
-						UpdateDatabase();
-						return;
+					menu = (Menu)Enum.Parse(typeof(Menu), input.ToString());
+					switch (menu)
+					{
+						case Menu.Create:
+							CreateUser();
+							break;
+						case Menu.Update:
+							UpdateDatabase();
+							break;
+						case Menu.Delete:
+							DeleteUser();
+							break;
+						case Menu.Get:
+							GetUser();
+							break;
+						case Menu.GetAll:
+							GetAllUsers();
+							break;
+						case Menu.ConsoleClearing:
+							System.Console.Clear();
+							ShowUserOptions();
+							break;
+						case Menu.Exit:
+							UpdateDatabase();
+							return;
+					}
 				}
 			}
 		}
