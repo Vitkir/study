@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Text.RegularExpressions;
 using Vitkir.UserManager.BLL.Logic;
 using Vitkir.UserManager.Common.Entities;
 
@@ -28,28 +31,60 @@ namespace Vitkir.UserManager.PL.Console
 
 		public static void CreateUser()
 		{
+			//todo
 			System.Console.WriteLine("Input name");
+			var pattern = new Regex("^[a-z]{1,15}$");
 			var name = System.Console.ReadLine();
+			while (!pattern.IsMatch(name))
+			{
+				name = System.Console.ReadLine();
+			}
 
-			System.Console.WriteLine("Input birthday in formate yyyy.MM.dd");
-			var birthday = DateTime.Parse(System.Console.ReadLine());
+			var info = CultureInfo.InvariantCulture;
+			var style = DateTimeStyles.None;
+			var formate = "yyyy.MM.dd";
+			System.Console.WriteLine("Input birthday in formate " + formate);
+			DateTime birthday;
+			var input = System.Console.ReadLine();
+			while (!DateTime.TryParseExact(input, formate, info, style, out birthday))
+			{
+				input = System.Console.ReadLine();
+			}
 
 			var user = new User(name, birthday);
-			var returned = userLogic.CreateUser(user).Id;
-			System.Console.WriteLine(returned != 0 ?
-				"success. User id: " + returned.ToString() : "unsuccessful");
+			int returned = default;
+			try
+			{
+				returned = userLogic.CreateUser(user).Id;
+
+			}
+			catch (IOException e)
+			{
+				System.Console.WriteLine(e.Message + ". Close file and try again.");
+			}
+			System.Console.WriteLine("success. User id: " + returned.ToString());
 		}
 
 		public static void UpdateDatabase()
 		{
-			var returned = userLogic.UpdateUserDAO();
-			System.Console.WriteLine(returned == true ? "success" : "unsuccessful");
+			bool returned = default;
+			try
+			{
+				returned = userLogic.UpdateUserDAO();
+
+			}
+			catch (IOException e)
+			{
+				System.Console.WriteLine(e.Message + ". Close file and try again.");
+			}
+			System.Console.WriteLine("success");
 		}
 
 		public static void DeleteUser()
 		{
 			System.Console.WriteLine("Input id");
-			var id = int.Parse(System.Console.ReadLine());
+			int id;
+			id = GetIdFromConsole();
 			var returned = userLogic.DeleteUserFromCache(id);
 			System.Console.WriteLine(returned != 0 ? "User: " + returned.ToString() + "deleted" : "unsuccessful");
 		}
@@ -57,8 +92,11 @@ namespace Vitkir.UserManager.PL.Console
 		public static void GetUser()
 		{
 			System.Console.WriteLine("Input id");
-			var id = int.Parse(System.Console.ReadLine());
-			System.Console.WriteLine(userLogic.GetUser(id).ToString());
+			int id;
+			id = GetIdFromConsole();
+			var user = userLogic.GetUser(id);
+			System.Console.WriteLine(user != null ?
+				"User: " + user.ToString() : "User with such id does not exist");
 		}
 
 		public static void GetAllUsers()
@@ -72,8 +110,7 @@ namespace Vitkir.UserManager.PL.Console
 
 		public static void GetMenu()
 		{
-			ConsoleKey escape = ConsoleKey.Escape;
-			char input = default;
+			char input;
 			Menu menu;
 			while (true)
 			{
@@ -109,6 +146,8 @@ namespace Vitkir.UserManager.PL.Console
 			}
 		}
 
+		public static UserLogic GetUserLogic() => new UserLogic();
+
 		private static void ShowUserOptions()
 		{
 			int option = 1;
@@ -119,6 +158,16 @@ namespace Vitkir.UserManager.PL.Console
 			}
 		}
 
-		public static UserLogic GetUserLogic() => new UserLogic();
+		private static int GetIdFromConsole()
+		{
+			int id;
+			var input = System.Console.ReadLine();
+			while (!int.TryParse(input, out id))
+			{
+				input = System.Console.ReadLine();
+			}
+
+			return id;
+		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.File;
 
@@ -14,7 +14,15 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		public User CreateUser(User user)
 		{
-			var createdUser = userDAO.CreateUser(user);
+			User createdUser;
+			try
+			{
+				createdUser = userDAO.CreateUser(user);
+			}
+			catch (IOException e)
+			{
+				throw new IOException(e.Message, e);
+			}
 			usersCache.Add(createdUser.Id, createdUser);
 			return createdUser;
 		}
@@ -22,7 +30,14 @@ namespace Vitkir.UserManager.BLL.Logic
 		public bool UpdateUserDAO()
 		{
 			var users = GetUsers();
-			userDAO.UpdateFile(users);
+			try
+			{
+				userDAO.UpdateFile(users);
+			}
+			catch (IOException e)
+			{
+				throw new IOException(e.Message);
+			}
 			return true;
 		}
 

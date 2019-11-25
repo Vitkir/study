@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.File
@@ -12,32 +9,40 @@ namespace Vitkir.UserManager.DAL.File
 	public class UserDAO
 	{
 		private const string usersFilePath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_6\users.txt";
-		private const string tmpFilePath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_6\tmp.txt";
+		private const string tmpFilePath = @"C:\Users\User\Desktop\Learning\xt_2016\Task_6\userstmp.txt";
+
+		private const string recordExeption = "Cannot data writing";
+		private const string readingExeption = "The users data file could not be read";
+		private const string fileMissingExeption = "File missing";
+
 		private int lastId;
 
 		public UserDAO()
 		{
+			if (!System.IO.File.Exists(usersFilePath))
+			{
+				CreateUsersDataFile();
+			}
 			lastId = GetLastId();
 		}
 
 		public User CreateUser(User user)
 		{
-			if (!System.IO.File.Exists(usersFilePath))
-			{
-				System.IO.File.Create(usersFilePath).Dispose();
-			}
 			user.Id = ++lastId;
-			var userItem = user.ToString();
+			var userItem = user.ToString() + Environment.NewLine;
 			long currentPosition;
-
-			using (FileStream fileStream = new FileStream(usersFilePath, FileMode.Append))
+			try
 			{
-				currentPosition = fileStream.Position;
-
-				using (StreamWriter streamWriter = new StreamWriter(fileStream))
+				using (FileStream fileStream = new FileStream(usersFilePath, FileMode.Append))
 				{
-					streamWriter.WriteLine(userItem);
+					currentPosition = fileStream.Position;
+					var byData = Encoding.ASCII.GetBytes(userItem);
+					fileStream.Write(byData, 0, byData.Length);
 				}
+			}
+			catch (IOException e)
+			{
+				throw new IOException(recordExeption, e);
 			}
 
 			using (StreamReader streamReader = new StreamReader(usersFilePath))
@@ -59,18 +64,27 @@ namespace Vitkir.UserManager.DAL.File
 				}
 			}
 			System.IO.File.Delete(usersFilePath);
+			var info = new FileInfo(usersFilePath).IsReadOnly;
+			if (!info)
+			{
+				throw new IOException(recordExeption);
+			}
 			System.IO.File.Move(tmpFilePath, usersFilePath);
 			return true;
 		}
 
 		public Dictionary<int, User> GetUsers()
 		{
-			var lines = System.IO.File.ReadAllLines(usersFilePath);
-			Dictionary<int, User> users = new Dictionary<int, User>();
+			string[] lines;
+			if (!System.IO.File.Exists(usersFilePath))
+			{
+				throw new IOException(fileMissingExeption);
+			}
+			lines = System.IO.File.ReadAllLines(usersFilePath);
 
+			Dictionary<int, User> users = new Dictionary<int, User>();
 			for (int i = 0; i < lines.Length; i++)
 			{
-				if (lines[i].Contains("\\")) continue;
 				var user = ParseString(lines[i]);
 				users.Add(user.Id, user);
 			}
@@ -81,15 +95,21 @@ namespace Vitkir.UserManager.DAL.File
 		{
 			string currentLine = default;
 			int currentId = default;
-			using (StreamReader streamReader = new StreamReader(usersFilePath))
+			try
 			{
-				currentLine = streamReader.ReadLine();
-				while (!string.IsNullOrEmpty(currentLine))
+				using (StreamReader streamReader = new StreamReader(usersFilePath))
 				{
-					if (currentLine.Contains("\\")) continue;
-					currentId = ParseId(currentLine);
 					currentLine = streamReader.ReadLine();
+					while (!string.IsNullOrEmpty(currentLine))
+					{
+						currentId = ParseId(currentLine);
+						currentLine = streamReader.ReadLine();
+					}
 				}
+			}
+			catch (IOException e)
+			{
+				throw new IOException(readingExeption, e);
 			}
 			return currentId;
 		}
@@ -107,6 +127,11 @@ namespace Vitkir.UserManager.DAL.File
 			{
 				Id = int.Parse(UserFields[0])
 			};
+		}
+
+		private static void CreateUsersDataFile()
+		{
+			System.IO.File.Create(usersFilePath).Dispose();
 		}
 	}
 }
