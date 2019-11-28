@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{52234B5D-4264-404C-AB38-BF3D73BA9A78}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Vitkir.UserManager.BLL.Core</RootNamespace>
-    <AssemblyName>Vitkir.UserManager.BLL.Core</AssemblyName>
+    <RootNamespace>Vitkir.UserManager.BLL.Logic</RootNamespace>
+    <AssemblyName>Vitkir.UserManager.BLL.Logic</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserLogic.cs" />
+    <Compile Include="AwardLogic.cs" />
+    <Compile Include="EntityLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -58,7 +60,7 @@
       <Name>Vitkir.UserManager.Common.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.DAL.File\Vitkir.UserManager.DAL.File.csproj">
-      <Project>{8CE673B7-3CB5-4BB0-B4DB-2C9834AD91E6}</Project>
+      <Project>{8ce673b7-3cb5-4bb0-b4db-2c9834ad91e6}</Project>
       <Name>Vitkir.UserManager.DAL.File</Name>
     </ProjectReference>
   </ItemGroup>

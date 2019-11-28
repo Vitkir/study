@@ -3,9 +3,9 @@ using Vitkir.UserManager.DAL.File;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public class UserLogic : EntityLogic<User>
+	class AwardLogic : EntityLogic<Award>
 	{
-		public UserLogic(UserDAO userDAO) : base(userDAO)
+		public AwardLogic(AwardDAO awardDAO) : base(awardDAO)
 		{
 
 		}
