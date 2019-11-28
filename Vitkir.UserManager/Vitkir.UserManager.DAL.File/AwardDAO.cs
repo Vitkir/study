@@ -2,7 +2,7 @@
 
 namespace Vitkir.UserManager.DAL.File
 {
-	class AwardDAO : AbstractDAO<Award>
+	public class AwardDAO : AbstractDAO<Award>
 	{
 		public AwardDAO() : base(@"C:\Users\T\Desktop\Learning\xt_2016\Task_6\awards.txt",
 			@"C:\Users\T\Desktop\Learning\xt_2016\Task_6\awardstmp.txt",
