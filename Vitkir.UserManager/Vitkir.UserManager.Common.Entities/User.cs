@@ -2,10 +2,8 @@
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class User : IEquatable<User>, ICloneable
+	public class User : Entity, IEquatable<User>, ICloneable
 	{
-		public int Id { get; set; }
-
 		public string Name { get; }
 
 		public DateTime Birthday { get; }
@@ -23,11 +21,6 @@ namespace Vitkir.UserManager.Common.Entities
 				}
 				return age;
 			}
-		}
-
-		public User()
-		{
-
 		}
 
 		public User(string name, DateTime birthday)

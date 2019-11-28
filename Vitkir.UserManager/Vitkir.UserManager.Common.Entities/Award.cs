@@ -2,15 +2,12 @@
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class Award
+	public class Award : Entity, IEquatable<Award>, ICloneable
 	{
-		public int Id { get; private set; }
+		public string Title { get; }
 
-		public string Title { get; private set; }
-
-		public Award(int id, string title)
+		public Award(string title)
 		{
-			Id = id;
 			Title = title;
 		}
 
@@ -21,6 +18,30 @@ namespace Vitkir.UserManager.Common.Entities
 								Environment.NewLine,
 								Id.ToString(),
 								Title);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null) return false;
+			Award objAsAward = obj as Award;
+			if (objAsAward == null) return false;
+			else return Equals(objAsAward);
+		}
+
+		public override int GetHashCode()
+		{
+			return Id;
+		}
+
+		public bool Equals(Award other)
+		{
+			if (other == null) return false;
+			return Id.Equals(other.Id);
+		}
+
+		public object Clone()
+		{
+			return new Award(Title) { Id = Id };
 		}
 	}
 }
