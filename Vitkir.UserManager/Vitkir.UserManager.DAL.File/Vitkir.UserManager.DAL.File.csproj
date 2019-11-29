@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="AbstractDAO.cs" />
     <Compile Include="AwardDAO.cs" />
+    <Compile Include="IAbstractDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDAO.cs" />
   </ItemGroup>
