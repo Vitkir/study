@@ -7,24 +7,24 @@ namespace Vitkir.UserManager.BLL.Logic
 {
 	public class EntityLogic<T> where T : Entity, ICloneable
 	{
-		private readonly AbstractDAO<T> entityDAO;
+		private readonly IDAO<T> entityDAO;
 		private readonly Dictionary<int, T> entityCache;
 
-		public T CreateUser(T user)
+		public T CreateEntity(T user)
 		{
 			T createdUser;
-			createdUser = entityDAO.CreateUser(user);
+			createdUser = entityDAO.CreateEntity(user);
 			entityCache.Add(createdUser.Id, createdUser);
 			return createdUser;
 		}
 
-		public void UpdateUserDAO()
+		public void UpdateEntityDAO()
 		{
-			var users = GetUsers();
+			var users = GetEntities();
 			entityDAO.UpdateFile(users);
 		}
 
-		public int DeleteUserFromCache(int id)
+		public int DeleteEntityFromCache(int id)
 		{
 			if (entityCache.ContainsKey(id))
 			{
@@ -43,7 +43,7 @@ namespace Vitkir.UserManager.BLL.Logic
 			return null;
 		}
 
-		public Dictionary<int, T> GetUsers()
+		public Dictionary<int, T> GetEntities()
 		{
 			var len = entityCache.Count;
 			T user;
@@ -56,7 +56,7 @@ namespace Vitkir.UserManager.BLL.Logic
 			return users;
 		}
 
-		public EntityLogic(AbstractDAO<T> entityDAO)
+		public EntityLogic(IDAO<T> entityDAO)
 		{
 			this.entityDAO = entityDAO;
 			entityCache = entityDAO.GetUsers();

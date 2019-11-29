@@ -6,7 +6,7 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public abstract class AbstractDAO<T> where T : Entity
+	public abstract class AbstractDAO<T> : IDAO<T> where T : Entity
 	{
 		private readonly string entityFilePath;
 		private readonly string tmpFilePath;
@@ -33,7 +33,7 @@ namespace Vitkir.UserManager.DAL.File
 			lastId = GetLastId();
 		}
 
-		public T CreateUser(T entity)
+		public T CreateEntity(T entity)
 		{
 			entity.Id = ++lastId;
 			var entityItem = entity.ToString() + Environment.NewLine;

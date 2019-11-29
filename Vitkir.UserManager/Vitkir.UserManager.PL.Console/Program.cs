@@ -2,18 +2,18 @@
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
-using Vitkir.UserManager.BLL.Logic;
 using Vitkir.UserManager.Common.Entities;
+using Vitkir.UserManager.BLL.Logic;
 
 namespace Vitkir.UserManager.PL.Console
 {
 	class Program
 	{
-		private static UserLogic userLogic;
+		private static EntityLogic<Entity> entityLogic;
+
 		static void Main()
 		{
-			userLogic = new UserLogic();
-			ShowUserOptions();
+			ShowEntityOptions();
 			GetMenu();
 		}
 
@@ -54,7 +54,7 @@ namespace Vitkir.UserManager.PL.Console
 			int returned = default;
 			try
 			{
-				returned = userLogic.CreateUser(user).Id;
+				returned = entityLogic.CreateEntity(user).Id;
 
 			}
 			catch (IOException e)
@@ -69,7 +69,7 @@ namespace Vitkir.UserManager.PL.Console
 			bool returned = default;
 			try
 			{
-				returned = userLogic.UpdateUserDAO();
+				returned = entityLogic.UpdateEntityDAO();
 
 			}
 			catch (IOException e)
@@ -84,7 +84,7 @@ namespace Vitkir.UserManager.PL.Console
 			System.Console.WriteLine("Input id");
 			int id;
 			id = GetIdFromConsole();
-			var returned = userLogic.DeleteUserFromCache(id);
+			var returned = entityLogic.DeleteEntityFromCache(id);
 			System.Console.WriteLine(returned != 0 ? "User id " + returned.ToString() + " deleted" : "unsuccessful");
 		}
 
@@ -93,14 +93,14 @@ namespace Vitkir.UserManager.PL.Console
 			System.Console.WriteLine("Input id");
 			int id;
 			id = GetIdFromConsole();
-			var user = userLogic.GetUser(id);
+			var user = entityLogic.GetUser(id);
 			System.Console.WriteLine(user != null ?
 				"User: " + user.ToString() : "User with such id does not exist");
 		}
 
 		public static void GetAllUsers()
 		{
-			var users = userLogic.GetUsers();
+			var users = entityLogic.GetEntities();
 			foreach (var pair in users)
 			{
 				System.Console.WriteLine(pair.Value.ToString());
@@ -138,7 +138,7 @@ namespace Vitkir.UserManager.PL.Console
 							break;
 						case Menu.ConsoleClearing:
 							System.Console.Clear();
-							ShowUserOptions();
+							ShowEntityOptions();
 							break;
 						case Menu.Exit:
 							UpdateDatabase();
@@ -148,9 +148,9 @@ namespace Vitkir.UserManager.PL.Console
 			}
 		}
 
-		public static UserLogic GetUserLogic() => new UserLogic();
+		public static EntityLogic<Entity> GetEntityLogic() => new EntityLogic<Entity>();
 
-		private static void ShowUserOptions()
+		private static void ShowEntityOptions()
 		{
 			int option = 1;
 			foreach (var name in Enum.GetNames(typeof(Menu)))
@@ -168,7 +168,6 @@ namespace Vitkir.UserManager.PL.Console
 			{
 				input = System.Console.ReadLine();
 			}
-
 			return id;
 		}
 	}
