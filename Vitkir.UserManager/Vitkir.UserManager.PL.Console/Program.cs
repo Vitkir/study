@@ -4,6 +4,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.BLL.Logic;
+using Vitkir.UserManager.Common.Dependencies;
+using Ninject;
 
 namespace Vitkir.UserManager.PL.Console
 {
@@ -11,15 +13,19 @@ namespace Vitkir.UserManager.PL.Console
 	{
 		private static UserLogic userLogic;
 		private static AwardLogic awardLogic;
+		private static IKernel dependencyManager;
 
 		static void Main()
 		{
+			dependencyManager = new StandardKernel(new DependencyManager());
+			userLogic = dependencyManager.Get<UserLogic>();
+			awardLogic = dependencyManager.Get<AwardLogic>();
 			ShowEntityOptions();
 			GetMenu();
 		}
 		public enum Entities : int
 		{
-			Award =1,
+			Award = 1,
 			User,
 		}
 
@@ -151,10 +157,6 @@ namespace Vitkir.UserManager.PL.Console
 				}
 			}
 		}
-
-		public static UserLogic GetUserLogic() => new UserLogic();
-
-		public static AwardLogic GetAwardLogic() => new AwardLogic();
 
 		private static void ShowEntityOptions()
 		{
