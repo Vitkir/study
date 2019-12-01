@@ -23,6 +23,7 @@ namespace Vitkir.UserManager.PL.Console
 			ShowEntityOptions();
 			GetMenu();
 		}
+
 		public enum Entities : int
 		{
 			Award = 1,
