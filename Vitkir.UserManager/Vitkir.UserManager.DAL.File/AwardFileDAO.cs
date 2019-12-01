@@ -1,11 +1,12 @@
-﻿using Vitkir.UserManager.Common.Entities;
+﻿using System.Configuration;
+using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public class AwardDAO : AbstractDAO<Award>
+	public class AwardFileDAO : AbstractFileDAO<Award>
 	{
-		public AwardDAO() : base(@"C:\Users\T\Desktop\Learning\xt_2016\Task_6\awards.txt",
-			@"C:\Users\T\Desktop\Learning\xt_2016\Task_6\awardstmp.txt",
+		public AwardFileDAO() : base(ConfigurationManager.AppSettings["awardsDataFilePath"],
+			ConfigurationManager.AppSettings["awardstmpFilePath"],
 			"Cannot write data. Award data file is read only",
 			"Award data file missing")
 		{

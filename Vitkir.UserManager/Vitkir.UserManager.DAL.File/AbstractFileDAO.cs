@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Vitkir.UserManager.Common.Entities;
+using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public abstract class AbstractDAO<T> : IDAO<T> where T : Entity
+	public abstract class AbstractFileDAO<T> : IDAO<T> where T : Entity
 	{
 		private readonly string entityFilePath;
 		private readonly string tmpFilePath;
@@ -16,7 +17,7 @@ namespace Vitkir.UserManager.DAL.File
 
 		private int lastId;
 
-		public AbstractDAO(string entityFilePath,
+		public AbstractFileDAO(string entityFilePath,
 			string tmpFilePath,
 			string writingExeption,
 			string fileMissingExeption)
@@ -73,7 +74,7 @@ namespace Vitkir.UserManager.DAL.File
 			System.IO.File.Move(tmpFilePath, entityFilePath);
 		}
 
-		public Dictionary<int, T> GetUsers()
+		public Dictionary<int, T> GetEntities()
 		{
 			string[] lines;
 			if (!System.IO.File.Exists(entityFilePath))

@@ -1,16 +1,17 @@
 ﻿using System;
 using Vitkir.UserManager.Common.Entities;
+using System.Configuration;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public class UserDAO : AbstractDAO<User>
+	public class UserFileDAO : AbstractFileDAO<User>
 	{
-		public UserDAO() : base(@"C:\Users\T\Desktop\Learning\xt_2016\Task_6\users.txt",
-			@"C:\Users\T\Desktop\Learning\xt_2016\Task_6\userstmp.txt",
+		public UserFileDAO() : base(ConfigurationManager.AppSettings["usersDataFilePath"],
+			ConfigurationManager.AppSettings["userstmpFilePath"],
 			"Cannot write data. User data file is read only",
 			"User data file missing")
 		{
-			
+
 		}
 
 		protected override User ParseString(string entityItem)
