@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Vitkir.UserManager.Common.Entities;
-using Vitkir.UserManager.DAL.File;
+using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public class EntityLogic<T> where T : Entity, ICloneable
+	public abstract class EntityLogic<T> where T : Entity, ICloneable
 	{
 		private readonly IDAO<T> entityDAO;
 		private readonly Dictionary<int, T> entityCache;
@@ -59,7 +59,7 @@ namespace Vitkir.UserManager.BLL.Logic
 		public EntityLogic(IDAO<T> entityDAO)
 		{
 			this.entityDAO = entityDAO;
-			entityCache = entityDAO.GetUsers();
+			entityCache = entityDAO.GetEntities();
 		}
 	}
 }

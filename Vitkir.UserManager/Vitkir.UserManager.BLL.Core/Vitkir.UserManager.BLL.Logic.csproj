@@ -59,6 +59,10 @@
       <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>
       <Name>Vitkir.UserManager.Common.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Vitkir.UserManager.DAL.Contracts\Vitkir.UserManager.DAL.Contracts.csproj">
+      <Project>{CBB9D75A-E9F7-46E0-9A8A-72A5B34432C8}</Project>
+      <Name>Vitkir.UserManager.DAL.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.DAL.File\Vitkir.UserManager.DAL.File.csproj">
       <Project>{8ce673b7-3cb5-4bb0-b4db-2c9834ad91e6}</Project>
       <Name>Vitkir.UserManager.DAL.File</Name>

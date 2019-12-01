@@ -1,11 +1,11 @@
 ﻿using Vitkir.UserManager.Common.Entities;
-using Vitkir.UserManager.DAL.File;
+using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	class AwardLogic : EntityLogic<Award>
+	public class AwardLogic : EntityLogic<Award>
 	{
-		public AwardLogic(AwardDAO awardDAO) : base(awardDAO)
+		public AwardLogic(IDAO<Award> awardDAO) : base(awardDAO)
 		{
 
 		}
