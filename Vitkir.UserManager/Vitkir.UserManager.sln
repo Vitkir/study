@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vitkir.UserManager.Tests.NU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vitkir.UserManager.DAL.Contracts", "Vitkir.UserManager.DAL.Contracts\Vitkir.UserManager.DAL.Contracts.csproj", "{CBB9D75A-E9F7-46E0-9A8A-72A5B34432C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vitkir.UserManager.Common.Dependencies", "Vitkir.UserManager.Common.Dependencies\Vitkir.UserManager.Common.Dependencies.csproj", "{C7F783E4-69DC-44E4-A8FA-8A225DF5A3C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{CBB9D75A-E9F7-46E0-9A8A-72A5B34432C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBB9D75A-E9F7-46E0-9A8A-72A5B34432C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBB9D75A-E9F7-46E0-9A8A-72A5B34432C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F783E4-69DC-44E4-A8FA-8A225DF5A3C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F783E4-69DC-44E4-A8FA-8A225DF5A3C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F783E4-69DC-44E4-A8FA-8A225DF5A3C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F783E4-69DC-44E4-A8FA-8A225DF5A3C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
