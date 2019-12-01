@@ -9,14 +9,19 @@ namespace Vitkir.UserManager.PL.Console
 {
 	class Program
 	{
-		private static EntityLogic<Entity> entityLogic;
+		private static UserLogic userLogic;
+		private static AwardLogic awardLogic;
 
 		static void Main()
 		{
 			ShowEntityOptions();
 			GetMenu();
 		}
-
+		public enum Entities : int
+		{
+			Award =1,
+			User,
+		}
 
 		public enum Menu : int
 		{
@@ -54,7 +59,7 @@ namespace Vitkir.UserManager.PL.Console
 			int returned = default;
 			try
 			{
-				returned = entityLogic.CreateEntity(user).Id;
+				returned = userLogic.CreateEntity(user).Id;
 
 			}
 			catch (IOException e)
@@ -66,10 +71,9 @@ namespace Vitkir.UserManager.PL.Console
 
 		public static void UpdateDatabase()
 		{
-			bool returned = default;
 			try
 			{
-				returned = entityLogic.UpdateEntityDAO();
+				userLogic.UpdateEntityDAO();
 
 			}
 			catch (IOException e)
@@ -84,7 +88,7 @@ namespace Vitkir.UserManager.PL.Console
 			System.Console.WriteLine("Input id");
 			int id;
 			id = GetIdFromConsole();
-			var returned = entityLogic.DeleteEntityFromCache(id);
+			var returned = userLogic.DeleteEntityFromCache(id);
 			System.Console.WriteLine(returned != 0 ? "User id " + returned.ToString() + " deleted" : "unsuccessful");
 		}
 
@@ -93,14 +97,14 @@ namespace Vitkir.UserManager.PL.Console
 			System.Console.WriteLine("Input id");
 			int id;
 			id = GetIdFromConsole();
-			var user = entityLogic.GetUser(id);
+			var user = userLogic.GetUser(id);
 			System.Console.WriteLine(user != null ?
 				"User: " + user.ToString() : "User with such id does not exist");
 		}
 
 		public static void GetAllUsers()
 		{
-			var users = entityLogic.GetEntities();
+			var users = userLogic.GetEntities();
 			foreach (var pair in users)
 			{
 				System.Console.WriteLine(pair.Value.ToString());
@@ -148,7 +152,9 @@ namespace Vitkir.UserManager.PL.Console
 			}
 		}
 
-		public static EntityLogic<Entity> GetEntityLogic() => new EntityLogic<Entity>();
+		public static UserLogic GetUserLogic() => new UserLogic();
+
+		public static AwardLogic GetAwardLogic() => new AwardLogic();
 
 		private static void ShowEntityOptions()
 		{

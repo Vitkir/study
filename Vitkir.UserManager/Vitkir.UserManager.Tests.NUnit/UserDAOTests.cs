@@ -6,11 +6,11 @@ namespace Vitkir.UserManager.Tests.NUnit
 	[TestClass]
 	public class UserDAOTests
 	{
-		private readonly UserDAO userDAO;
+		private readonly UserFileDAO userDAO;
 
 		public UserDAOTests()
 		{
-			userDAO = new UserDAO();
+			userDAO = new UserFileDAO();
 		}
 
 		[TestMethod]
