@@ -13,11 +13,7 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return string.Format("ID: {1}{0}" +
-								"Title: {2}{0}",
-								Environment.NewLine,
-								Id.ToString(),
-								Title);
+			return string.Format("{0}:{1}", Id.ToString(), Title);
 		}
 
 		public override bool Equals(object obj)

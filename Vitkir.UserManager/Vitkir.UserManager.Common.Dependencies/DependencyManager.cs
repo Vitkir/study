@@ -10,6 +10,7 @@ namespace Vitkir.UserManager.Common.Dependencies
 		public override void Load()
 		{
 			Bind<IDAO<User>>().To<UserFileDAO>();
+			Bind<IDAO<Award>>().To<AwardFileDAO>();
 		}
 	}
 }

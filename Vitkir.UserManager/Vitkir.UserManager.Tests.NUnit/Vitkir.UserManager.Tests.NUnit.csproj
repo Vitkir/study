@@ -45,12 +45,16 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.2.0.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserDAOTests.cs" />
-    <Compile Include="UserLogicTests.cs" />
+    <Compile Include="PLTests.cs" />
+    <Compile Include="EntitiesDAOTests.cs" />
+    <Compile Include="EntitiesLogicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +65,10 @@
     <ProjectReference Include="..\Vitkir.UserManager.BLL.Core\Vitkir.UserManager.BLL.Logic.csproj">
       <Project>{52234b5d-4264-404c-ab38-bf3d73ba9a78}</Project>
       <Name>Vitkir.UserManager.BLL.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vitkir.UserManager.Common.Dependencies\Vitkir.UserManager.Common.Dependencies.csproj">
+      <Project>{C7F783E4-69DC-44E4-A8FA-8A225DF5A3C2}</Project>
+      <Name>Vitkir.UserManager.Common.Dependencies</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
       <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>

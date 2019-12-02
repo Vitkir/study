@@ -13,7 +13,7 @@ namespace Vitkir.UserManager.DAL.File
 
 		}
 
-		protected override Award ParseString(string entityItem)
+		public override Award ParseString(string entityItem)
 		{
 			var entityFields = entityItem.Split(':');
 			return new Award(entityFields[1])

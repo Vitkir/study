@@ -9,7 +9,7 @@ using Ninject;
 
 namespace Vitkir.UserManager.PL.Console
 {
-	class Program
+	public class Program
 	{
 		private static UserLogic userLogic;
 		private static AwardLogic awardLogic;
@@ -17,9 +17,6 @@ namespace Vitkir.UserManager.PL.Console
 
 		static void Main()
 		{
-			dependencyManager = new StandardKernel(new DependencyManager());
-			userLogic = dependencyManager.Get<UserLogic>();
-			awardLogic = dependencyManager.Get<AwardLogic>();
 			ShowEntityOptions();
 			GetMenu();
 		}
@@ -41,84 +38,14 @@ namespace Vitkir.UserManager.PL.Console
 			Exit,
 		}
 
-		public static void CreateUser()
+		public Program()
 		{
-			System.Console.WriteLine("Input name");
-			var pattern = new Regex("^[a-z]{1,15}$");
-			var name = System.Console.ReadLine();
-			while (!pattern.IsMatch(name))
-			{
-				name = System.Console.ReadLine();
-			}
-
-			var info = CultureInfo.InvariantCulture;
-			var style = DateTimeStyles.None;
-			var formate = "yyyy.MM.dd";
-			System.Console.WriteLine("Input birthday in formate " + formate);
-			DateTime birthday;
-			var input = System.Console.ReadLine();
-			while (!DateTime.TryParseExact(input, formate, info, style, out birthday))
-			{
-				input = System.Console.ReadLine();
-			}
-
-			var user = new User(name, birthday);
-			int returned = default;
-			try
-			{
-				returned = userLogic.CreateEntity(user).Id;
-
-			}
-			catch (IOException e)
-			{
-				System.Console.WriteLine(e.Message + ". Close file and try again.");
-			}
-			System.Console.WriteLine("success. User id: " + returned.ToString());
+			dependencyManager = new StandardKernel(new DependencyManager());
+			userLogic = dependencyManager.Get<UserLogic>();
+			awardLogic = dependencyManager.Get<AwardLogic>();
 		}
 
-		public static void UpdateDatabase()
-		{
-			try
-			{
-				userLogic.UpdateEntityDAO();
-
-			}
-			catch (IOException e)
-			{
-				System.Console.WriteLine(e.Message + ". Close file and try again.");
-			}
-			System.Console.WriteLine("success");
-		}
-
-		public static void DeleteUser()
-		{
-			System.Console.WriteLine("Input id");
-			int id;
-			id = GetIdFromConsole();
-			var returned = userLogic.DeleteEntityFromCache(id);
-			System.Console.WriteLine(returned != 0 ? "User id " + returned.ToString() + " deleted" : "unsuccessful");
-		}
-
-		public static void GetUser()
-		{
-			System.Console.WriteLine("Input id");
-			int id;
-			id = GetIdFromConsole();
-			var user = userLogic.GetUser(id);
-			System.Console.WriteLine(user != null ?
-				"User: " + user.ToString() : "User with such id does not exist");
-		}
-
-		public static void GetAllUsers()
-		{
-			var users = userLogic.GetEntities();
-			foreach (var pair in users)
-			{
-				System.Console.WriteLine(pair.Value.ToString());
-			}
-		}
-
-		public static void GetMenu()
+		private static void GetMenu()
 		{
 			char input;
 			Menu menu;
@@ -166,6 +93,83 @@ namespace Vitkir.UserManager.PL.Console
 			{
 				System.Console.WriteLine($"{option.ToString()}: {name}");
 				option++;
+			}
+		}
+
+		private static void CreateUser()
+		{
+			System.Console.WriteLine("Input name");
+			var pattern = new Regex("^[a-z]{1,15}$");
+			var name = System.Console.ReadLine();
+			while (!pattern.IsMatch(name))
+			{
+				name = System.Console.ReadLine();
+			}
+
+			var info = CultureInfo.InvariantCulture;
+			var style = DateTimeStyles.None;
+			var formate = "yyyy.MM.dd";
+			System.Console.WriteLine("Input birthday in formate " + formate);
+			DateTime birthday;
+			var input = System.Console.ReadLine();
+			while (!DateTime.TryParseExact(input, formate, info, style, out birthday))
+			{
+				input = System.Console.ReadLine();
+			}
+
+			var user = new User(name, birthday);
+			int returned = default;
+			try
+			{
+				returned = userLogic.CreateEntity(user).Id;
+
+			}
+			catch (IOException e)
+			{
+				System.Console.WriteLine(e.Message + ". Close file and try again.");
+			}
+			System.Console.WriteLine("success. User id: " + returned.ToString());
+		}
+
+		private static void UpdateDatabase()
+		{
+			try
+			{
+				userLogic.UpdateEntityDAO();
+
+			}
+			catch (IOException e)
+			{
+				System.Console.WriteLine(e.Message + ". Close file and try again.");
+			}
+			System.Console.WriteLine("success");
+		}
+
+		private static void DeleteUser()
+		{
+			System.Console.WriteLine("Input id");
+			int id;
+			id = GetIdFromConsole();
+			var returned = userLogic.DeleteEntityFromCache(id);
+			System.Console.WriteLine(returned != 0 ? "User id " + returned.ToString() + " deleted" : "unsuccessful");
+		}
+
+		private static void GetUser()
+		{
+			System.Console.WriteLine("Input id");
+			int id;
+			id = GetIdFromConsole();
+			var user = userLogic.GetUser(id);
+			System.Console.WriteLine(user != null ?
+				"User: " + user.ToString() : "User with such id does not exist");
+		}
+
+		private static void GetAllUsers()
+		{
+			var users = userLogic.GetEntities();
+			foreach (var pair in users)
+			{
+				System.Console.WriteLine(pair.Value.ToString());
 			}
 		}
 

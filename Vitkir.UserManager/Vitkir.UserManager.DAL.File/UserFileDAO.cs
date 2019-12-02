@@ -1,6 +1,7 @@
 ﻿using System;
-using Vitkir.UserManager.Common.Entities;
 using System.Configuration;
+using System.Globalization;
+using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.File
 {
@@ -14,10 +15,10 @@ namespace Vitkir.UserManager.DAL.File
 
 		}
 
-		protected override User ParseString(string entityItem)
+		public override User ParseString(string entityItem)
 		{
 			var entityFields = entityItem.Split(':');
-			return new User(entityFields[1], DateTime.Parse(entityFields[2]))
+			return new User(entityFields[1], DateTime.ParseExact(entityFields[2], "dd.MM.yyyy", CultureInfo.InvariantCulture))
 			{
 				Id = int.Parse(entityFields[0])
 			};

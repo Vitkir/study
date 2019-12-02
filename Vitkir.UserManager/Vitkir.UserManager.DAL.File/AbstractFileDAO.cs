@@ -37,7 +37,7 @@ namespace Vitkir.UserManager.DAL.File
 		public T CreateEntity(T entity)
 		{
 			entity.Id = ++lastId;
-			var entityItem = entity.ToString() + Environment.NewLine;
+			var entityItem = entity.ToString()/* + Environment.NewLine*/;
 			long currentPosition;
 			using (FileStream fileStream = new FileStream(entityFilePath, FileMode.Append))
 			{
@@ -76,18 +76,21 @@ namespace Vitkir.UserManager.DAL.File
 
 		public Dictionary<int, T> GetEntities()
 		{
-			string[] lines;
 			if (!System.IO.File.Exists(entityFilePath))
 			{
 				throw new IOException(fileMissingExeption);
 			}
-			lines = System.IO.File.ReadAllLines(entityFilePath);
-
 			Dictionary<int, T> users = new Dictionary<int, T>();
-			for (int i = 0; i < lines.Length; i++)
+			using (StreamReader streamReader = new StreamReader(entityFilePath))
 			{
-				var T = ParseString(lines[i]);
-				users.Add(T.Id, T);
+				var currentLine = streamReader.ReadLine();
+				T entity = default;
+				while (!string.IsNullOrEmpty(currentLine))
+				{
+					entity = ParseString(currentLine);
+					users.Add(entity.Id, entity);
+					currentLine = streamReader.ReadLine();
+				}
 			}
 			return users;
 		}
@@ -119,6 +122,6 @@ namespace Vitkir.UserManager.DAL.File
 			System.IO.File.Create(entityFilePath).Dispose();
 		}
 
-		protected abstract T ParseString(string entityItem);
+		public abstract T ParseString(string entityItem);
 	}
 }
