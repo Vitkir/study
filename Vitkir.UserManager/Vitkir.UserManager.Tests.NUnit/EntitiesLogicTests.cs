@@ -31,9 +31,9 @@ namespace Vitkir.UserManager.Tests.NUnit
 		[TestMethod]
 		public void CannotChangeUserByGetUser()
 		{
-			var user = userLogic.GetUser(1);
+			var user = userLogic.GetEntity(1);
 			user.Id = 10;
-			var testUser = userLogic.GetUser(1);
+			var testUser = userLogic.GetEntity(1);
 			Assert.AreNotEqual(user.Id, testUser.Id, "createdUser update couset source user update.");
 		}
 

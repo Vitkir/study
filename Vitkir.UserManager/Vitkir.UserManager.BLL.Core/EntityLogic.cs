@@ -5,7 +5,7 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public abstract class EntityLogic<T> where T : Entity, ICloneable
+	public abstract class EntityLogic<T> : ILogic<T> where T : Entity, ICloneable
 	{
 		private readonly IDAO<T> entityDAO;
 		private readonly Dictionary<int, T> entityCache;
@@ -34,7 +34,7 @@ namespace Vitkir.UserManager.BLL.Logic
 			return 0;
 		}
 
-		public T GetUser(int id)
+		public T GetEntity(int id)
 		{
 			if (entityCache.ContainsKey(id))
 			{

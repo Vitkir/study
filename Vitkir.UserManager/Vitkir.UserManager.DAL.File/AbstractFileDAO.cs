@@ -37,7 +37,7 @@ namespace Vitkir.UserManager.DAL.File
 		public T CreateEntity(T entity)
 		{
 			entity.Id = ++lastId;
-			var entityItem = entity.ToString()/* + Environment.NewLine*/;
+			var entityItem = entity.ToString() + Environment.NewLine;
 			long currentPosition;
 			using (FileStream fileStream = new FileStream(entityFilePath, FileMode.Append))
 			{
