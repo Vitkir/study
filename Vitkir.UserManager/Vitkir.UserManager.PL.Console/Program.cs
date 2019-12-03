@@ -1,16 +1,12 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
-using System.Text.RegularExpressions;
-using Vitkir.UserManager.Common.Entities;
-using Vitkir.UserManager.BLL.Logic;
-using Vitkir.UserManager.Common.Dependencies;
-using Ninject;
+﻿using Ninject;
+using System;
 using Vitkir.UserManadger.PL.Console;
+using Vitkir.UserManager.Common.Dependencies;
+using static Vitkir.UserManadger.PL.Console.Enums;
 
 namespace Vitkir.UserManager.PL.Console
 {
-	public class Program
+	class Program
 	{
 		private static UserPresentation userPresentation;
 		private static AwardPresentation awardPresentation;
@@ -18,33 +14,11 @@ namespace Vitkir.UserManager.PL.Console
 
 		static void Main()
 		{
-			ShowEntityOptions(new Menu());
-			GetMenu();
-		}
-
-		public enum Entities : int
-		{
-			Award = 1,
-			User,
-			Exit,
-		}
-
-		public enum Menu : int
-		{
-			Create = 1,
-			Update,
-			Delete,
-			Get,
-			GetAll,
-			ConsoleClearing,
-			Exit,
-		}
-
-		public Program()
-		{
 			dependencyManager = new StandardKernel(new DependencyManager());
 			userPresentation = dependencyManager.Get<UserPresentation>();
 			awardPresentation = dependencyManager.Get<AwardPresentation>();
+			ShowEnum(new Menu());
+			GetMenu();
 		}
 
 		private static void GetMenu()
@@ -63,24 +37,28 @@ namespace Vitkir.UserManager.PL.Console
 					switch (menu)
 					{
 						case Menu.Create:
-							ShowEntityOptions(entities);
+							ShowEnum(entities);
+							GetSubMenu().CreateEntity();
 							break;
 						case Menu.Update:
 							userPresentation.UpdateDatabase();
 							awardPresentation.UpdateDatabase();
 							break;
 						case Menu.Delete:
-							ShowEntityOptions(entities);
+							ShowEnum(entities);
+							GetSubMenu().DeleteEntity();
 							break;
 						case Menu.Get:
-							ShowEntityOptions(entities);
+							ShowEnum(entities);
+							GetSubMenu().GetEntity();
 							break;
 						case Menu.GetAll:
-							ShowEntityOptions(entities);
+							ShowEnum(entities);
+							GetSubMenu().GetAllentities();
 							break;
 						case Menu.ConsoleClearing:
 							System.Console.Clear();
-							ShowEntityOptions(menu);
+							ShowEnum(menu);
 							break;
 						case Menu.Exit:
 							userPresentation.UpdateDatabase();
@@ -90,10 +68,11 @@ namespace Vitkir.UserManager.PL.Console
 				}
 			}
 		}
-		private static void GetSubMenu()
+
+		private static IEntityPresentation GetSubMenu()
 		{
 			char input;
-			Entities menu;
+			Entities entities;
 			while (true)
 			{
 				System.Console.Write("Select action :>");
@@ -101,39 +80,28 @@ namespace Vitkir.UserManager.PL.Console
 				System.Console.WriteLine(Environment.NewLine);
 				if (char.IsDigit(input))
 				{
-					menu = (Entities)Enum.Parse(typeof(Entities), input.ToString());
-					switch (menu)
+					entities = (Entities)Enum.Parse(typeof(Entities), input.ToString());
+					switch (entities)
 					{
 						case Entities.Award:
-							break;
+							return awardPresentation;
 						case Entities.User:
-							break;
-						case Entities.Exit:
-							return;
+							return userPresentation;
 					}
 				}
 			}
 		}
 
-		private static void ShowEntityOptions(Enum @enum)
+		private static void ShowEnum(Enum @enum)
 		{
 			int option = 1;
 			foreach (var name in Enum.GetNames(@enum.GetType()))
 			{
+
 				System.Console.WriteLine($"{option.ToString()}: {name}");
 				option++;
 			}
 		}
 
-		private static int GetIdFromConsole()
-		{
-			int id;
-			var input = System.Console.ReadLine();
-			while (!int.TryParse(input, out id))
-			{
-				input = System.Console.ReadLine();
-			}
-			return id;
-		}
 	}
 }

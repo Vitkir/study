@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="AbstractEntityPresentation.cs" />
     <Compile Include="AwardPresentation.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="IEntityPresentation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserPresentation.cs" />

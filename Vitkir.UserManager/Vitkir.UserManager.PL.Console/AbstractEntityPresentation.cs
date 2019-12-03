@@ -5,7 +5,7 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManadger.PL.Console
 {
-	public abstract class AbstractEntityPresentation<T> where T : Entity, ICloneable
+	public abstract class AbstractEntityPresentation<T> : IEntityPresentation where T : Entity, ICloneable
 	{
 		protected readonly ILogic<T> entityLogic;
 
@@ -30,14 +30,16 @@ namespace Vitkir.UserManadger.PL.Console
 			System.Console.WriteLine("success");
 		}
 
-		public void DeleteEntity(int id)
+		public void DeleteEntity()
 		{
+			int id = GetIdFromConsole();
 			var returned = entityLogic.DeleteEntityFromCache(id);
 			System.Console.WriteLine(returned != 0 ? nameof(T) + " id " + returned.ToString() + " deleted" : "unsuccessful");
 		}
 
-		public void GetEntity(int id)
+		public void GetEntity()
 		{
+			int id = GetIdFromConsole();
 			System.Console.WriteLine("Input id");
 			var entity = entityLogic.GetEntity(id);
 			System.Console.WriteLine(entity != null ?
@@ -51,6 +53,17 @@ namespace Vitkir.UserManadger.PL.Console
 			{
 				System.Console.WriteLine(pair.Value.ToString());
 			}
+		}
+
+		private int GetIdFromConsole()
+		{
+			int id;
+			var input = System.Console.ReadLine();
+			while (!int.TryParse(input, out id))
+			{
+				input = System.Console.ReadLine();
+			}
+			return id;
 		}
 	}
 }
