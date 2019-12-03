@@ -14,7 +14,7 @@ namespace Vitkir.UserManadger.PL.Console
 
 		public override void CreateEntity()
 		{
-			System.Console.WriteLine("Input name");
+			System.Console.WriteLine("Input tytle");
 			var pattern = new Regex("^.{1,40}$");
 			var tytle = System.Console.ReadLine();
 			while (!pattern.IsMatch(tytle))
