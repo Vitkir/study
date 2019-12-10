@@ -55,6 +55,11 @@ namespace Vitkir.UserManadger.PL.Console
 			}
 		}
 
+		public void AssignEntity()
+		{
+			throw new NotImplementedException();
+		}
+
 		private int GetIdFromConsole()
 		{
 			int id;

@@ -56,6 +56,10 @@ namespace Vitkir.UserManager.PL.Console
 							ShowEnum(entities);
 							GetSubMenu().GetAllentities();
 							break;
+						case Menu.Assign:
+							ShowEnum(entities);
+
+							break;
 						case Menu.ConsoleClearing:
 							System.Console.Clear();
 							ShowEnum(menu);

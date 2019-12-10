@@ -1,6 +1,6 @@
 ﻿namespace Vitkir.UserManadger.PL.Console
 {
-	class Enums
+	internal class Enums
 	{
 		internal enum Entities : int
 		{
@@ -16,6 +16,7 @@
 			Delete,
 			Get,
 			GetAll,
+			Assign,
 			ConsoleClearing,
 			Exit,
 		}
