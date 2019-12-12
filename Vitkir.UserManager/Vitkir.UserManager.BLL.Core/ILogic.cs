@@ -6,7 +6,7 @@ namespace Vitkir.UserManager.BLL.Logic
 {
 	public interface ILogic<T> where T : Entity, ICloneable
 	{
-		T CreateEntity(T user);
+		T CreateEntity(T entity);
 
 		int DeleteEntityFromCache(int id);
 

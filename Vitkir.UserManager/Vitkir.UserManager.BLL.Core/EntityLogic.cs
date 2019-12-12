@@ -10,18 +10,24 @@ namespace Vitkir.UserManager.BLL.Logic
 		private readonly IDAO<T> entityDAO;
 		private readonly Dictionary<int, T> entityCache;
 
-		public T CreateEntity(T user)
+		public EntityLogic(IDAO<T> entityDAO)
 		{
-			T createdUser;
-			createdUser = entityDAO.CreateEntity(user);
-			entityCache.Add(createdUser.Id, createdUser);
-			return createdUser;
+			this.entityDAO = entityDAO;
+			entityCache = entityDAO.GetEntities();
+		}
+
+		public T CreateEntity(T entity)
+		{
+			T createdEntity;
+			createdEntity = entityDAO.CreateEntity(entity);
+			entityCache.Add(createdEntity.Id, createdEntity);
+			return createdEntity;
 		}
 
 		public void UpdateEntityDAO()
 		{
-			var users = GetEntities();
-			entityDAO.UpdateFile(users);
+			var entities = GetEntities();
+			entityDAO.UpdateFile(entities);
 		}
 
 		public int DeleteEntityFromCache(int id)
@@ -46,20 +52,14 @@ namespace Vitkir.UserManager.BLL.Logic
 		public Dictionary<int, T> GetEntities()
 		{
 			var len = entityCache.Count;
-			T user;
-			var users = new Dictionary<int, T>(len);
+			T entity;
+			var entities = new Dictionary<int, T>(len);
 			foreach (var pair in entityCache)
 			{
-				user = (T)pair.Value.Clone();
-				users.Add(user.Id, user);
+				entity = (T)pair.Value.Clone();
+				entities.Add(entity.Id, entity);
 			}
-			return users;
-		}
-
-		public EntityLogic(IDAO<T> entityDAO)
-		{
-			this.entityDAO = entityDAO;
-			entityCache = entityDAO.GetEntities();
+			return entities;
 		}
 	}
 }

@@ -48,6 +48,7 @@
     <Compile Include="AwardFileDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFileDAO.cs" />
+    <Compile Include="UsersAwardsFileDAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

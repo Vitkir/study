@@ -6,6 +6,7 @@
 		{
 			Award = 1,
 			User,
+			Relationship,
 			Back,
 		}
 
@@ -16,7 +17,6 @@
 			Delete,
 			Get,
 			GetAll,
-			Assign,
 			ConsoleClearing,
 			Exit,
 		}

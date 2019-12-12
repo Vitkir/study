@@ -40,7 +40,6 @@ namespace Vitkir.UserManadger.PL.Console
 		public void GetEntity()
 		{
 			int id = GetIdFromConsole();
-			System.Console.WriteLine("Input id");
 			var entity = entityLogic.GetEntity(id);
 			System.Console.WriteLine(entity != null ?
 				nameof(T) + ": " + entity.ToString() : nameof(T) + " with such id does not exist");
@@ -60,12 +59,14 @@ namespace Vitkir.UserManadger.PL.Console
 			throw new NotImplementedException();
 		}
 
-		private int GetIdFromConsole()
+		protected int GetIdFromConsole()
 		{
 			int id;
+			System.Console.WriteLine("Input id");
 			var input = System.Console.ReadLine();
 			while (!int.TryParse(input, out id))
 			{
+				System.Console.WriteLine("Incorrect input");
 				input = System.Console.ReadLine();
 			}
 			return id;
