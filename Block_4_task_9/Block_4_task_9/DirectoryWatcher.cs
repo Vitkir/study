@@ -10,8 +10,8 @@ namespace Block4Task9
 	{
 		public FileSystemWatcher Watcher { get; private set; }
 
-		private static readonly string pathRootWorkDirectory = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\WorkFolder";
-		private static readonly string pathRootBackupDirectory = @"C:\Users\User\Desktop\Learning\xt_2016\Task_4.9\Backup";
+		private readonly string pathRootWorkDirectory;
+		private readonly string pathRootBackupDirectory;
 
 		private const string filesExtension = ".txt";
 		private const string logName = "Log.txt";
@@ -27,6 +27,33 @@ namespace Block4Task9
 			LogItemChanged,
 			LogItemDeleted,
 			LogItemRenamed
+		}
+
+		public DirectoryWatcher(string workDirectory, string backupDirectory)
+		{
+			pathRootWorkDirectory = workDirectory;
+			pathRootBackupDirectory = backupDirectory;
+			rootWorkDirectory = new DirectoryInfo(pathRootWorkDirectory);
+			rootBackupDirectory = new DirectoryInfo(pathRootBackupDirectory);
+			if (!rootWorkDirectory.Exists)
+			{
+				rootWorkDirectory.Create();
+			}
+			if (!rootBackupDirectory.Exists)
+			{
+				rootBackupDirectory.Create();
+			}
+			Watcher = new FileSystemWatcher(pathRootWorkDirectory);
+			Watcher.IncludeSubdirectories = true;
+			Watcher.NotifyFilter = NotifyFilters.CreationTime
+											| NotifyFilters.LastWrite
+											| NotifyFilters.FileName
+											| NotifyFilters.DirectoryName;
+
+			Watcher.Created += OnCreated;
+			Watcher.Deleted += OnDeleted;
+			Watcher.Changed += OnChanged;
+			Watcher.Renamed += OnRenamed;
 		}
 
 		public void RestoreDirectory(DateTime recoveryTime)
@@ -71,27 +98,6 @@ namespace Block4Task9
 						break;
 				}
 			}
-		}
-
-		public DirectoryWatcher()
-		{
-			rootWorkDirectory = new DirectoryInfo(pathRootWorkDirectory);
-			rootBackupDirectory = new DirectoryInfo(pathRootBackupDirectory);
-			if (!rootWorkDirectory.Exists)
-			{
-				rootWorkDirectory.Create();
-			}
-			Watcher = new FileSystemWatcher(pathRootWorkDirectory);
-			Watcher.IncludeSubdirectories = true;
-			Watcher.NotifyFilter = NotifyFilters.CreationTime
-											| NotifyFilters.LastWrite
-											| NotifyFilters.FileName
-											| NotifyFilters.DirectoryName;
-
-			Watcher.Created += OnCreated;
-			Watcher.Deleted += OnDeleted;
-			Watcher.Changed += OnChanged;
-			Watcher.Renamed += OnRenamed;
 		}
 
 		public void CreateCheckpoint()

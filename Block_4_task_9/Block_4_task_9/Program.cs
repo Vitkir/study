@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 
 namespace Block4Task9
@@ -12,7 +13,8 @@ namespace Block4Task9
 
 			string helpEscape = $"Press <{escape.ToString()}> to exit";
 
-			DirectoryWatcher manager = new DirectoryWatcher();
+			DirectoryWatcher manager = new DirectoryWatcher(ConfigurationManager.AppSettings.Get("workDirectory"), 
+				ConfigurationManager.AppSettings.Get("backupDirectory"));
 
 			if (args[0] == "y")
 			{
