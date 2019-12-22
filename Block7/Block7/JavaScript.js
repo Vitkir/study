@@ -19,7 +19,7 @@
 	}
 	for (let i = 0; i < inputText.length; i++) {
 		if (!repeatChars.includes(inputText[i])) {
-			let char = inputText.slice(i, 1);
+			let char = inputText.substring(i, i + 1);
 			outputText = outputText + char;
 		}
 	}
