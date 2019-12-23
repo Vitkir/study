@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="JavaScript7_2.js" />
     <Content Include="Main.html" />
     <Content Include="JavaScript.js" />
     <Content Include="Web.config" />
