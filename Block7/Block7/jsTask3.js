@@ -28,3 +28,15 @@ function singleSelect(li) {
 	}
 	li.classList.add('selected');
 }
+
+function moveItems(sourceId, destId, querySelector) {
+
+	let sourceList = document.getElementById(sourceId),
+		allItems = sourceList.querySelectorAll(querySelector),
+		destList = document.getElementById(destId);
+
+	for (var i = 0; i < allItems.length; i++) {
+		destList.appendChild(allItems[i]);
+		allItems[i].classList.remove('selected');
+	}
+}

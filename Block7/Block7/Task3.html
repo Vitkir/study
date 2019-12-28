@@ -9,7 +9,7 @@
 	<div id="selectionMenu">
 		<div>
 			<h4>available</h4>
-			<ul id="ul">
+			<ul id="available">
 				<li>Option 1</li>
 				<li>Option 2</li>
 				<li>Option 3</li>
@@ -17,14 +17,14 @@
 			</ul>
 		</div>
 		<div class="buttons">
-			<button>>></button>
-			<button>></button>
-			<button><</button>
-			<button><<</button>
+			<button id="btn1" onclick="moveItems('available', 'selected', 'li')">>></button>
+			<button id="btn2" onclick="moveItems('available', 'selected', 'li.selected')">></button>
+			<button id="btn3" onclick="moveItems('selected', 'available', 'li.selected')"><</button>
+			<button id="btn4" onclick="moveItems('selected', 'available', 'li')"><<</button>
 		</div>
 		<div>
 			<h4>selected</h4>
-			<ul>
+			<ul id="selected">
 				<li>Option 4</li>
 				<li>Option 5</li>
 			</ul>
