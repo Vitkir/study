@@ -130,7 +130,7 @@
     <Content Include="Task1.js" />
     <Content Include="StyleSheet.css" />
     <Content Include="Task3.html" />
-    <Content Include="jsTask3.js" />
+    <Content Include="Task3.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

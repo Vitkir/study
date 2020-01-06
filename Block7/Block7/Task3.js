@@ -1,9 +1,4 @@
 ﻿selectionMenu.onclick = function (event) {
-	//let ul = event.target.closest('ul');
-	//if (!ul) return;
-
-	//if (!selectionMenu.contains(ul)) return;
-
 	if (event.target.tagName != "LI") return;
 
 	if (event.ctrlKey || event.metaKey) {
@@ -23,6 +18,7 @@ function toggleSelect(li) {
 
 function singleSelect(li) {
 	let selected = selectionMenu.querySelectorAll('.selected');
+
 	for (let elem of selected) {
 		elem.classList.remove('selected');
 	}
@@ -30,7 +26,6 @@ function singleSelect(li) {
 }
 
 function moveItems(sourceId, destId, querySelector) {
-
 	let sourceList = document.getElementById(sourceId),
 		allItems = sourceList.querySelectorAll(querySelector),
 		destList = document.getElementById(destId);
