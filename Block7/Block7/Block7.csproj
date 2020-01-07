@@ -125,12 +125,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Task2.js" />
-    <Content Include="Main.html" />
-    <Content Include="Task1.js" />
-    <Content Include="StyleSheet.css" />
-    <Content Include="Task3.html" />
-    <Content Include="Task3.js" />
+    <Content Include="PageTurning.js" />
+    <Content Include="Task2\Task2.js" />
+    <Content Include="Task1\Task1.html" />
+    <Content Include="Task1\Task1.js" />
+    <Content Include="Task2\Task2.html" />
+    <Content Include="Task3\StyleSheet.css" />
+    <Content Include="Task3\Task3.html" />
+    <Content Include="Task3\Task3.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
