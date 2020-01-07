@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PageTurning.js" />
+    <Content Include="StyleSheet2.css" />
     <Content Include="Task2\Task2.js" />
     <Content Include="Task1\Task1.html" />
     <Content Include="Task1\Task1.js" />
