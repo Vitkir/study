@@ -6,14 +6,14 @@
 	<link href="StyleSheet.css" rel="stylesheet" />
 </head>
 <body>
-	<div id="selectionMenu" class="menu">
+	<div id="selectionMenu" class="menu" onmousedown="onMousedown()" onclick="onClick(event)">
 		<div>
 			<h4>available</h4>
 			<ul id="available">
 				<li>Option 1</li>
 				<li>Option 2</li>
 				<li>Option 3</li>
-				
+
 			</ul>
 		</div>
 		<div class="buttons">
@@ -25,6 +25,30 @@
 		<div>
 			<h4>selected</h4>
 			<ul id="selected">
+				<li>Option 4</li>
+				<li>Option 5</li>
+			</ul>
+		</div>
+	</div>
+	<div id="selectionMenu2" class="menu" onmousedown="onMousedown()" onclick="onClick(event)">
+		<div>
+			<h4>available</h4>
+			<ul id="available2">
+				<li>Option 1</li>
+				<li>Option 2</li>
+				<li>Option 3</li>
+
+			</ul>
+		</div>
+		<div class="buttons">
+			<button id="btn12" onclick="moveItems('available2', 'selected2', 'li')">>></button>
+			<button id="btn22" onclick="moveItems('available2', 'selected2', 'li.selected')">></button>
+			<button id="btn32" onclick="moveItems('selected2', 'available2', 'li.selected')"><</button>
+			<button id="btn42" onclick="moveItems('selected2', 'available2', 'li')"><<</button>
+		</div>
+		<div>
+			<h4>selected</h4>
+			<ul id="selected2">
 				<li>Option 4</li>
 				<li>Option 5</li>
 			</ul>

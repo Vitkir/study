@@ -1,4 +1,4 @@
-﻿selectionMenu.onclick = function (event) {
+﻿function onClick(event) {
 	if (event.target.tagName != "LI") return;
 
 	if (event.ctrlKey || event.metaKey) {
@@ -8,7 +8,7 @@
 	}
 }
 
-selectionMenu.onmousedown = function () {
+function onMousedown() {
 	return false;
 };
 
@@ -17,7 +17,7 @@ function toggleSelect(li) {
 }
 
 function singleSelect(li) {
-	let selected = selectionMenu.querySelectorAll('.selected');
+	let selected = li.closest('.menu').querySelectorAll('.selected');
 
 	for (let elem of selected) {
 		elem.classList.remove('selected');
