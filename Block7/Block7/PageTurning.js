@@ -29,10 +29,19 @@ function appendElements() {
 function timerControl() {
 	let ref = document.getElementById('path');
 
-	if (timer === false) {
+	if (ref === null) {
+		clearInterval(timer);
+		timer = false;
+		if (confirm('press "OK" to go to first page')) {
+			window.history.go(-2);
+		} else {
+			self.close();
+		}
+	} else if (timer === false) {
 		timer = setInterval(function () {
+			//todo close window
 			window.location.href = ref.href;
-		}, 5000);
+		}, 3000);
 	} else {
 		clearInterval(timer);
 		timer = false;
