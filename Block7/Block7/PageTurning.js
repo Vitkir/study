@@ -4,19 +4,24 @@ function appendElements() {
 	let container = document.createElement('div'),
 		previousPage = document.createElement('button'),
 		timerButton = document.createElement('button'),
-		icon = document.createElement('i');
+		icon1 = document.createElement('i'),
+		icon2 = document.createElement('i');
+
+	icon1.classList.add("btn");
+	icon1.classList.add("fa");
+	icon1.classList.add("fa-backward");
 
 	previousPage.addEventListener('click', back);
-	previousPage.innerHTML = "Go to previous page";
-	previousPage.setAttribute('class', "back");
+	previousPage.appendChild(icon1);
 
-	icon.classList.add("fas");
-	icon.classList.add("fa-stop-circle");
+	icon2.classList.add("btn");
+	icon2.classList.add("fa");
+	icon2.classList.add("fa-stop");
 
 	timerButton.setAttribute('id', "timerBtn");
 	timerButton.addEventListener('click', timerControl);
 	timerButton.addEventListener('click', timerButtonStyle)
-	timerButton.appendChild(icon);
+	timerButton.appendChild(icon2);
 
 	container.appendChild(previousPage);
 	container.appendChild(timerButton);
@@ -50,14 +55,15 @@ function timerControl() {
 
 function timerButtonStyle(event) {
 	let timerbutton = event.target,
-		icon = document.getElementsByTagName('i');
+		icon = document.getElementById('timerBtn').firstChild;
 
-	if (icon[0].className === "fas fa-stop-circle") {
-		timerbutton.classList.remove("fa-stop-circle");
-		timerbutton.classList.add("fa-play-circle");
+
+	if (icon.className === "btn fa fa-stop") {
+		timerbutton.classList.remove("fa-stop");
+		timerbutton.classList.add("fa-play");
 	} else {
-		timerbutton.classList.remove("fa-play-circle");
-		timerbutton.classList.add("fa-stop-circle");
+		timerbutton.classList.remove("fa-play");
+		timerbutton.classList.add("fa-stop");
 	}
 }
 
