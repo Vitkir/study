@@ -1,4 +1,4 @@
-﻿calculate.onclick = function () {
+﻿function calculate() {
 	let input = document.getElementById('inputExpression').value + "",
 		pattern = /([/+-/*/]?)([ ]?)(([0-9]+\.[0-9]+)|[0-9]+)/g,
 		exp = input.match(pattern),

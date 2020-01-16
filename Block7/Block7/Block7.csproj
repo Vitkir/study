@@ -127,16 +127,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Main.html" />
-    <Content Include="PageTurning.js" />
-    <Content Include="StyleSheet2.css" />
-    <Content Include="Task2\Task2.js" />
-    <Content Include="Task1\Task1.html" />
-    <Content Include="Task1\Task1.js" />
-    <Content Include="Task2\Task2.html" />
-    <Content Include="Task3\StyleSheet.css" />
-    <Content Include="Task3\Task3.html" />
-    <Content Include="Task3\Task3.js" />
+    <Content Include="html\Main.html" />
+    <Content Include="scripts\Main.js" />
+    <Content Include="scripts\Calculate.js" />
+    <Content Include="html\DeleteDoubleLetters.html" />
+    <Content Include="scripts\DeleteDoubleLetters.js" />
+    <Content Include="html\Calculate.html" />
+    <Content Include="css\SelectionMenu.css" />
+    <Content Include="html\SelectionMenu.html" />
+    <Content Include="scripts\SelectionMenu.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

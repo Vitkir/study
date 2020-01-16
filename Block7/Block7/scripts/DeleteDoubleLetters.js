@@ -1,4 +1,4 @@
-﻿butt.onclick = function () {
+﻿function deleteDoubleLetters() {
 	let inputText = document.getElementById('inputText').value + "",
 		words = inputText.split("?").join(" ").
 			split("!").join(" ").

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>SelectionMenu</title>
+	<link href="../css/SelectionMenu.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="content">
+		<div id="selectionMenu" class="menu" onmousedown="onMousedown()" onclick="onClick(event)">
+			<div>
+				<h4>available</h4>
+				<ul id="available">
+					<li>Option 1</li>
+					<li>Option 2</li>
+					<li>Option 3</li>
+					<li>Option 4</li>
+					<li>Option 5</li>
+				</ul>
+			</div>
+			<div class="buttons">
+				<button id="btn1" onclick="moveItems('available', 'selected', 'li')">>></button>
+				<button id="btn2" onclick="moveItems('available', 'selected', 'li.selected')">></button>
+				<button id="btn3" onclick="moveItems('selected', 'available', 'li.selected')"><</button>
+				<button id="btn4" onclick="moveItems('selected', 'available', 'li')"><<</button>
+			</div>
+			<div>
+				<h4>selected</h4>
+				<ul id="selected">
+				</ul>
+			</div>
+		</div>
+		<div id="selectionMenu2" class="menu" onmousedown="onMousedown()" onclick="onClick(event)">
+			<div>
+				<h4>available</h4>
+				<ul id="available2">
+					<li>Option 1</li>
+					<li>Option 2</li>
+					<li>Option 3</li>
+					<li>Option 4</li>
+					<li>Option 5</li>
+				</ul>
+			</div>
+			<div class="buttons">
+				<button id="btn12" onclick="moveItems('available2', 'selected2', 'li')">>></button>
+				<button id="btn22" onclick="moveItems('available2', 'selected2', 'li.selected')">></button>
+				<button id="btn32" onclick="moveItems('selected2', 'available2', 'li.selected')"><</button>
+				<button id="btn42" onclick="moveItems('selected2', 'available2', 'li')"><<</button>
+			</div>
+			<div>
+				<h4>selected</h4>
+				<ul id="selected2">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script src="../scripts/SelectionMenu.js"></script>
+</body>
+</html>
