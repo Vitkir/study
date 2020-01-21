@@ -57,7 +57,7 @@ namespace Vitkir.UserManager.DAL.File
 		public void UpdateFile(Dictionary<int, T> usersCache)
 		{
 			var info = new FileInfo(entityFilePath).IsReadOnly;
-			if (!info)
+			if (info)
 			{
 				throw new IOException(writingExeption);
 			}
@@ -80,7 +80,7 @@ namespace Vitkir.UserManager.DAL.File
 			{
 				throw new IOException(fileMissingExeption);
 			}
-			Dictionary<int, T> users = new Dictionary<int, T>();
+			Dictionary<int, T> entities = new Dictionary<int, T>();
 			using (StreamReader streamReader = new StreamReader(entityFilePath))
 			{
 				var currentLine = streamReader.ReadLine();
@@ -88,11 +88,11 @@ namespace Vitkir.UserManager.DAL.File
 				while (!string.IsNullOrEmpty(currentLine))
 				{
 					entity = ParseString(currentLine);
-					users.Add(entity.Id, entity);
+					entities.Add(entity.Id, entity);
 					currentLine = streamReader.ReadLine();
 				}
 			}
-			return users;
+			return entities;
 		}
 
 		private int GetLastId()
