@@ -7,7 +7,6 @@
 			Award = 1,
 			User,
 			Relationship,
-			Back,
 		}
 
 		internal enum Menu : int
