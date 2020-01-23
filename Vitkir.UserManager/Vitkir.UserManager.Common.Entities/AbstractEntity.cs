@@ -1,6 +1,6 @@
 ﻿namespace Vitkir.UserManager.Common.Entities
 {
-	public class Entity
+	public abstract class AbstractEntity
 	{
 		public int Id { get; set; }
 	}

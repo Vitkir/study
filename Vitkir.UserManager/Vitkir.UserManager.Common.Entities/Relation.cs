@@ -2,13 +2,13 @@
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class UsersAwards : Entity, IEquatable<UsersAwards>, ICloneable
+	public class Relation : AbstractEntity, IEquatable<Relation>, ICloneable
 	{
 		public int UserId { get; set; }
 
 		public int AwardId { get; set; }
 
-		public UsersAwards(int userId, int awardId)
+		public Relation(int userId, int awardId)
 		{
 			UserId = userId;
 			AwardId = awardId;
@@ -22,9 +22,8 @@ namespace Vitkir.UserManager.Common.Entities
 		public override bool Equals(object obj)
 		{
 			if (obj == null) return false;
-			UsersAwards objAsUser = obj as UsersAwards;
-			if (objAsUser == null) return false;
-			else return Equals(objAsUser);
+			if (!(obj is Relation)) return false;
+			return true;
 		}
 
 		public override int GetHashCode()
@@ -32,7 +31,7 @@ namespace Vitkir.UserManager.Common.Entities
 			return Id;
 		}
 
-		public bool Equals(UsersAwards other)
+		public bool Equals(Relation other)
 		{
 			if (other == null) return false;
 			return Id.Equals(other.Id);
@@ -40,7 +39,7 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public object Clone()
 		{
-			return new UsersAwards(UserId, AwardId) { Id = Id };
+			return new Relation(UserId, AwardId) { Id = Id };
 		}
 	}
 }

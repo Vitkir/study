@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class Award : Entity, IEquatable<Award>, ICloneable
+	public class Award : AbstractEntity, IEquatable<Award>, ICloneable
 	{
 		public string Title { get; }
 
@@ -10,6 +11,8 @@ namespace Vitkir.UserManager.Common.Entities
 		{
 			Title = title;
 		}
+
+		public List<User> RelatedUsers { get; set; }
 
 		public override string ToString()
 		{
@@ -19,9 +22,8 @@ namespace Vitkir.UserManager.Common.Entities
 		public override bool Equals(object obj)
 		{
 			if (obj == null) return false;
-			Award objAsAward = obj as Award;
-			if (objAsAward == null) return false;
-			else return Equals(objAsAward);
+			if (!(obj is Award)) return false;
+			return true;
 		}
 
 		public override int GetHashCode()

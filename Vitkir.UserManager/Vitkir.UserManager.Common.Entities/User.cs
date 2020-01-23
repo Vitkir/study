@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class User : Entity, IEquatable<User>, ICloneable
+	public class User : AbstractEntity, IEquatable<User>, ICloneable
 	{
 		public string Name { get; }
 
@@ -23,10 +24,13 @@ namespace Vitkir.UserManager.Common.Entities
 			}
 		}
 
+		public List<int> RelatedAwards { get; set; }
+
 		public User(string name, DateTime birthday)
 		{
 			Name = name;
 			Birthday = birthday;
+			RelatedAwards = new List<int>(0);
 		}
 
 		public override string ToString()
@@ -38,9 +42,8 @@ namespace Vitkir.UserManager.Common.Entities
 		public override bool Equals(object obj)
 		{
 			if (obj == null) return false;
-			User objAsUser = obj as User;
-			if (objAsUser == null) return false;
-			else return Equals(objAsUser);
+			if (!(obj is User)) return false;
+			return true;
 		}
 
 		public override int GetHashCode()
@@ -56,7 +59,11 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public object Clone()
 		{
-			return new User(Name, Birthday) { Id = Id };
+			return new User(Name, Birthday)
+			{
+				Id = Id,
+				RelatedAwards = RelatedAwards
+			};
 		}
 	}
 }
