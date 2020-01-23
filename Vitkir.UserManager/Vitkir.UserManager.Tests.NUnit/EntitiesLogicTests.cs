@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
+using System;
 using Vitkir.UserManager.BLL.Logic;
 using Vitkir.UserManager.Common.Dependencies;
 using Vitkir.UserManager.Common.Entities;
@@ -12,11 +12,14 @@ namespace Vitkir.UserManager.Tests.NUnit
 	{
 		private readonly IKernel kernel;
 		private readonly UserLogic userLogic;
+		private int userId = 1;
+		private int awardId = 1;
 
 		public EntitiesLogicTests()
 		{
 			kernel = new StandardKernel(new DependencyManager());
 			userLogic = kernel.Get<UserLogic>();
+
 		}
 
 		[TestMethod]
@@ -31,7 +34,7 @@ namespace Vitkir.UserManager.Tests.NUnit
 		[TestMethod]
 		public void CannotChangeUserByGetUser()
 		{
-			var user = userLogic.GetEntity(1);
+			var user = userLogic.GetEntity(userId);
 			user.Id = 10;
 			var testUser = userLogic.GetEntity(1);
 			Assert.AreNotEqual(user.Id, testUser.Id, "createdUser update couset source user update.");
@@ -47,17 +50,43 @@ namespace Vitkir.UserManager.Tests.NUnit
 		}
 
 		[TestMethod]
-		public void UpdateUserDAO()
+		public void AddRelation()
 		{
+			var relation = new Relation(userId, awardId);
+
+			userLogic.CreateRelation(relation);
+			Assert.IsTrue(userLogic.GetEntity(userId).RelatedAwards.Contains(awardId));
+		}
+
+		[TestMethod]
+		public void GetRelationEntity()
+		{
+			var collect1 = userLogic.GetRelatedEntities(1);
 			try
 			{
-				userLogic.DeleteEntityFromCache(2);
-				userLogic.UpdateEntityDAO();
+				Assert.IsNotNull(collect1);
 			}
-			catch (Exception)
+			catch (NullReferenceException)
 			{
-				Assert.Fail("method dont work");
 			}
+		}
+
+		[TestMethod]
+		public void UpdateUserDAO()
+		{
+			userLogic.DeleteEntityFromCache(2);
+			var dict1 = userLogic.GetEntities();
+			userLogic.UpdateEntityDAO();
+			var dict2 = userLogic.GetEntities();
+			Assert.AreNotEqual(dict1.Count, dict2.Count, "User deleted");
+		}
+
+		[TestMethod]
+		public void DeleteRelation()
+		{
+			userLogic.CreateRelation(new Relation(1, 3));
+			userLogic.DeleteRelationEntity(userId, 3);
+			Assert.IsFalse(userLogic.GetRelatedEntities(userId).Contains(3));
 		}
 	}
 }
