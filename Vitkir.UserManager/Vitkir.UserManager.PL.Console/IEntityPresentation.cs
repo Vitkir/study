@@ -11,7 +11,5 @@
 		void GetEntity();
 
 		void UpdateDatabase();
-
-		void AssignEntity();
 	}
 }

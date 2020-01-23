@@ -6,7 +6,7 @@
 		{
 			Award = 1,
 			User,
-			Relationship,
+			Relationships,
 		}
 
 		internal enum Menu : int

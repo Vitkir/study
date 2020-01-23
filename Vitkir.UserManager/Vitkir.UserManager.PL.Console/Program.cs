@@ -9,16 +9,16 @@ namespace Vitkir.UserManager.PL.Console
 	class Program
 	{
 		private static UserPresentation userPresentation;
+		private static UserPresentation.RelationsPresentation relationsPresentation;
 		private static AwardPresentation awardPresentation;
-		private static UsersAwardsPresentation usersAwardsPresentation;
 		private static IKernel dependencyManager;
 
 		static void Main()
 		{
 			dependencyManager = new StandardKernel(new DependencyManager());
 			userPresentation = dependencyManager.Get<UserPresentation>();
+			relationsPresentation = new UserPresentation.RelationsPresentation(userPresentation);
 			awardPresentation = dependencyManager.Get<AwardPresentation>();
-			usersAwardsPresentation = dependencyManager.Get<UsersAwardsPresentation>();
 			ShowEnum(new Menu());
 			GetMenu();
 		}
@@ -45,7 +45,6 @@ namespace Vitkir.UserManager.PL.Console
 						case Menu.Update:
 							userPresentation.UpdateDatabase();
 							awardPresentation.UpdateDatabase();
-							usersAwardsPresentation.UpdateDatabase();
 							break;
 						case Menu.Delete:
 							ShowEnum(entities);
@@ -66,7 +65,6 @@ namespace Vitkir.UserManager.PL.Console
 						case Menu.Exit:
 							userPresentation.UpdateDatabase();
 							awardPresentation.UpdateDatabase();
-							usersAwardsPresentation.UpdateDatabase();
 							return;
 					}
 				}
@@ -91,8 +89,8 @@ namespace Vitkir.UserManager.PL.Console
 							return awardPresentation;
 						case Entities.User:
 							return userPresentation;
-						case Entities.Relationship:
-							return usersAwardsPresentation;
+						case Entities.Relationships:
+							return relationsPresentation;
 					}
 				}
 			}

@@ -7,7 +7,7 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManadger.PL.Console
 {
-	class UserPresentation : AbstractEntityPresentation<User>
+	public class UserPresentation : AbstractEntityPresentation<User>
 	{
 		public UserPresentation(ILogic<User> userlogic) : base(userlogic)
 		{
@@ -46,6 +46,91 @@ namespace Vitkir.UserManadger.PL.Console
 				System.Console.WriteLine(e.Message + ". Close file and try again.");
 			}
 			System.Console.WriteLine("success. User id: " + returned.ToString());
+		}
+
+		public class RelationsPresentation : IEntityPresentation
+		{
+			private UserPresentation parent;
+
+			public RelationsPresentation(UserPresentation parent)
+			{
+				this.parent = parent;
+			}
+
+			public void CreateEntity()
+			{
+				var userId = parent.GetIdFromConsole();
+				var awardId = parent.GetIdFromConsole();
+				var relation = new Relation(userId, awardId);
+				Relation createdRelation = null;
+
+				try
+				{
+					createdRelation = CastingEntityLogicToIRelationLogic().CreateRelation(relation);
+				}
+				catch (IOException e)
+				{
+					System.Console.WriteLine(e.Message + ". Close file and try again.");
+				}
+				System.Console.WriteLine(createdRelation != null ?
+					"Relation user " + createdRelation.UserId +
+					" and award " + createdRelation.AwardId + " created" : "unsuccessful");
+			}
+
+			public void DeleteEntity()
+			{
+				var userId = parent.GetIdFromConsole();
+				var awardId = parent.GetIdFromConsole();
+				var returned = CastingEntityLogicToIRelationLogic().DeleteRelationEntity(userId, awardId);
+
+				System.Console.WriteLine(returned != null ?
+					"user " + returned.Item1.ToString() +
+					" and award " + returned.Item2.ToString() + " relation deleted" : "unsuccessful");
+			}
+
+			public void GetAllentities()
+			{
+				int userId = parent.GetIdFromConsole();
+				var awards = CastingEntityLogicToIRelationLogic().GetRelatedEntities(userId);
+				if (awards == null)
+				{
+					System.Console.WriteLine("user" + userId.ToString() + "doesn't exists relations");
+					return;
+				}
+				foreach (var award in awards)
+				{
+					System.Console.WriteLine(award.ToString());
+				}
+			}
+
+			public void GetEntity()
+			{
+				var userId = parent.GetIdFromConsole();
+				var awardId = parent.GetIdFromConsole();
+				var flag = parent.entityLogic.GetEntity(userId).RelatedAwards.Contains(awardId);
+
+				System.Console.WriteLine(flag ?
+					"user " + userId.ToString() + " contains award " + awardId.ToString() : "does not contains");
+			}
+
+			public void UpdateDatabase()
+			{
+				try
+				{
+					CastingEntityLogicToIRelationLogic().UpdateRelationsDAO();
+				}
+				catch (IOException e)
+				{
+					System.Console.WriteLine(e.Message + ". Close file and try again.");
+				}
+				System.Console.WriteLine("success");
+			}
+
+			private IRelationLogic CastingEntityLogicToIRelationLogic()
+			{
+				return (parent.entityLogic as IRelationLogic);
+			}
+
 		}
 	}
 }

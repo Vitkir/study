@@ -5,7 +5,7 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManadger.PL.Console
 {
-	public abstract class AbstractEntityPresentation<T> : IEntityPresentation where T : Entity, ICloneable
+	public abstract class AbstractEntityPresentation<T> : IEntityPresentation where T : AbstractEntity, ICloneable
 	{
 		protected readonly ILogic<T> entityLogic;
 
@@ -21,7 +21,6 @@ namespace Vitkir.UserManadger.PL.Console
 			try
 			{
 				entityLogic.UpdateEntityDAO();
-
 			}
 			catch (IOException e)
 			{
@@ -54,10 +53,7 @@ namespace Vitkir.UserManadger.PL.Console
 			}
 		}
 
-		public void AssignEntity()
-		{
-			throw new NotImplementedException();
-		}
+		
 
 		protected int GetIdFromConsole()
 		{

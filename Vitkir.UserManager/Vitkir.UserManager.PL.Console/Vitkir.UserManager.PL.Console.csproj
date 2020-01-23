@@ -55,7 +55,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserPresentation.cs" />
-    <Compile Include="UsersAwardsPresentation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
