@@ -4,7 +4,7 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public interface ILogic<T> where T : Entity, ICloneable
+	public interface ILogic<T> where T : AbstractEntity, ICloneable
 	{
 		T CreateEntity(T entity);
 

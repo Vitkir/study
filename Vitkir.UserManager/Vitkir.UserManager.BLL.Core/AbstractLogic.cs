@@ -5,18 +5,18 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public abstract class EntityLogic<T> : ILogic<T> where T : Entity, ICloneable
+	public abstract class AbstractLogic<T> : ILogic<T> where T : AbstractEntity, ICloneable
 	{
-		private readonly IDAO<T> entityDAO;
-		private readonly Dictionary<int, T> entityCache;
+		protected readonly Dictionary<int, T> entityCache;
+		protected readonly IDAO<T> entityDAO;
 
-		public EntityLogic(IDAO<T> entityDAO)
+		public AbstractLogic(IDAO<T> entityDAO)
 		{
 			this.entityDAO = entityDAO;
 			entityCache = entityDAO.GetEntities();
 		}
 
-		public T CreateEntity(T entity)
+		public virtual T CreateEntity(T entity)
 		{
 			T createdEntity;
 			createdEntity = entityDAO.CreateEntity(entity);
@@ -24,7 +24,7 @@ namespace Vitkir.UserManager.BLL.Logic
 			return createdEntity;
 		}
 
-		public void UpdateEntityDAO()
+		public virtual void UpdateEntityDAO()
 		{
 			var entities = GetEntities();
 			entityDAO.UpdateFile(entities);

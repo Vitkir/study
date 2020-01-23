@@ -3,9 +3,9 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public class UsersAwardsLogic: EntityLogic<UsersAwards>
+	public class RelationsLogic: AbstractLogic<Relation>
 	{
-		public UsersAwardsLogic(IDAO<UsersAwards> usersAwardsDAO) : base(usersAwardsDAO)
+		public RelationsLogic(IDAO<Relation> usersAwardsDAO) : base(usersAwardsDAO)
 		{
 
 		}
