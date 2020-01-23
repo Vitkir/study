@@ -7,7 +7,7 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public abstract class AbstractFileDAO<T> : IDAO<T> where T : Entity
+	public abstract class AbstractFileDAO<T> : IDAO<T> where T : AbstractEntity
 	{
 		private readonly string entityFilePath;
 		private readonly string tmpFilePath;
@@ -15,7 +15,7 @@ namespace Vitkir.UserManager.DAL.File
 		private readonly string writingExeption;
 		private readonly string fileMissingExeption;
 
-		private int lastId;
+		protected int lastId;
 
 		public AbstractFileDAO(string entityFilePath,
 			string tmpFilePath,
@@ -29,7 +29,7 @@ namespace Vitkir.UserManager.DAL.File
 
 			if (!System.IO.File.Exists(this.entityFilePath))
 			{
-				CreateEntityDataFile();
+				System.IO.File.Create(this.entityFilePath).Dispose();
 			}
 			lastId = GetLastId();
 		}
@@ -115,11 +115,6 @@ namespace Vitkir.UserManager.DAL.File
 		{
 			var separator = currentLine.IndexOf(':');
 			return int.Parse(currentLine.Substring(0, separator));
-		}
-
-		private void CreateEntityDataFile()
-		{
-			System.IO.File.Create(entityFilePath).Dispose();
 		}
 
 		public abstract T ParseString(string entityItem);
