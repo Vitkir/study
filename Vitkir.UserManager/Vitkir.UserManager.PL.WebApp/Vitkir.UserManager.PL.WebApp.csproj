@@ -124,6 +124,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -159,13 +160,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Users.cshtml" />
+    <Content Include="Views\Home\Awards.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -179,6 +179,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vitkir.UserManager.BLL.Core\Vitkir.UserManager.BLL.Logic.csproj">
+      <Project>{52234b5d-4264-404c-ab38-bf3d73ba9a78}</Project>
+      <Name>Vitkir.UserManager.BLL.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vitkir.UserManager.Common.Dependencies\Vitkir.UserManager.Common.Dependencies.csproj">
+      <Project>{c7f783e4-69dc-44e4-a8fa-8a225df5a3c2}</Project>
+      <Name>Vitkir.UserManager.Common.Dependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
+      <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>
+      <Name>Vitkir.UserManager.Common.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
