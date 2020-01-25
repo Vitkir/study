@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{52234B5D-4264-404C-AB38-BF3D73BA9A78}</ProjectGuid>
+    <ProjectGuid>{152220DA-AB65-4C3C-8ED9-52EB93504159}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Vitkir.UserManager.BLL.Logic</RootNamespace>
-    <AssemblyName>Vitkir.UserManager.BLL.Logic</AssemblyName>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vitkir.UserManager.BLL.Contracts</RootNamespace>
+    <AssemblyName>Vitkir.UserManager.BLL.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,16 +23,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,26 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AwardLogic.cs" />
-    <Compile Include="AbstractLogic.cs" />
+    <Compile Include="ILogic.cs" />
+    <Compile Include="IRelationLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserLogic.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
-      <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>
+      <Project>{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}</Project>
       <Name>Vitkir.UserManager.Common.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Vitkir.UserManager.DAL.Contracts\Vitkir.UserManager.DAL.Contracts.csproj">
-      <Project>{CBB9D75A-E9F7-46E0-9A8A-72A5B34432C8}</Project>
-      <Name>Vitkir.UserManager.DAL.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Vitkir.UserManager.DAL.File\Vitkir.UserManager.DAL.File.csproj">
-      <Project>{8ce673b7-3cb5-4bb0-b4db-2c9834ad91e6}</Project>
-      <Name>Vitkir.UserManager.DAL.File</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

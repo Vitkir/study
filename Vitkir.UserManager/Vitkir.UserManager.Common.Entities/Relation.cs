@@ -2,11 +2,11 @@
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class Relation : AbstractEntity, IEquatable<Relation>, ICloneable
+	public readonly struct Relation
 	{
-		public int UserId { get; set; }
+		public int UserId { get; }
 
-		public int AwardId { get; set; }
+		public int AwardId { get; }
 
 		public Relation(int userId, int awardId)
 		{
@@ -16,30 +16,32 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return Id.ToString() + ":" + UserId.ToString() + ":" + AwardId.ToString();
+			return UserId.ToString() + ":" + AwardId.ToString();
 		}
 
 		public override bool Equals(object obj)
 		{
-			if (obj == null) return false;
-			if (!(obj is Relation)) return false;
-			return true;
+			return obj is Relation relation &&
+				   UserId == relation.UserId &&
+				   AwardId == relation.AwardId;
 		}
 
 		public override int GetHashCode()
 		{
-			return Id;
+			var hashCode = -940031710;
+			hashCode = hashCode * -1521134295 + UserId.GetHashCode();
+			hashCode = hashCode * -1521134295 + AwardId.GetHashCode();
+			return hashCode;
 		}
 
-		public bool Equals(Relation other)
+		public static bool operator ==(Relation left, Relation right)
 		{
-			if (other == null) return false;
-			return Id.Equals(other.Id);
+			return left.Equals(right);
 		}
 
-		public object Clone()
+		public static bool operator !=(Relation left, Relation right)
 		{
-			return new Relation(UserId, AwardId) { Id = Id };
+			return !(left == right);
 		}
 	}
 }

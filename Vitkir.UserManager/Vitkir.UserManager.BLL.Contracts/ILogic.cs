@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Vitkir.UserManager.Common.Entities;
 
-namespace Vitkir.UserManager.BLL.Logic
+namespace Vitkir.UserManager.BLL.Contracts
 {
 	public interface ILogic<T> where T : AbstractEntity, ICloneable
 	{

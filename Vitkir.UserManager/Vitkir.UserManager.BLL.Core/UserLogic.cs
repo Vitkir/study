@@ -5,7 +5,7 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public class UserLogic : AbstractLogic<User>, IRelationLogic
+	public class UserLogic : AbstractLogic<User>
 	{
 		private readonly IRelationsDAO relationsDAO;
 
@@ -17,7 +17,7 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		private void UpdateRelationsCache()
 		{
-			var relations = CastingIRelationsDAOToIDAO().GetEntities();
+			var relations = relationsDAO.GetEntities();
 
 			foreach (var entity in relations)
 			{
@@ -40,7 +40,7 @@ namespace Vitkir.UserManager.BLL.Logic
 			if (!user.RelatedAwards.Contains(relation.AwardId))
 			{
 				user.RelatedAwards.Add(relation.AwardId);
-				return CastingIRelationsDAOToIDAO().CreateEntity(relation);
+				return relationsDAO.CreateEntity(relation);
 			}
 			return relation;
 		}
@@ -62,7 +62,7 @@ namespace Vitkir.UserManager.BLL.Logic
 					relations.Add(counter++, new Relation(user.Id, relation));
 				}
 			}
-			CastingIRelationsDAOToIDAO().UpdateFile(relations);
+			relationsDAO.UpdateFile(relations);
 		}
 
 		public Tuple<int, int> DeleteRelationEntity(int userId, int awardId)
@@ -90,11 +90,6 @@ namespace Vitkir.UserManager.BLL.Logic
 				GetEntity(id).RelatedAwards.AddRange(relations);
 			}
 			return relations;
-		}
-
-		private IDAO<Relation> CastingIRelationsDAOToIDAO()
-		{
-			return (relationsDAO as IDAO<Relation>);
 		}
 
 		#endregion
