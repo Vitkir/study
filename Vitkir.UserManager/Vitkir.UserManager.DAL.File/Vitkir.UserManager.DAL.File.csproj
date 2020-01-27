@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractFileDAO.cs" />
+    <Compile Include="AbstractEntityFileDAO.cs" />
     <Compile Include="AwardFileDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFileDAO.cs" />

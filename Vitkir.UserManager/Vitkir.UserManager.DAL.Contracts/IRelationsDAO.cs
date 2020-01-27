@@ -3,8 +3,8 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.Contracts
 {
-	public interface IRelationsDAO : IDAO<Relation>
+	public interface IRelationsDAO : IDAO<Relation, Relation>
 	{
-		List<int> GetRelatedEntitiesId(int destEntityId);
+		List<int> GetRelatedIdEntities(int EntityId);
 	}
 }

@@ -55,6 +55,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Vitkir.UserManager.BLL.Contracts\Vitkir.UserManager.BLL.Contracts.csproj">
+      <Project>{152220DA-AB65-4C3C-8ED9-52EB93504159}</Project>
+      <Name>Vitkir.UserManager.BLL.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
       <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>
       <Name>Vitkir.UserManager.Common.Entities</Name>

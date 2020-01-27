@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public abstract class AbstractLogic<T> : ILogic<T> where T : AbstractEntity, ICloneable
+	public abstract class AbstractLogic<T> : ILogic<T> where T : IEquatable<T>, ICloneable
 	{
 		protected readonly Dictionary<int, T> entityCache;
 		protected readonly IDAO<T> entityDAO;

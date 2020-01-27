@@ -1,4 +1,5 @@
 ﻿using Ninject.Modules;
+using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.BLL.Logic;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;

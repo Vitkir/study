@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.Contracts
 {
-	public interface IDAO<T> where T : AbstractEntity
+	public interface IDAO<TEntityId, TEntity>
+		where TEntity : IEntity<TEntityId>, IEquatable<TEntity>
 	{
-		T CreateEntity(T entity);
+		TEntity CreateEntity(TEntity entity);
 
-		Dictionary<int, T> GetEntities();
+		Dictionary<TEntityId, TEntity> GetEntities();
 
-		void UpdateFile(Dictionary<int, T> usersCache);
+		void UpdateFile(List<TEntity> usersCache);
 	}
 }

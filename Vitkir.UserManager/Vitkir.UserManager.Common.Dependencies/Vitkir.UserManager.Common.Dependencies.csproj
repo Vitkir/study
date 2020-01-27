@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationManager.cs" />
     <Compile Include="DependencyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,6 +53,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Vitkir.UserManager.BLL.Contracts\Vitkir.UserManager.BLL.Contracts.csproj">
+      <Project>{152220DA-AB65-4C3C-8ED9-52EB93504159}</Project>
+      <Name>Vitkir.UserManager.BLL.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.BLL.Core\Vitkir.UserManager.BLL.Logic.csproj">
       <Project>{52234B5D-4264-404C-AB38-BF3D73BA9A78}</Project>
       <Name>Vitkir.UserManager.BLL.Logic</Name>

@@ -7,7 +7,8 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public abstract class AbstractFileDAO<T> : IDAO<T> where T : AbstractEntity
+	public abstract class AbstractEntityFileDAO<TEntityId, TEntity> : IDAO<TEntityId, TEntity>
+		where TEntity : IEntity<TEntityId>, IEquatable<TEntity>
 	{
 		private readonly string entityFilePath;
 		private readonly string tmpFilePath;
@@ -17,7 +18,7 @@ namespace Vitkir.UserManager.DAL.File
 
 		protected int lastId;
 
-		public AbstractFileDAO(string entityFilePath,
+		public AbstractEntityFileDAO(string entityFilePath,
 			string tmpFilePath,
 			string writingExeption,
 			string fileMissingExeption)
@@ -34,15 +35,14 @@ namespace Vitkir.UserManager.DAL.File
 			lastId = GetLastId();
 		}
 
-		public T CreateEntity(T entity)
+		public TEntity CreateEntity(TEntity entity)
 		{
-			entity.Id = ++lastId;
-			var entityItem = entity.ToString() + Environment.NewLine;
+			var entityItem = lastId++.ToString() + entity.ToString() + Environment.NewLine;
 			long currentPosition;
 			using (FileStream fileStream = new FileStream(entityFilePath, FileMode.Append))
 			{
 				currentPosition = fileStream.Position;
-				var byData = Encoding.ASCII.GetBytes(entityItem);
+				var byData = Encoding.Unicode.GetBytes(entityItem);
 				fileStream.Write(byData, 0, byData.Length);
 			}
 
@@ -54,7 +54,7 @@ namespace Vitkir.UserManager.DAL.File
 			return ParseString(entityItem);
 		}
 
-		public void UpdateFile(Dictionary<int, T> usersCache)
+		public void UpdateFile(List<TEntity> tuples)
 		{
 			var info = new FileInfo(entityFilePath).IsReadOnly;
 			if (info)
@@ -65,29 +65,28 @@ namespace Vitkir.UserManager.DAL.File
 			System.IO.File.Create(tmpFilePath).Dispose();
 			using (StreamWriter streamWriter = new StreamWriter(tmpFilePath))
 			{
-				foreach (var pair in usersCache)
+				foreach (var tuple in tuples)
 				{
-					streamWriter.WriteLine(pair.Value.ToString());
+					streamWriter.WriteLine(tuple.ToString());
 				}
 			}
 			System.IO.File.Delete(entityFilePath);
 			System.IO.File.Move(tmpFilePath, entityFilePath);
 		}
 
-		public Dictionary<int, T> GetEntities()
+		public Dictionary<TEntityId, TEntity> GetEntities()
 		{
 			if (!System.IO.File.Exists(entityFilePath))
 			{
 				throw new IOException(fileMissingExeption);
 			}
-			Dictionary<int, T> entities = new Dictionary<int, T>();
+			var entities = new Dictionary<TEntityId, TEntity>();
 			using (StreamReader streamReader = new StreamReader(entityFilePath))
 			{
 				var currentLine = streamReader.ReadLine();
-				T entity = default;
 				while (!string.IsNullOrEmpty(currentLine))
 				{
-					entity = ParseString(currentLine);
+					var entity = ParseString(currentLine);
 					entities.Add(entity.Id, entity);
 					currentLine = streamReader.ReadLine();
 				}
@@ -117,6 +116,6 @@ namespace Vitkir.UserManager.DAL.File
 			return int.Parse(currentLine.Substring(0, separator));
 		}
 
-		public abstract T ParseString(string entityItem);
+		public abstract TEntity ParseString(string entityItem);
 	}
 }

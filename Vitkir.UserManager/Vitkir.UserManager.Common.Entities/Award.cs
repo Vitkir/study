@@ -3,8 +3,13 @@ using System.Collections.Generic;
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class Award : AbstractEntity, IEquatable<Award>, ICloneable
+	public class Award : IEntity<int>, IEquatable<Award>, ICloneable
 	{
+		public int Id
+		{
+			get => throw new NotImplementedException();
+			set => throw new NotImplementedException();
+		}
 		public string Title { get; }
 
 		public Award(string title)
@@ -16,7 +21,7 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return string.Format("{0}:{1}", Id.ToString(), Title);
+			return string.Format(Title);
 		}
 
 		public override bool Equals(object obj)
@@ -26,20 +31,20 @@ namespace Vitkir.UserManager.Common.Entities
 			return true;
 		}
 
-		public override int GetHashCode()
-		{
-			return Id;
-		}
-
 		public bool Equals(Award other)
 		{
 			if (other == null) return false;
-			return Id.Equals(other.Id);
+			return Title == other.Title;
+		}
+
+		public override int GetHashCode()
+		{
+			return Title.GetHashCode();
 		}
 
 		public object Clone()
 		{
-			return new Award(Title) { Id = Id };
+			return new Award(Title);
 		}
 	}
 }

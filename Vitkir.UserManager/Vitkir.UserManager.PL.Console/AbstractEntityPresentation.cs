@@ -5,7 +5,7 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManadger.PL.Console
 {
-	public abstract class AbstractEntityPresentation<T> : IEntityPresentation where T : AbstractEntity, ICloneable
+	public abstract class AbstractEntityPresentation<T> : IEntityPresentation where T :  ICloneable
 	{
 		protected readonly ILogic<T> entityLogic;
 

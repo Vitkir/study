@@ -3,8 +3,14 @@ using System.Collections.Generic;
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public class User : AbstractEntity, IEquatable<User>, ICloneable
+	public class User : IEntity<int>, IEquatable<User>, ICloneable
 	{
+		public int Id
+		{
+			get => throw new NotImplementedException();
+			set => throw new NotImplementedException();
+		}
+
 		public string Name { get; }
 
 		public DateTime Birthday { get; }
@@ -35,8 +41,8 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return string.Format("{0}:{1}:{2}",
-				Id.ToString(), Name.ToString(), Birthday.ToString("dd.MM.yyyy"));
+			return string.Format("{0}:{1}",
+				Name.ToString(), Birthday.ToString("dd.MM.yyyy"));
 		}
 
 		public override bool Equals(object obj)
@@ -46,24 +52,26 @@ namespace Vitkir.UserManager.Common.Entities
 			return true;
 		}
 
-		public override int GetHashCode()
-		{
-			return Id;
-		}
-
 		public bool Equals(User other)
 		{
 			if (other == null) return false;
-			return Id.Equals(other.Id);
+			return (Name, Birthday) == (other.Name, other.Birthday);
 		}
 
 		public object Clone()
 		{
 			return new User(Name, Birthday)
 			{
-				Id = Id,
 				RelatedAwards = RelatedAwards
 			};
+		}
+
+		public override int GetHashCode()
+		{
+			var hashCode = -512614078;
+			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+			hashCode = hashCode * -1521134295 + Birthday.GetHashCode();
+			return hashCode;
 		}
 	}
 }

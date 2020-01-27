@@ -84,7 +84,7 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		private ICollection<int> UpdateCacheRelatedEntitiesFromDAO(int id)
 		{
-			var relations = relationsDAO.GetRelatedEntitiesId(id);
+			var relations = relationsDAO.GetRelatedIdEntities(id);
 			if (relations != null)
 			{
 				GetEntity(id).RelatedAwards.AddRange(relations);

@@ -5,7 +5,7 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public class UserFileDAO : AbstractFileDAO<User>
+	public class UserFileDAO : AbstractEntityFileDAO<User>
 	{
 		public UserFileDAO() : base(ConfigurationManager.AppSettings["usersDataFilePath"],
 			ConfigurationManager.AppSettings["userstmpFilePath"],

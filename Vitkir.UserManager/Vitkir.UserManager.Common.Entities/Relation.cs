@@ -2,11 +2,16 @@
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public readonly struct Relation
+	public readonly struct Relation : IEntity<Relation>, IEquatable<Relation>
 	{
 		public int UserId { get; }
 
 		public int AwardId { get; }
+		public Relation Id
+		{
+			get => throw new NotImplementedException();
+			set => throw new NotImplementedException();
+		}
 
 		public Relation(int userId, int awardId)
 		{
@@ -22,8 +27,7 @@ namespace Vitkir.UserManager.Common.Entities
 		public override bool Equals(object obj)
 		{
 			return obj is Relation relation &&
-				   UserId == relation.UserId &&
-				   AwardId == relation.AwardId;
+				(UserId, AwardId) == (relation.UserId, relation.AwardId);
 		}
 
 		public override int GetHashCode()
@@ -32,6 +36,11 @@ namespace Vitkir.UserManager.Common.Entities
 			hashCode = hashCode * -1521134295 + UserId.GetHashCode();
 			hashCode = hashCode * -1521134295 + AwardId.GetHashCode();
 			return hashCode;
+		}
+
+		public bool Equals(Relation other)
+		{
+			return (UserId, AwardId) == (other.UserId, other.AwardId);
 		}
 
 		public static bool operator ==(Relation left, Relation right)
