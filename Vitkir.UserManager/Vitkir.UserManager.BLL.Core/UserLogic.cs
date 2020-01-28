@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public class UserLogic : AbstractLogic<User>
+	public class UserLogic : AbstractLogic<int, User>
 	{
-		private readonly IRelationsDAO relationsDAO;
+		private readonly IRelationLogic relationsLogic;
 
-		public UserLogic(IDAO<User> userDAO, IRelationsDAO relationsDAO) : base(userDAO)
+		public UserLogic(IDAO<int, User> userDAO, IRelationLogic relationsLogic) : base(userDAO)
 		{
-			this.relationsDAO = relationsDAO;
+			this.relationsLogic = relationsLogic;
 			UpdateRelationsCache();
 		}
 
 		private void UpdateRelationsCache()
 		{
-			var relations = relationsDAO.GetEntities();
+			var relations = relationsLogic.GetEntities();
 
 			foreach (var entity in relations)
 			{
-				entityCache[entity.Value.UserId].RelatedAwards.Add(entity.Value.AwardId);
+				cache[entity.Value.UserId].RelatedAwards.Add(entity.Value.AwardId);
 			}
 		}
 
@@ -36,11 +37,11 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		public Relation CreateRelation(Relation relation)
 		{
-			var user = entityCache[relation.UserId];
+			var user = cache[relation.UserId];
 			if (!user.RelatedAwards.Contains(relation.AwardId))
 			{
 				user.RelatedAwards.Add(relation.AwardId);
-				return relationsDAO.CreateEntity(relation);
+				return relationsLogic.CreateEntity(relation);
 			}
 			return relation;
 		}
@@ -55,19 +56,19 @@ namespace Vitkir.UserManager.BLL.Logic
 		{
 			int counter = 0;
 			var relations = new Dictionary<int, Relation>();
-			foreach (var user in entityCache.Values)
+			foreach (var user in cache.Values)
 			{
 				foreach (var relation in user.RelatedAwards)
 				{
 					relations.Add(counter++, new Relation(user.Id, relation));
 				}
 			}
-			relationsDAO.UpdateFile(relations);
+			relationsLogic.UpdateFile(relations);
 		}
 
 		public Tuple<int, int> DeleteRelationEntity(int userId, int awardId)
 		{
-			var user = entityCache[userId];
+			var user = cache[userId];
 			if (user.RelatedAwards.Contains(awardId))
 			{
 				user.RelatedAwards.Remove(awardId);
@@ -78,13 +79,13 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		public ICollection<int> GetRelatedEntities(int id)
 		{
-			var relations = entityCache[id].RelatedAwards;
+			var relations = cache[id].RelatedAwards;
 			return relations;
 		}
 
 		private ICollection<int> UpdateCacheRelatedEntitiesFromDAO(int id)
 		{
-			var relations = relationsDAO.GetRelatedIdEntities(id);
+			var relations = relationsLogic.GetRelatedIdEntities(id);
 			if (relations != null)
 			{
 				GetEntity(id).RelatedAwards.AddRange(relations);

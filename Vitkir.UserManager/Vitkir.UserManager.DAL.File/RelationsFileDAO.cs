@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 
-
 namespace Vitkir.UserManager.DAL.File
 {
-	public class RelationsFileDAO : IRelationsDAO
+	public class RelationsFileDAO : AbstractEntityFileDAO<Relation, Relation>, IRelationsDAO
 	{
 		public RelationsFileDAO() : base(ConfigurationManager.AppSettings["relationsFilePath"],
 			ConfigurationManager.AppSettings["relationstmpFilePath"],
@@ -17,42 +15,37 @@ namespace Vitkir.UserManager.DAL.File
 
 		}
 
-		public KeyValuePair<int, Relation> CreateEntity(Relation entity)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Dictionary<int, Relation> GetEntities()
-		{
-			throw new NotImplementedException();
-		}
-
 		public List<int> GetRelatedIdEntities(int userId)
 		{
 			var entities = GetEntities();
 
 			List<int> relatedAwards = new List<int>();
 
-			foreach (var value in entities.Values)
+			foreach (var entity in entities)
 			{
-				if (value.UserId == userId)
+				if (entity.UserId == userId)
 				{
-					relatedAwards.Add(value.AwardId);
+					relatedAwards.Add(entity.AwardId);
 				}
 			}
 			if (relatedAwards.Count == 0) return null;
 			return relatedAwards;
 		}
 
-		public Relation ParseString(string entityItem)
+		public override Relation ParseString(string entityItem)
 		{
 			var entityFields = entityItem.Split(':');
 			return new Relation(int.Parse(entityFields[1]), int.Parse(entityFields[2]));
 		}
 
-		public void UpdateFile(Dictionary<int, Relation> usersCache)
+		protected override Relation ParseId(string currentLine)
 		{
-			throw new NotImplementedException();
+			return ParseString(currentLine);
+		}
+
+		protected override Relation GetLastAvaliableId(Relation entity)
+		{
+			return lastId = entity;
 		}
 	}
 }

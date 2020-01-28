@@ -4,15 +4,15 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.BLL.Contracts
 {
-	public interface ILogic<T> where T : IEntity, ICloneable
+	public interface ILogic<TId, TEntity> where TEntity : IEntity<TId>, IEquatable<TEntity>
 	{
-		T CreateEntity(T entity);
+		TEntity CreateEntity(TEntity entity);
 
-		int DeleteEntityFromCache(int id);
+		TId DeleteEntityFromCache(TId id);
 
-		Dictionary<int, T> GetEntities();
+		TEntity GetEntity(TId id);
 
-		T GetEntity(int id);
+		List<TEntity> GetEntities();
 
 		void UpdateEntityDAO();
 	}

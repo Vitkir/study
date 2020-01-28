@@ -1,10 +1,9 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public class AwardFileDAO : AbstractEntityFileDAO<Award>
+	public class AwardFileDAO : AbstractIntIdEntityFileDAO<Award>
 	{
 		public AwardFileDAO() : base(ConfigurationManager.AppSettings["awardsDataFilePath"],
 			ConfigurationManager.AppSettings["awardstmpFilePath"],
@@ -14,12 +13,11 @@ namespace Vitkir.UserManager.DAL.File
 
 		}
 
-		public override ValueTuple<int,Award> ParseString(string entityItem)
+		public override Award ParseString(string entityItem)
 		{
 			var entityFields = entityItem.Split(':');
-			lastId = int.Parse(entityFields[0]);
-			var award = new Award(entityFields[1]);
-			return (lastId,award);
+			return new Award(entityFields[1])
+			{ Id = int.Parse(entityFields[0]) };
 		}
 	}
 }

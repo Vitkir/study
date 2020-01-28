@@ -10,13 +10,13 @@ namespace Vitkir.UserManager.DAL.File
 	public abstract class AbstractEntityFileDAO<TEntityId, TEntity> : IDAO<TEntityId, TEntity>
 		where TEntity : IEntity<TEntityId>, IEquatable<TEntity>
 	{
-		private readonly string entityFilePath;
 		private readonly string tmpFilePath;
 
 		private readonly string writingExeption;
 		private readonly string fileMissingExeption;
 
-		protected int lastId;
+		protected readonly string entityFilePath;
+		protected TEntityId lastId;
 
 		public AbstractEntityFileDAO(string entityFilePath,
 			string tmpFilePath,
@@ -35,9 +35,12 @@ namespace Vitkir.UserManager.DAL.File
 			lastId = GetLastId();
 		}
 
+		public abstract TEntity ParseString(string entityItem);
+
 		public TEntity CreateEntity(TEntity entity)
 		{
-			var entityItem = lastId++.ToString() + entity.ToString() + Environment.NewLine;
+			entity.Id = GetLastAvaliableId(entity);
+			var entityItem = entity.ToString() + Environment.NewLine;
 			long currentPosition;
 			using (FileStream fileStream = new FileStream(entityFilePath, FileMode.Append))
 			{
@@ -54,7 +57,7 @@ namespace Vitkir.UserManager.DAL.File
 			return ParseString(entityItem);
 		}
 
-		public void UpdateFile(List<TEntity> tuples)
+		public void UpdateFile(List<TEntity> entities)
 		{
 			var info = new FileInfo(entityFilePath).IsReadOnly;
 			if (info)
@@ -65,57 +68,59 @@ namespace Vitkir.UserManager.DAL.File
 			System.IO.File.Create(tmpFilePath).Dispose();
 			using (StreamWriter streamWriter = new StreamWriter(tmpFilePath))
 			{
-				foreach (var tuple in tuples)
+				foreach (var entity in entities)
 				{
-					streamWriter.WriteLine(tuple.ToString());
+					streamWriter.WriteLine(entity.ToString());
 				}
 			}
 			System.IO.File.Delete(entityFilePath);
 			System.IO.File.Move(tmpFilePath, entityFilePath);
 		}
 
-		public Dictionary<TEntityId, TEntity> GetEntities()
+		public List<TEntity> GetEntities()
 		{
 			if (!System.IO.File.Exists(entityFilePath))
 			{
 				throw new IOException(fileMissingExeption);
 			}
-			var entities = new Dictionary<TEntityId, TEntity>();
+			var entities = new List<TEntity>();
 			using (StreamReader streamReader = new StreamReader(entityFilePath))
 			{
 				var currentLine = streamReader.ReadLine();
 				while (!string.IsNullOrEmpty(currentLine))
 				{
 					var entity = ParseString(currentLine);
-					entities.Add(entity.Id, entity);
+					entities.Add(entity);
 					currentLine = streamReader.ReadLine();
 				}
 			}
 			return entities;
 		}
 
-		private int GetLastId()
+		protected TEntityId GetLastId()
 		{
+			string lastLine = default;
 			string currentLine = default;
-			int currentId = default;
+			TEntityId lastId = default;
 			using (StreamReader streamReader = new StreamReader(entityFilePath))
 			{
 				currentLine = streamReader.ReadLine();
-				while (!string.IsNullOrEmpty(currentLine))
+				while (true)
 				{
-					currentId = ParseId(currentLine);
 					currentLine = streamReader.ReadLine();
+					if (string.IsNullOrEmpty(currentLine))
+					{
+						break;
+					}
+					lastLine = currentLine;
 				}
+				lastId = ParseId(lastLine);
 			}
-			return currentId;
+			return lastId;
 		}
 
-		private int ParseId(string currentLine)
-		{
-			var separator = currentLine.IndexOf(':');
-			return int.Parse(currentLine.Substring(0, separator));
-		}
+		protected abstract TEntityId ParseId(string currentLine);
 
-		public abstract TEntity ParseString(string entityItem);
+		protected abstract TEntityId GetLastAvaliableId(TEntity entity);
 	}
 }

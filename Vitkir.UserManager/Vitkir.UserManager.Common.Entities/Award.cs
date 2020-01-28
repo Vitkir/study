@@ -21,7 +21,7 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return string.Format(Title);
+			return string.Format(Id.ToString() + ":" + Title);
 		}
 
 		public override bool Equals(object obj)

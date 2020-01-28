@@ -9,7 +9,7 @@ namespace Vitkir.UserManager.DAL.Contracts
 	{
 		TEntity CreateEntity(TEntity entity);
 
-		Dictionary<TEntityId, TEntity> GetEntities();
+		List<TEntity> GetEntities();
 
 		void UpdateFile(List<TEntity> usersCache);
 	}

@@ -41,8 +41,8 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return string.Format("{0}:{1}",
-				Name.ToString(), Birthday.ToString("dd.MM.yyyy"));
+			return string.Format("{0}:{1}:{2}",
+				Id.ToString(), Name.ToString(), Birthday.ToString("dd.MM.yyyy"));
 		}
 
 		public override bool Equals(object obj)

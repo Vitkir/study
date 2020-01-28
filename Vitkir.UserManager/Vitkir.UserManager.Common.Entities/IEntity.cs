@@ -2,8 +2,8 @@
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public interface IEntity<T>
+	public interface IEntity<TId>
 	{
-		T Id { get; set; }
+		TId Id { get; set; }
 	}
 }

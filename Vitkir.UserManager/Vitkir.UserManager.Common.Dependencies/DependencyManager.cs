@@ -11,8 +11,8 @@ namespace Vitkir.UserManager.Common.Dependencies
 	{
 		public override void Load()
 		{
-			Bind<IDAO<User>>().To<UserFileDAO>();
-			Bind<IDAO<Award>>().To<AwardFileDAO>();
+			Bind<IDAO<int,User>>().To<UserFileDAO>();
+			Bind<IDAO<int, Award>>().To<AwardFileDAO>();
 			Bind<IRelationsDAO>().To<RelationsFileDAO>().InSingletonScope();
 			Bind<ILogic<User>>().To<UserLogic>();
 			Bind<ILogic<Award>>().To<AwardLogic>();

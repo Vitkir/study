@@ -6,22 +6,23 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public abstract class AbstractLogic<T> : ILogic<T> where T : IEquatable<T>, ICloneable
+	public abstract class AbstractLogic<TId, TEntity> : ILogic<TId, TEntity>
+		where TEntity : IEntity<TId>, IEquatable<TEntity>, ICloneable
 	{
-		protected readonly Dictionary<int, T> entityCache;
-		protected readonly IDAO<T> entityDAO;
+		protected readonly Dictionary<TId, TEntity> cache;
+		protected readonly IDAO<TId, TEntity> entityDAO;
 
-		public AbstractLogic(IDAO<T> entityDAO)
+		public AbstractLogic(IDAO<TId, TEntity> entityDAO)
 		{
 			this.entityDAO = entityDAO;
-			entityCache = entityDAO.GetEntities();
+			cache = entityDAO.GetEntities();
 		}
 
-		public virtual T CreateEntity(T entity)
+		public virtual TEntity CreateEntity(TEntity entity)
 		{
-			T createdEntity;
+			TEntity createdEntity;
 			createdEntity = entityDAO.CreateEntity(entity);
-			entityCache.Add(createdEntity.Id, createdEntity);
+			cache.Add(createdEntity.Id, createdEntity);
 			return createdEntity;
 		}
 
@@ -31,34 +32,34 @@ namespace Vitkir.UserManager.BLL.Logic
 			entityDAO.UpdateFile(entities);
 		}
 
-		public int DeleteEntityFromCache(int id)
+		public TId DeleteEntityFromCache(TId id)//check whether ContainsKey check is necessary
 		{
-			if (entityCache.ContainsKey(id))
+			if (cache.ContainsKey(id))
 			{
-				entityCache.Remove(id);
+				cache.Remove(id);
 				return id;
 			}
-			return 0;
+			throw new KeyNotFoundException();
 		}
 
-		public T GetEntity(int id)
+		public TEntity GetEntity(TId id)//check whether ContainsKey check is necessary
 		{
-			if (entityCache.ContainsKey(id))
+			if (cache.ContainsKey(id))
 			{
-				return (T)entityCache[id].Clone();
+				return (TEntity)cache[id].Clone();
 			}
-			return null;
+			throw new KeyNotFoundException();
 		}
 
-		public Dictionary<int, T> GetEntities()
+		public List<TEntity> GetEntities()// make the same with linq and choose the best way
 		{
-			var len = entityCache.Count;
-			T entity;
-			var entities = new Dictionary<int, T>(len);
-			foreach (var pair in entityCache)
+			var len = cache.Count;
+			TEntity entity;
+			var entities = new List<TEntity>(len);
+			foreach (var pair in cache.Values)
 			{
-				entity = (T)pair.Value.Clone();
-				entities.Add(entity.Id, entity);
+				entity = (TEntity)pair.Clone();
+				entities.Add(entity);
 			}
 			return entities;
 		}
