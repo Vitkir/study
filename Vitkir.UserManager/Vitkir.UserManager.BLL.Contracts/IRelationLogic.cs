@@ -3,8 +3,8 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.BLL.Contracts
 {
-	public interface IRelationLogic
+	public interface IGetRelationCache//relationdoes not have logic
 	{
-		List<Relation> GetRelatedEntities(int UserId);
+		List<Award> GetAwardsUser(int UserId);
 	}
 }

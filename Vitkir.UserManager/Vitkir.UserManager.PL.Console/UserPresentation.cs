@@ -2,19 +2,18 @@
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
-using Vitkir.UserManager.BLL.Logic;
+using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManadger.PL.Console
 {
 	public class UserPresentation : AbstractEntityPresentation<User>
 	{
-		public UserPresentation(ILogic<User> userlogic) : base(userlogic)
+		public UserPresentation(ILogic<int, User> userlogic) : base(userlogic)
 		{
-
 		}
 
-		public override void CreateEntity()
+		public override void Create()
 		{
 			System.Console.WriteLine("Input name");
 			var pattern = new Regex("^[a-z]{1,15}$");
@@ -39,7 +38,7 @@ namespace Vitkir.UserManadger.PL.Console
 			int returned = default;
 			try
 			{
-				returned = entityLogic.CreateEntity(user).Id;
+				returned = entityLogic.Create(user).Id;
 			}
 			catch (IOException e)
 			{
@@ -48,89 +47,36 @@ namespace Vitkir.UserManadger.PL.Console
 			System.Console.WriteLine("success. User id: " + returned.ToString());
 		}
 
-		public class RelationsPresentation : IEntityPresentation
+		public void AddAward()
 		{
-			private UserPresentation parent;
+			var userId = GetIdFromConsole();
+			var awardId = GetIdFromConsole();
+			var relation = new Relation(userId, awardId);
+			Relation createdRelation = default;
 
-			public RelationsPresentation(UserPresentation parent)
+			try
 			{
-				this.parent = parent;
+				createdRelation = (entityLogic as IReward).AddAward(relation);
 			}
-
-			public void CreateEntity()
+			catch (IOException e)
 			{
-				var userId = parent.GetIdFromConsole();
-				var awardId = parent.GetIdFromConsole();
-				var relation = new Relation(userId, awardId);
-				Relation createdRelation = null;
-
-				try
-				{
-					createdRelation = CastingEntityLogicToIRelationLogic().CreateRelation(relation);
-				}
-				catch (IOException e)
-				{
-					System.Console.WriteLine(e.Message + ". Close file and try again.");
-				}
-				System.Console.WriteLine(createdRelation != null ?
-					"Relation user " + createdRelation.UserId +
-					" and award " + createdRelation.AwardId + " created" : "unsuccessful");
+				System.Console.WriteLine(e.Message + ". Close file and try again.");
 			}
+			System.Console.WriteLine(createdRelation != null ?
+				"Relation user " + createdRelation.UserId +
+				" and award " + createdRelation.AwardId + " created" : "unsuccessful");
+		}
 
-			public void DeleteEntity()
-			{
-				var userId = parent.GetIdFromConsole();
-				var awardId = parent.GetIdFromConsole();
-				var returned = CastingEntityLogicToIRelationLogic().DeleteRelationEntity(userId, awardId);
+		public void RemoveAward()
+		{
+			var userId = GetIdFromConsole();
+			var awardId = GetIdFromConsole();
+			var relation = new Relation(userId, awardId);
+			var returned = (entityLogic as IReward).RemoveAward(relation);
 
-				System.Console.WriteLine(returned != null ?
-					"user " + returned.Item1.ToString() +
-					" and award " + returned.Item2.ToString() + " relation deleted" : "unsuccessful");
-			}
-
-			public void GetAllentities()
-			{
-				int userId = parent.GetIdFromConsole();
-				var awards = CastingEntityLogicToIRelationLogic().GetRelatedEntities(userId);
-				if (awards == null)
-				{
-					System.Console.WriteLine("user" + userId.ToString() + "doesn't exists relations");
-					return;
-				}
-				foreach (var award in awards)
-				{
-					System.Console.WriteLine(award.ToString());
-				}
-			}
-
-			public void GetEntity()
-			{
-				var userId = parent.GetIdFromConsole();
-				var awardId = parent.GetIdFromConsole();
-				var flag = parent.entityLogic.GetEntity(userId).RelatedAwards.Contains(awardId);
-
-				System.Console.WriteLine(flag ?
-					"user " + userId.ToString() + " contains award " + awardId.ToString() : "does not contains");
-			}
-
-			public void UpdateDatabase()
-			{
-				try
-				{
-					CastingEntityLogicToIRelationLogic().UpdateRelationsDAO();
-				}
-				catch (IOException e)
-				{
-					System.Console.WriteLine(e.Message + ". Close file and try again.");
-				}
-				System.Console.WriteLine("success");
-			}
-
-			private IRelationLogic CastingEntityLogicToIRelationLogic()
-			{
-				return (parent.entityLogic as IRelationLogic);
-			}
-
+			System.Console.WriteLine(returned == true ?
+				"user " + userId.ToString() +
+				" and award " + awardId.ToString() + " relation deleted" : "unsuccessful");
 		}
 	}
 }

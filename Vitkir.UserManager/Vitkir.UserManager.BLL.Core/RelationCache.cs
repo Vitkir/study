@@ -2,9 +2,9 @@
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 
-namespace Vitkir.UserManager.Common.Dependencies
+namespace Vitkir.UserManager.BLL.Logic
 {
-	class RelationCache
+	internal class RelationCache : ICache
 	{
 		private readonly IRelationsDAO relationsDAO;
 		private readonly List<Relation> relations;
@@ -15,26 +15,26 @@ namespace Vitkir.UserManager.Common.Dependencies
 			relations = relationsDAO.GetEntities();
 		}
 
-		public Relation CreaeRelation(Relation relation)
+		public Relation Create(Relation relation)
 		{
 			var returnEntity = relationsDAO.CreateEntity(relation);
 			relations.Add(returnEntity);
 			return returnEntity;
 		}
 
-		public void UpdateReltionDAO()
-		{
-			relationsDAO.UpdateFile(relations);
-		}
-
-		public bool DeleteRelationFromCache(Relation relation)
+		public bool Delete(Relation relation)
 		{
 			return relations.Remove(relation);
 		}
 
-		public List<Relation> GetRelations()
+		public List<Relation> GetAll()
 		{
 			return relations;
+		}
+
+		public void UpdateDAO()
+		{
+			relationsDAO.UpdateFile(relations);
 		}
 	}
 }

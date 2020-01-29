@@ -49,6 +49,7 @@
     <Compile Include="AwardLogic.cs" />
     <Compile Include="AbstractLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelationCache.cs" />
     <Compile Include="UserLogic.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,10 @@
     <ProjectReference Include="..\Vitkir.UserManager.BLL.Contracts\Vitkir.UserManager.BLL.Contracts.csproj">
       <Project>{152220DA-AB65-4C3C-8ED9-52EB93504159}</Project>
       <Name>Vitkir.UserManager.BLL.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vitkir.UserManager.Common.Contracts\Vitkir.UserManager.Common.Contracts.csproj">
+      <Project>{E87A08DB-4914-449A-8438-67ADC63BB70B}</Project>
+      <Name>Vitkir.UserManager.Common.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
       <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>

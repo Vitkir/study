@@ -6,14 +6,14 @@ namespace Vitkir.UserManager.BLL.Contracts
 {
 	public interface ILogic<TId, TEntity> where TEntity : IEntity<TId>, IEquatable<TEntity>
 	{
-		TEntity CreateEntity(TEntity entity);
+		TEntity Create(TEntity entity);
 
-		TId DeleteEntityFromCache(TId id);
+		bool Delete(TId id);
 
-		TEntity GetEntity(TId id);
+		TEntity Get(TId id);
 
-		List<TEntity> GetEntities();
+		List<TEntity> GetAll();
 
-		void UpdateEntityDAO();
+		void UpdateDAO();
 	}
 }

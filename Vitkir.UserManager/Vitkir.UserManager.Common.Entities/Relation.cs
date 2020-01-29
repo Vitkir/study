@@ -4,14 +4,11 @@ namespace Vitkir.UserManager.Common.Entities
 {
 	public readonly struct Relation : IEntity<Relation>, IEquatable<Relation>
 	{
+		public Relation Id { get => this; }
+
 		public int UserId { get; }
 
 		public int AwardId { get; }
-		public Relation Id
-		{
-			get => throw new NotImplementedException();
-			set => throw new NotImplementedException();
-		}
 
 		public Relation(int userId, int awardId)
 		{

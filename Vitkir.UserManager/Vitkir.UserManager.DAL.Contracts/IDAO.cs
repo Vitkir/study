@@ -4,8 +4,8 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.Contracts
 {
-	public interface IDAO<TEntityId, TEntity>
-		where TEntity : IEntity<TEntityId>, IEquatable<TEntity>
+	public interface IDAO<TId, TEntity>
+		where TEntity : IEntity<TId>, IEquatable<TEntity>
 	{
 		TEntity CreateEntity(TEntity entity);
 

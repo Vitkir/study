@@ -8,16 +8,16 @@ namespace Vitkir.UserManager.PL.Console
 {
 	class Program
 	{
-		private static UserPresentation userPresentation;
-		private static UserPresentation.RelationsPresentation relationsPresentation;
+		private static relationCache userPresentation;
+		private static relationCache.RelationsPresentation relationsPresentation;
 		private static AwardPresentation awardPresentation;
 		private static IKernel dependencyManager;
 
 		static void Main()
 		{
 			dependencyManager = new StandardKernel(new DependencyManager());
-			userPresentation = dependencyManager.Get<UserPresentation>();
-			relationsPresentation = new UserPresentation.RelationsPresentation(userPresentation);
+			userPresentation = dependencyManager.Get<relationCache>();
+			relationsPresentation = new relationCache.RelationsPresentation(userPresentation);
 			awardPresentation = dependencyManager.Get<AwardPresentation>();
 			ShowEnum(new Menu());
 			GetMenu();
@@ -56,7 +56,7 @@ namespace Vitkir.UserManager.PL.Console
 							break;
 						case Menu.GetAll:
 							ShowEnum(entities);
-							GetSubMenu().GetAllentities();
+							GetSubMenu().GetEntities();
 							break;
 						case Menu.ConsoleClearing:
 							System.Console.Clear();

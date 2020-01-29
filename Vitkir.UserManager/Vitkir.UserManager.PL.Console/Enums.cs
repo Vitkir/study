@@ -6,10 +6,23 @@
 		{
 			Award = 1,
 			User,
-			Relationships,
+			Exit,
 		}
 
-		internal enum Menu : int
+		internal enum UserMenu : int
+		{
+			Create = 1,
+			Update,
+			Delete,
+			Get,
+			GetAll,
+			AddAward,
+			GetAwardsUser,
+			ConsoleClearing,
+			Back,
+		}
+
+		internal enum AwardMenu : int
 		{
 			Create = 1,
 			Update,
@@ -17,7 +30,7 @@
 			Get,
 			GetAll,
 			ConsoleClearing,
-			Exit,
+			Back,
 		}
 	}
 }

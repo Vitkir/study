@@ -26,7 +26,7 @@ namespace Vitkir.UserManager.Tests.NUnit
 		public void CannotUpdateUserByCreate()
 		{
 			User user = new User("name", new DateTime(1994, 05, 14));
-			var createdUser = userLogic.CreateEntity(user);
+			var createdUser = userLogic.Create(user);
 			createdUser.Id = 10;
 			Assert.AreNotEqual(user.Id, createdUser.Id, "createdUser update couset source user update.");
 		}
@@ -34,18 +34,18 @@ namespace Vitkir.UserManager.Tests.NUnit
 		[TestMethod]
 		public void CannotChangeUserByGetUser()
 		{
-			var user = userLogic.GetEntity(userId);
+			var user = userLogic.Get(userId);
 			user.Id = 10;
-			var testUser = userLogic.GetEntity(1);
+			var testUser = userLogic.Get(1);
 			Assert.AreNotEqual(user.Id, testUser.Id, "createdUser update couset source user update.");
 		}
 
 		[TestMethod]
 		public void CannotChangeUserByGetUsers()
 		{
-			var users = userLogic.GetEntities();
+			var users = userLogic.GetAll();
 			users[1].Id = 10;
-			var testUsers = userLogic.GetEntities();
+			var testUsers = userLogic.GetAll();
 			Assert.AreNotEqual(users[1].Id, testUsers[1].Id, "createdUser update couset source user update.");
 		}
 
@@ -55,7 +55,7 @@ namespace Vitkir.UserManager.Tests.NUnit
 			var relation = new Relation(userId, awardId);
 
 			userLogic.CreateRelation(relation);
-			Assert.IsTrue(userLogic.GetEntity(userId).RelatedAwards.Contains(awardId));
+			Assert.IsTrue(userLogic.Get(userId).RelatedAwards.Contains(awardId));
 		}
 
 		[TestMethod]
@@ -74,10 +74,10 @@ namespace Vitkir.UserManager.Tests.NUnit
 		[TestMethod]
 		public void UpdateUserDAO()
 		{
-			userLogic.DeleteEntityFromCache(2);
-			var dict1 = userLogic.GetEntities();
-			userLogic.UpdateEntityDAO();
-			var dict2 = userLogic.GetEntities();
+			userLogic.Delete(2);
+			var dict1 = userLogic.GetAll();
+			userLogic.UpdateDAO();
+			var dict2 = userLogic.GetAll();
 			Assert.AreNotEqual(dict1.Count, dict2.Count, "User deleted");
 		}
 

@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Vitkir.UserManager.Common.Entities
 {
 	public class Award : IEntity<int>, IEquatable<Award>, ICloneable
 	{
-		public int Id
-		{
-			get => throw new NotImplementedException();
-			set => throw new NotImplementedException();
-		}
+		public int Id { get; set; }
+
 		public string Title { get; }
 
 		public Award(string title)
 		{
 			Title = title;
 		}
-
-		public List<User> RelatedUsers { get; set; }
 
 		public override string ToString()
 		{

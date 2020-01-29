@@ -1,26 +1,49 @@
 ﻿using System;
 using System.IO;
-using Vitkir.UserManager.BLL.Logic;
+using Vitkir.UserManadger.PL.Contracts;
+using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManadger.PL.Console
 {
-	public abstract class AbstractEntityPresentation<T> : IEntityPresentation where T :  ICloneable
+	public abstract class AbstractEntityPresentation<TEntity> : IEntityPresentation
+		where TEntity : IEntity<int>, IEquatable<TEntity>
 	{
-		protected readonly ILogic<T> entityLogic;
+		protected readonly ILogic<int, TEntity> entityLogic;
 
-		protected AbstractEntityPresentation(ILogic<T> entitylogic)
+		protected AbstractEntityPresentation(ILogic<int, TEntity> entitylogic)
 		{
 			entityLogic = entitylogic;
 		}
 
-		public abstract void CreateEntity();
+		public abstract void Create();
 
-		public void UpdateDatabase()
+		public void Delete()
+		{
+			int id = GetIdFromConsole();
+			var returned = entityLogic.Delete(id);
+			System.Console.WriteLine(returned == true ? nameof(TEntity) + " id " + returned.ToString() + " deleted" : "unsuccessful");
+		}
+
+		public void Get()
+		{
+			int id = GetIdFromConsole();
+			try
+			{
+				var entity = entityLogic.Get(id);
+				System.Console.WriteLine(nameof(TEntity) + ": " + entity.ToString());
+			}
+			catch (IndexOutOfRangeException)
+			{
+				System.Console.WriteLine(nameof(TEntity) + " with such id does not exist");
+			}
+		}
+
+		public void Update()
 		{
 			try
 			{
-				entityLogic.UpdateEntityDAO();
+				entityLogic.UpdateDAO();
 			}
 			catch (IOException e)
 			{
@@ -29,31 +52,14 @@ namespace Vitkir.UserManadger.PL.Console
 			System.Console.WriteLine("success");
 		}
 
-		public void DeleteEntity()
+		public void GetAll()
 		{
-			int id = GetIdFromConsole();
-			var returned = entityLogic.DeleteEntityFromCache(id);
-			System.Console.WriteLine(returned != 0 ? nameof(T) + " id " + returned.ToString() + " deleted" : "unsuccessful");
-		}
-
-		public void GetEntity()
-		{
-			int id = GetIdFromConsole();
-			var entity = entityLogic.GetEntity(id);
-			System.Console.WriteLine(entity != null ?
-				nameof(T) + ": " + entity.ToString() : nameof(T) + " with such id does not exist");
-		}
-
-		public void GetAllentities()
-		{
-			var etities = entityLogic.GetEntities();
-			foreach (var pair in etities)
+			var etities = entityLogic.GetAll();
+			foreach (var entity in etities)
 			{
-				System.Console.WriteLine(pair.Value.ToString());
+				System.Console.WriteLine(entity.ToString());
 			}
 		}
-
-		
 
 		protected int GetIdFromConsole()
 		{

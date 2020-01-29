@@ -1,98 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public class UserLogic : AbstractLogic<int, User>
+	public class UserLogic : AbstractLogic<int, User>, IReward
 	{
-		private readonly IRelationLogic relationsLogic;
-
-		public UserLogic(IDAO<int, User> userDAO, IRelationLogic relationsLogic) : base(userDAO)
+		public UserLogic(IDAO<int, User> userDAO) : base(userDAO)
 		{
-			this.relationsLogic = relationsLogic;
-			UpdateRelationsCache();
 		}
 
-		private void UpdateRelationsCache()
+		public override User Get(int id)
 		{
-			var relations = relationsLogic.GetEntities();
+			var user = base.Get(id);
+			user.RelatedAwards = GetRelatedAwardIds(id);
+			return user;
+		}
 
-			foreach (var entity in relations)
+		public override List<User> GetAll()
+		{
+			var users = base.GetAll();
+			foreach (var user in users)
 			{
-				cache[entity.Value.UserId].RelatedAwards.Add(entity.Value.AwardId);
+				user.RelatedAwards = GetRelatedAwardIds(user.Id);
 			}
+			return users;
 		}
 
-		public override User CreateEntity(User entity)
+		private List<int> GetRelatedAwardIds(int id)
 		{
-			var createdEntity = base.CreateEntity(entity);
-			UpdateCacheRelatedEntitiesFromDAO(createdEntity.Id);
-			return createdEntity;
+			return relationCache.GetAll()
+				.Where(relation => relation.UserId == id)
+				.Select(relation => relation.AwardId)
+				.ToList();
 		}
 
-		#region UsersAwardsRelationsLogic
-
-		public Relation CreateRelation(Relation relation)
+		public Relation AddAward(Relation relation)
 		{
-			var user = cache[relation.UserId];
-			if (!user.RelatedAwards.Contains(relation.AwardId))
-			{
-				user.RelatedAwards.Add(relation.AwardId);
-				return relationsLogic.CreateEntity(relation);
-			}
-			return relation;
+			return relationCache.Create(relation);
 		}
 
-		public override void UpdateEntityDAO()
+		public bool RemoveAward(Relation relation)
 		{
-			base.UpdateEntityDAO();
-			UpdateRelationsDAO();
+			return relationCache.Delete(relation);
 		}
-
-		public void UpdateRelationsDAO()
-		{
-			int counter = 0;
-			var relations = new Dictionary<int, Relation>();
-			foreach (var user in cache.Values)
-			{
-				foreach (var relation in user.RelatedAwards)
-				{
-					relations.Add(counter++, new Relation(user.Id, relation));
-				}
-			}
-			relationsLogic.UpdateFile(relations);
-		}
-
-		public Tuple<int, int> DeleteRelationEntity(int userId, int awardId)
-		{
-			var user = cache[userId];
-			if (user.RelatedAwards.Contains(awardId))
-			{
-				user.RelatedAwards.Remove(awardId);
-				return new Tuple<int, int>(userId, awardId);
-			}
-			return null;
-		}
-
-		public ICollection<int> GetRelatedEntities(int id)
-		{
-			var relations = cache[id].RelatedAwards;
-			return relations;
-		}
-
-		private ICollection<int> UpdateCacheRelatedEntitiesFromDAO(int id)
-		{
-			var relations = relationsLogic.GetRelatedIdEntities(id);
-			if (relations != null)
-			{
-				GetEntity(id).RelatedAwards.AddRange(relations);
-			}
-			return relations;
-		}
-
-		#endregion
 	}
 }

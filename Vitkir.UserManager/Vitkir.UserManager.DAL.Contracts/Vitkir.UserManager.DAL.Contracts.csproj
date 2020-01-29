@@ -46,6 +46,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Vitkir.UserManager.Common.Contracts\Vitkir.UserManager.Common.Contracts.csproj">
+      <Project>{E87A08DB-4914-449A-8438-67ADC63BB70B}</Project>
+      <Name>Vitkir.UserManager.Common.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
       <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>
       <Name>Vitkir.UserManager.Common.Entities</Name>
