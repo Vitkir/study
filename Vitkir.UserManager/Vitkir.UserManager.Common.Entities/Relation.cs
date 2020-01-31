@@ -2,9 +2,9 @@
 
 namespace Vitkir.UserManager.Common.Entities
 {
-	public readonly struct Relation : IEntity<Relation>, IEquatable<Relation>
+	public class Relation : IEntity<Relation>, IEquatable<Relation>
 	{
-		public Relation Id { get => this; }
+		public Relation Id { get; set; }// create RelationID sturct to made Id
 
 		public int UserId { get; }
 

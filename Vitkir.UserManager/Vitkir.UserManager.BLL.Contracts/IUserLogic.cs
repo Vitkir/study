@@ -2,7 +2,7 @@
 
 namespace Vitkir.UserManager.BLL.Contracts
 {
-	public interface IReward
+	public interface IUserLogic : ILogic<int, User>
 	{
 		Relation AddAward(Relation relation);
 

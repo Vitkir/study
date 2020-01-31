@@ -6,10 +6,10 @@ namespace Vitkir.UserManager.BLL.Logic
 {
 	internal class RelationCache : ICache
 	{
-		private readonly IRelationsDAO relationsDAO;
-		private readonly List<Relation> relations;
+		private readonly IRelationDAO relationsDAO;
+		private readonly Dictionary<Relation> relations;
 
-		public RelationCache(IRelationsDAO relationsDAO)
+		public RelationCache(IRelationDAO relationsDAO)
 		{
 			this.relationsDAO = relationsDAO;
 			relations = relationsDAO.GetEntities();

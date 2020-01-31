@@ -43,8 +43,7 @@
   <ItemGroup>
     <Compile Include="ICache.cs" />
     <Compile Include="ILogic.cs" />
-    <Compile Include="IRelationLogic.cs" />
-    <Compile Include="IReward.cs" />
+    <Compile Include="IUserLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

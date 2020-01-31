@@ -13,7 +13,7 @@ namespace Vitkir.UserManager.Common.Dependencies
 		{
 			Bind<IDAO<int,User>>().To<UserFileDAO>();
 			Bind<IDAO<int, Award>>().To<AwardFileDAO>();
-			Bind<IRelationsDAO>().To<RelationsFileDAO>().InSingletonScope();
+			Bind<IRelationDAO>().To<RelationsFileDAO>().InSingletonScope();
 			Bind<ILogic<User>>().To<UserLogic>();
 			Bind<ILogic<Award>>().To<AwardLogic>();
 		}

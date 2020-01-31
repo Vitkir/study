@@ -5,7 +5,7 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public class RelationsFileDAO : AbstractEntityFileDAO<Relation, Relation>, IRelationsDAO
+	public class RelationsFileDAO : AbstractEntityFileDAO<Relation, Relation>, IRelationDAO
 	{
 		public RelationsFileDAO() : base(ConfigurationManager.AppSettings["relationsFilePath"],
 			ConfigurationManager.AppSettings["relationstmpFilePath"],

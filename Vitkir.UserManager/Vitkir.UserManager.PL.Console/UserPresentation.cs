@@ -56,7 +56,7 @@ namespace Vitkir.UserManadger.PL.Console
 
 			try
 			{
-				createdRelation = (entityLogic as IReward).AddAward(relation);
+				createdRelation = (entityLogic as IAward).AddAward(relation);
 			}
 			catch (IOException e)
 			{
@@ -72,7 +72,7 @@ namespace Vitkir.UserManadger.PL.Console
 			var userId = GetIdFromConsole();
 			var awardId = GetIdFromConsole();
 			var relation = new Relation(userId, awardId);
-			var returned = (entityLogic as IReward).RemoveAward(relation);
+			var returned = (entityLogic as IAward).RemoveAward(relation);
 
 			System.Console.WriteLine(returned == true ?
 				"user " + userId.ToString() +

@@ -6,7 +6,7 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public class UserLogic : AbstractLogic<int, User>, IReward
+	public class UserLogic : AbstractLogic<int, User>, IAward
 	{
 		public UserLogic(IDAO<int, User> userDAO) : base(userDAO)
 		{

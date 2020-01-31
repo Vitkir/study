@@ -56,7 +56,6 @@ namespace Vitkir.UserManager.BLL.Logic
 		{
 			return entityDAO.GetEntities()
 				.ToDictionary(entity => entity.Id);
-
 		}
 	}
 }
