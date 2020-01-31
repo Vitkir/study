@@ -7,7 +7,7 @@ namespace Vitkir.UserManadger.PL.Console
 {
 	public class AwardPresentation : AbstractEntityPresentation<Award>
 	{
-		public AwardPresentation(ILogic<int, Award> awardlogic) : base(awardlogic)
+		public AwardPresentation(IAwardLogic awardlogic) : base(awardlogic)
 		{
 		}
 
@@ -37,7 +37,7 @@ namespace Vitkir.UserManadger.PL.Console
 		public void GetAwardsUser()
 		{
 			var id = GetIdFromConsole();
-			var returnList = (entityLogic as IGetRelationCache).GetAwardsUser(id);
+			var returnList = (entityLogic as IAwardLogic).GetAll(id);
 			foreach (var award in returnList)
 			{
 				award.ToString();

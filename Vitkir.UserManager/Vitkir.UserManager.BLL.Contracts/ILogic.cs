@@ -12,7 +12,7 @@ namespace Vitkir.UserManager.BLL.Contracts
 
 		TEntity Get(TId id);
 
-		List<TEntity> GetAll();
+		Dictionary<TId, TEntity> GetAll();
 
 		void UpdateDAO();
 	}

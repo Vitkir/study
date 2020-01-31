@@ -3,7 +3,7 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public class AwardFileDAO : AbstractIntIdEntityFileDAO<Award>
+	public class AwardFileDAO : AbstractIntIdFileDAO<Award>
 	{
 		public AwardFileDAO() : base(ConfigurationManager.AppSettings["awardsDataFilePath"],
 			ConfigurationManager.AppSettings["awardstmpFilePath"],

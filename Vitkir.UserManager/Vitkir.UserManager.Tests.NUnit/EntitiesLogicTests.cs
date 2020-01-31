@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using System;
-using Vitkir.UserManager.BLL.Logic;
+using System.Linq;
+using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.Common.Dependencies;
 using Vitkir.UserManager.Common.Entities;
 
@@ -11,14 +12,16 @@ namespace Vitkir.UserManager.Tests.NUnit
 	public class EntitiesLogicTests
 	{
 		private readonly IKernel kernel;
-		private readonly UserLogic userLogic;
-		private int userId = 1;
-		private int awardId = 1;
+		private readonly IUserLogic userLogic;
+		private readonly IAwardLogic awardLogic;
+		private readonly int userId = 1;
+		private readonly int awardId = 1;
 
 		public EntitiesLogicTests()
 		{
 			kernel = new StandardKernel(new DependencyManager());
-			userLogic = kernel.Get<UserLogic>();
+			userLogic = kernel.Get<IUserLogic>();
+			awardLogic = kernel.Get<IAwardLogic>();
 
 		}
 
@@ -54,14 +57,14 @@ namespace Vitkir.UserManager.Tests.NUnit
 		{
 			var relation = new Relation(userId, awardId);
 
-			userLogic.CreateRelation(relation);
+			userLogic.AddAward(relation);
 			Assert.IsTrue(userLogic.Get(userId).RelatedAwards.Contains(awardId));
 		}
 
 		[TestMethod]
 		public void GetRelationEntity()
 		{
-			var collect1 = userLogic.GetRelatedEntities(1);
+			var collect1 = awardLogic.GetAll(1);
 			try
 			{
 				Assert.IsNotNull(collect1);
@@ -84,9 +87,14 @@ namespace Vitkir.UserManager.Tests.NUnit
 		[TestMethod]
 		public void DeleteRelation()
 		{
-			userLogic.CreateRelation(new Relation(1, 3));
-			userLogic.DeleteRelationEntity(userId, 3);
-			Assert.IsFalse(userLogic.GetRelatedEntities(userId).Contains(3));
+			var relation = new Relation(userId, 3);
+			userLogic.AddAward(relation);
+			userLogic.RemoveAward(relation);
+			Assert.IsFalse(awardLogic.GetAll(userId)
+				.Where(award => award.Id == 3)
+				.Select(award => award.Id)
+				.ToList()
+				.Contains(3));
 		}
 	}
 }

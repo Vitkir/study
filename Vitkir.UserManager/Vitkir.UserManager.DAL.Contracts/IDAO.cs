@@ -11,6 +11,6 @@ namespace Vitkir.UserManager.DAL.Contracts
 
 		List<TEntity> GetEntities();
 
-		void UpdateFile(List<TEntity> usersCache);
+		void UpdateFile(Dictionary<TId, TEntity> usersCache);
 	}
 }

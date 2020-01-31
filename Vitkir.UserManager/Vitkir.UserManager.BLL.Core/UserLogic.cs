@@ -6,7 +6,7 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	public class UserLogic : AbstractLogic<int, User>, IAward
+	public class UserLogic : AbstractLogic<int, User>, IUserLogic
 	{
 		public UserLogic(IDAO<int, User> userDAO) : base(userDAO)
 		{
@@ -19,10 +19,10 @@ namespace Vitkir.UserManager.BLL.Logic
 			return user;
 		}
 
-		public override List<User> GetAll()
+		public override Dictionary<int, User> GetAll()
 		{
 			var users = base.GetAll();
-			foreach (var user in users)
+			foreach (var user in users.Values)
 			{
 				user.RelatedAwards = GetRelatedAwardIds(user.Id);
 			}
@@ -32,8 +32,8 @@ namespace Vitkir.UserManager.BLL.Logic
 		private List<int> GetRelatedAwardIds(int id)
 		{
 			return relationCache.GetAll()
-				.Where(relation => relation.UserId == id)
-				.Select(relation => relation.AwardId)
+				.Where(relation => relation.Key.UserId == id)
+				.Select(relation => relation.Key.AwardId)
 				.ToList();
 		}
 

@@ -2,14 +2,14 @@
 {
 	internal class Enums
 	{
-		internal enum Entities : int
+		internal enum MainMenu : int
 		{
 			Award = 1,
 			User,
 			Exit,
 		}
 
-		internal enum UserMenu : int
+		internal enum UserMakeIt : int
 		{
 			Create = 1,
 			Update,
@@ -22,7 +22,7 @@
 			Back,
 		}
 
-		internal enum AwardMenu : int
+		internal enum AwardMakeIt : int
 		{
 			Create = 1,
 			Update,

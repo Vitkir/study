@@ -3,10 +3,10 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public abstract class AbstractIntIdEntityFileDAO<TEntity> : AbstractEntityFileDAO<int, TEntity>
+	public abstract class AbstractIntIdFileDAO<TEntity> : AbstractFileDAO<int, TEntity>
 		where TEntity : IEntity<int>, IEquatable<TEntity>
 	{
-		public AbstractIntIdEntityFileDAO(string entityFilePath,
+		public AbstractIntIdFileDAO(string entityFilePath,
 			string tmpFilePath,
 			string writingExeption,
 			string fileMissingExeption) : base(entityFilePath, tmpFilePath, writingExeption, fileMissingExeption)

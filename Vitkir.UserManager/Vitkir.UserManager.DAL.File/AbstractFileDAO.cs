@@ -7,8 +7,8 @@ using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.DAL.File
 {
-	public abstract class AbstractEntityFileDAO<TEntityId, TEntity> : IDAO<TEntityId, TEntity>
-		where TEntity : IEntity<TEntityId>, IEquatable<TEntity>
+	public abstract class AbstractFileDAO<TId, TEntity> : IDAO<TId, TEntity>
+		where TEntity : IEntity<TId>, IEquatable<TEntity>
 	{
 		private readonly string tmpFilePath;
 
@@ -16,9 +16,9 @@ namespace Vitkir.UserManager.DAL.File
 		private readonly string fileMissingExeption;
 
 		protected readonly string entityFilePath;
-		protected TEntityId lastId;
+		protected TId lastId;
 
-		public AbstractEntityFileDAO(string entityFilePath,
+		public AbstractFileDAO(string entityFilePath,
 			string tmpFilePath,
 			string writingExeption,
 			string fileMissingExeption)
@@ -57,7 +57,7 @@ namespace Vitkir.UserManager.DAL.File
 			return ParseString(entityItem);
 		}
 
-		public void UpdateFile(List<TEntity> entities)
+		public void UpdateFile(Dictionary<TId, TEntity> entities)
 		{
 			var info = new FileInfo(entityFilePath).IsReadOnly;
 			if (info)
@@ -68,7 +68,7 @@ namespace Vitkir.UserManager.DAL.File
 			System.IO.File.Create(tmpFilePath).Dispose();
 			using (StreamWriter streamWriter = new StreamWriter(tmpFilePath))
 			{
-				foreach (var entity in entities)
+				foreach (var entity in entities.Values)
 				{
 					streamWriter.WriteLine(entity.ToString());
 				}
@@ -97,14 +97,13 @@ namespace Vitkir.UserManager.DAL.File
 			return entities;
 		}
 
-		protected TEntityId GetLastId()
+		protected TId GetLastId()
 		{
 			string lastLine = default;
-			string currentLine = default;
-			TEntityId lastId = default;
+			TId lastId = default;
 			using (StreamReader streamReader = new StreamReader(entityFilePath))
 			{
-				currentLine = streamReader.ReadLine();
+				var currentLine = streamReader.ReadLine();
 				while (true)
 				{
 					currentLine = streamReader.ReadLine();
@@ -119,8 +118,8 @@ namespace Vitkir.UserManager.DAL.File
 			return lastId;
 		}
 
-		protected abstract TEntityId ParseId(string currentLine);
+		protected abstract TId ParseId(string currentLine);
 
-		protected abstract TEntityId GetLastAvaliableId(TEntity entity);
+		protected abstract TId GetLastAvaliableId(TEntity entity);
 	}
 }

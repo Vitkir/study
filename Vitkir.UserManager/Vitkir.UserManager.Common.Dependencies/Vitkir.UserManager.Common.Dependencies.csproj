@@ -61,6 +61,10 @@
       <Project>{52234B5D-4264-404C-AB38-BF3D73BA9A78}</Project>
       <Name>Vitkir.UserManager.BLL.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Vitkir.UserManager.Common.Contracts\Vitkir.UserManager.Common.Contracts.csproj">
+      <Project>{E87A08DB-4914-449A-8438-67ADC63BB70B}</Project>
+      <Name>Vitkir.UserManager.Common.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
       <Project>{2CDE2477-15AE-4DD0-8BD2-01C65BE99A71}</Project>
       <Name>Vitkir.UserManager.Common.Entities</Name>

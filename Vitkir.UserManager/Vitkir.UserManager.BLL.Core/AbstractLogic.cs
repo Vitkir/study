@@ -44,12 +44,12 @@ namespace Vitkir.UserManager.BLL.Logic
 			return (TEntity)cache[id].Clone();
 		}
 
-		public virtual List<TEntity> GetAll()
+		public virtual Dictionary<TId, TEntity> GetAll()
 		{
 			return cache.Values
 				.Select(entity => entity.Clone())
 				.Cast<TEntity>()
-				.ToList();
+				.ToDictionary(e => e.Id);
 		}
 
 		private Dictionary<TId, TEntity> GetAllFromDAO()

@@ -8,89 +8,142 @@ namespace Vitkir.UserManager.PL.Console
 {
 	class Program
 	{
-		private static relationCache userPresentation;
-		private static relationCache.RelationsPresentation relationsPresentation;
+		private static UserPresentation userPresentation;
 		private static AwardPresentation awardPresentation;
 		private static IKernel dependencyManager;
+		private static UserMakeIt user;
+		private static AwardMakeIt award;
 
 		static void Main()
 		{
 			dependencyManager = new StandardKernel(new DependencyManager());
-			userPresentation = dependencyManager.Get<relationCache>();
-			relationsPresentation = new relationCache.RelationsPresentation(userPresentation);
+			userPresentation = dependencyManager.Get<UserPresentation>();
 			awardPresentation = dependencyManager.Get<AwardPresentation>();
-			ShowEnum(new Menu());
-			GetMenu();
+			user = new UserMakeIt();
+			award = new AwardMakeIt();
+			ShowEnum(new MainMenu());
+			MainMenu();
 		}
 
-		private static void GetMenu()
+		private static void MainMenu()
 		{
 			char input;
-			Menu menu;
-			Entities entities = new Entities();
+			MainMenu menu;
 			while (true)
 			{
 				System.Console.Write("Select action :>");
-				input = System.Console.ReadKey().KeyChar;
+				input = System.Console.ReadKey(false).KeyChar;
 				System.Console.WriteLine(Environment.NewLine);
 				if (char.IsDigit(input))
 				{
-					menu = (Menu)Enum.Parse(typeof(Menu), input.ToString());
+					menu = (MainMenu)Enum.Parse(typeof(MainMenu), input.ToString());
 					switch (menu)
 					{
-						case Menu.Create:
-							ShowEnum(entities);
-							GetSubMenu().CreateEntity();
+						case Enums.MainMenu.Award:
+							ShowEnum(award);
+							AwardMakeIt();
 							break;
-						case Menu.Update:
-							userPresentation.UpdateDatabase();
-							awardPresentation.UpdateDatabase();
+						case Enums.MainMenu.User:
+							ShowEnum(user);
+							UserMakeIt();
 							break;
-						case Menu.Delete:
-							ShowEnum(entities);
-							GetSubMenu().DeleteEntity();
-							break;
-						case Menu.Get:
-							ShowEnum(entities);
-							GetSubMenu().GetEntity();
-							break;
-						case Menu.GetAll:
-							ShowEnum(entities);
-							GetSubMenu().GetEntities();
-							break;
-						case Menu.ConsoleClearing:
-							System.Console.Clear();
-							ShowEnum(menu);
-							break;
-						case Menu.Exit:
-							userPresentation.UpdateDatabase();
-							awardPresentation.UpdateDatabase();
+						case Enums.MainMenu.Exit:
 							return;
+						default:
+							System.Console.WriteLine("Select an action");
+							break;
 					}
 				}
 			}
 		}
 
-		private static IEntityPresentation GetSubMenu()
+		private static void UserMakeIt()
 		{
 			char input;
-			Entities entities;
+			UserMakeIt userMakeIt;
 			while (true)
 			{
 				System.Console.Write("Select action :>");
-				input = System.Console.ReadKey().KeyChar;
+				input = System.Console.ReadKey(false).KeyChar;
 				System.Console.WriteLine(Environment.NewLine);
 				if (char.IsDigit(input))
 				{
-					entities = (Entities)Enum.Parse(typeof(Entities), input.ToString());
-					switch (entities)
+					userMakeIt = (UserMakeIt)Enum.Parse(typeof(UserMakeIt), input.ToString());
+					switch (userMakeIt)
 					{
-						case Entities.Award:
-							return awardPresentation;
-						case Entities.User:
-							return userPresentation;
-						case Entities.Relationships:
-							return relationsPresentation;
+						case Enums.UserMakeIt.Create:
+							userPresentation.Create();
+							break;
+						case Enums.UserMakeIt.Update:
+							userPresentation.Update();
+							break;
+						case Enums.UserMakeIt.Delete:
+							userPresentation.Delete();
+							break;
+						case Enums.UserMakeIt.Get:
+							userPresentation.Get();
+							break;
+						case Enums.UserMakeIt.GetAll:
+							userPresentation.GetAll();
+							break;
+						case Enums.UserMakeIt.AddAward:
+							userPresentation.AddAward();
+							break;
+						case Enums.UserMakeIt.GetAwardsUser:
+							awardPresentation.GetAll();
+							break;
+						case Enums.UserMakeIt.ConsoleClearing:
+							System.Console.Clear();
+							UserMakeIt();
+							break;
+						case Enums.UserMakeIt.Back:
+							return;
+						default:
+							System.Console.WriteLine("Select an action");
+							break;
+					}
+				}
+			}
+		}
+
+		private static void AwardMakeIt()
+		{
+			char input;
+			AwardMakeIt awardMakeIt;
+			while (true)
+			{
+				System.Console.Write("Select action :>");
+				input = System.Console.ReadKey(false).KeyChar;
+				System.Console.WriteLine(Environment.NewLine);
+				if (char.IsDigit(input))
+				{
+					awardMakeIt = (AwardMakeIt)Enum.Parse(typeof(AwardMakeIt), input.ToString());
+					switch (awardMakeIt)
+					{
+						case Enums.AwardMakeIt.Create:
+							awardPresentation.Create();
+							break;
+						case Enums.AwardMakeIt.Update:
+							awardPresentation.Update();
+							break;
+						case Enums.AwardMakeIt.Delete:
+							awardPresentation.Delete();
+							break;
+						case Enums.AwardMakeIt.Get:
+							awardPresentation.Get();
+							break;
+						case Enums.AwardMakeIt.GetAll:
+							awardPresentation.GetAll();
+							break;
+						case Enums.AwardMakeIt.ConsoleClearing:
+							System.Console.Clear();
+							AwardMakeIt();
+							break;
+						case Enums.AwardMakeIt.Back:
+							return;
+						default:
+							System.Console.WriteLine("Select an action");
+							break;
 					}
 				}
 			}
@@ -106,6 +159,5 @@ namespace Vitkir.UserManager.PL.Console
 				option++;
 			}
 		}
-
 	}
 }

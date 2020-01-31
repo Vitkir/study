@@ -1,24 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 
 namespace Vitkir.UserManager.BLL.Logic
 {
-	internal class RelationCache : ICache
+	public class RelationCache : ICache
 	{
-		private readonly IRelationDAO relationsDAO;
-		private readonly Dictionary<Relation> relations;
+		private readonly IRelationDAO relationDAO;
+		private readonly Dictionary<Relation, Relation> relations;
 
 		public RelationCache(IRelationDAO relationsDAO)
 		{
-			this.relationsDAO = relationsDAO;
-			relations = relationsDAO.GetEntities();
+			this.relationDAO = relationsDAO;
+			relations = relationsDAO.GetEntities().ToDictionary(e => e.Id);
 		}
 
 		public Relation Create(Relation relation)
 		{
-			var returnEntity = relationsDAO.CreateEntity(relation);
-			relations.Add(returnEntity);
+			var returnEntity = relationDAO.CreateEntity(relation);
+			relations.Add(returnEntity.Id, returnEntity);
 			return returnEntity;
 		}
 
@@ -27,14 +28,14 @@ namespace Vitkir.UserManager.BLL.Logic
 			return relations.Remove(relation);
 		}
 
-		public List<Relation> GetAll()
+		public Dictionary<Relation, Relation> GetAll()
 		{
 			return relations;
 		}
 
 		public void UpdateDAO()
 		{
-			relationsDAO.UpdateFile(relations);
+			relationDAO.UpdateFile(relations);
 		}
 	}
 }

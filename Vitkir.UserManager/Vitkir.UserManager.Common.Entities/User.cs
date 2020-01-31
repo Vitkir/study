@@ -41,19 +41,6 @@ namespace Vitkir.UserManager.Common.Entities
 				Id.ToString(), Name.ToString(), Birthday.ToString("dd.MM.yyyy"));
 		}
 
-		public override bool Equals(object obj)
-		{
-			if (obj == null) return false;
-			if (!(obj is User)) return false;
-			return true;
-		}
-
-		public bool Equals(User other)
-		{
-			if (other == null) return false;
-			return (Name, Birthday) == (other.Name, other.Birthday);
-		}
-
 		public object Clone()
 		{
 			return new User(Name, Birthday)
@@ -62,12 +49,34 @@ namespace Vitkir.UserManager.Common.Entities
 			};
 		}
 
+		public override bool Equals(object obj)
+		{
+			return obj is User other &&
+				(Name, Birthday) == (other.Name, other.Birthday);
+		}
+
+		public bool Equals(User other)
+		{
+			return other != null &&
+				(Name, Birthday) == (other.Name, other.Birthday);
+		}
+
 		public override int GetHashCode()
 		{
 			var hashCode = -512614078;
 			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
 			hashCode = hashCode * -1521134295 + Birthday.GetHashCode();
 			return hashCode;
+		}
+
+		public static bool operator ==(User left, User right)
+		{
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(User left, User right)
+		{
+			return !(left == right);
 		}
 	}
 }

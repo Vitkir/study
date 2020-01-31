@@ -9,7 +9,7 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		bool Delete(Relation relation);
 
-		List<Relation> GetAll();
+		Dictionary<Relation, Relation> GetAll();
 
 		void UpdateDAO();
 	}

@@ -18,17 +18,21 @@ namespace Vitkir.UserManager.Common.Entities
 			return string.Format(Id.ToString() + ":" + Title);
 		}
 
+		public object Clone()
+		{
+			return new Award(Title);
+		}
+
 		public override bool Equals(object obj)
 		{
-			if (obj == null) return false;
-			if (!(obj is Award)) return false;
-			return true;
+			return obj is Award other &&
+				Title == other.Title;
 		}
 
 		public bool Equals(Award other)
 		{
-			if (other == null) return false;
-			return Title == other.Title;
+			return other != null &&
+				Title == other.Title;
 		}
 
 		public override int GetHashCode()
@@ -36,9 +40,14 @@ namespace Vitkir.UserManager.Common.Entities
 			return Title.GetHashCode();
 		}
 
-		public object Clone()
+		public static bool operator ==(Award left, Award right)
 		{
-			return new Award(Title);
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(Award left, Award right)
+		{
+			return !(left == right);
 		}
 	}
 }
