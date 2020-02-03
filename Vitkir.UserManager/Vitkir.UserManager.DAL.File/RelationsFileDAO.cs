@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 
@@ -7,8 +6,9 @@ namespace Vitkir.UserManager.DAL.File
 {
 	public class RelationsFileDAO : AbstractFileDAO<Relation, Relation>, IRelationDAO
 	{
-		public RelationsFileDAO() : base(ConfigurationManager.AppSettings["relationsFilePath"],
-			ConfigurationManager.AppSettings["relationstmpFilePath"],
+		public RelationsFileDAO(string entityFilePath,
+			string tmpFilePath) : base(entityFilePath,
+			tmpFilePath,
 			"Cannot write data. UsersAwards data file is read only",
 			"UsersAwards data file missing")
 		{

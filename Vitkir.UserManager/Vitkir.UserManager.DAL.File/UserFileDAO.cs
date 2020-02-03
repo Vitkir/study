@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Globalization;
 using Vitkir.UserManager.Common.Entities;
 
@@ -7,8 +6,9 @@ namespace Vitkir.UserManager.DAL.File
 {
 	public class UserFileDAO : AbstractIntIdFileDAO<User>
 	{
-		public UserFileDAO() : base(ConfigurationManager.AppSettings["usersDataFilePath"],
-			ConfigurationManager.AppSettings["userstmpFilePath"],
+		public UserFileDAO(string entityFilePath,
+			string tmpFilePath) : base(entityFilePath,
+			tmpFilePath,
 			"Cannot write data. User data file is read only",
 			"User data file missing")
 		{
