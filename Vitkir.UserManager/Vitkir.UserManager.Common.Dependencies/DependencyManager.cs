@@ -11,7 +11,7 @@ namespace Vitkir.UserManager.Common.Dependencies
 {
 	public class DependencyManager : NinjectModule
 	{
-		private readonly FilePathConfigSection configSection = (FilePathConfigSection)ConfigurationManager.GetSection("Paths");
+		private readonly FilePathConfigSection configSection = (FilePathConfigSection)ConfigurationManager.GetSection("MyPaths");//FileDALConfiguration
 
 		public override void Load()
 		{
