@@ -45,6 +45,7 @@ namespace Vitkir.UserManager.Common.Entities
 		{
 			return new User(Name, Birthday)
 			{
+				Id = Id,
 				RelatedAwards = RelatedAwards
 			};
 		}

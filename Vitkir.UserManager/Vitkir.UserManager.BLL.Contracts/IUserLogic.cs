@@ -7,5 +7,9 @@ namespace Vitkir.UserManager.BLL.Contracts
 		Relation AddAward(Relation relation);
 
 		bool RemoveAward(Relation relation);
+
+		bool RemoveAllAwardsUser(int id);
+
+		bool RemoveAwardAllUsers(int id);
 	}
 }

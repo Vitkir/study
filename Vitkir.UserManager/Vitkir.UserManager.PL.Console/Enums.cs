@@ -6,6 +6,7 @@
 		{
 			Award = 1,
 			User,
+			ConsoleClearing,
 			Exit,
 		}
 
@@ -17,8 +18,8 @@
 			Get,
 			GetAll,
 			AddAward,
+			RemoveAward,
 			GetAwardsUser,
-			ConsoleClearing,
 			Back,
 		}
 
@@ -29,7 +30,6 @@
 			Delete,
 			Get,
 			GetAll,
-			ConsoleClearing,
 			Back,
 		}
 	}

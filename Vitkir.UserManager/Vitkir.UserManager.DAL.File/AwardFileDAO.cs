@@ -10,7 +10,6 @@ namespace Vitkir.UserManager.DAL.File
 			"Cannot write data. Award data file is read only",
 			"Award data file missing")
 		{
-
 		}
 
 		public override Award ParseString(string entityItem)

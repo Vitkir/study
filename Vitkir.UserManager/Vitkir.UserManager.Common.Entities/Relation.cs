@@ -4,7 +4,7 @@ namespace Vitkir.UserManager.Common.Entities
 {
 	public struct Relation : IEntity<Relation>, IEquatable<Relation>
 	{
-		public Relation Id { get => this; set { this = value; } }// debug fields updating
+		public Relation Id { get => this; set { this = value; } }
 
 		public int UserId { get; }
 

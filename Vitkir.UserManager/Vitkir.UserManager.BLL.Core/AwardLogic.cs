@@ -8,15 +8,16 @@ namespace Vitkir.UserManager.BLL.Logic
 {
 	public class AwardLogic : AbstractLogic<int, Award>, IAwardLogic
 	{
-		public AwardLogic(IDAO<int, Award> awardDAO) : base(awardDAO)
+		public AwardLogic(IDAO<int, Award> awardDAO, ICache relationCache) : base(awardDAO, relationCache)
 		{
 		}
 
 		public List<Award> GetAll(int userId)
 		{
-			return relationCache.GetAll()
-				.Where(relation => relation.Key.UserId == userId)
-				.Select(relation => cache[relation.Key.AwardId].Clone())
+			return relationCache.GetAll().Values
+				.Where(relation => relation.UserId == userId 
+				&& cache.ContainsKey(relation.AwardId))
+				.Select(relation => cache[relation.AwardId].Clone())
 				.Cast<Award>()
 				.ToList();
 		}

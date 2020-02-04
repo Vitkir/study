@@ -8,7 +8,7 @@ namespace Vitkir.UserManager.BLL.Logic
 {
 	public class UserLogic : AbstractLogic<int, User>, IUserLogic
 	{
-		public UserLogic(IDAO<int, User> userDAO) : base(userDAO)
+		public UserLogic(IDAO<int, User> userDAO, ICache relationCache) : base(userDAO, relationCache)
 		{
 		}
 
@@ -45,6 +45,16 @@ namespace Vitkir.UserManager.BLL.Logic
 		public bool RemoveAward(Relation relation)
 		{
 			return relationCache.Delete(relation);
+		}
+
+		public bool RemoveAllAwardsUser(int id)
+		{
+			return relationCache.DeleteAllForUser(id);
+		}
+
+		public bool RemoveAwardAllUsers(int id)
+		{
+			return relationCache.DeleteAllForAward(id);
 		}
 	}
 }

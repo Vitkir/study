@@ -14,10 +14,11 @@ namespace Vitkir.UserManager.BLL.Logic
 		protected readonly ICache relationCache;
 		protected readonly IDAO<TId, TEntity> entityDAO;
 
-		public AbstractLogic(IDAO<TId, TEntity> entityDAO)
+		public AbstractLogic(IDAO<TId, TEntity> entityDAO, ICache relationCache)
 		{
 			this.entityDAO = entityDAO;
 			cache = GetAllFromDAO();
+			this.relationCache = relationCache;
 		}
 
 		public TEntity Create(TEntity entity)
@@ -32,6 +33,7 @@ namespace Vitkir.UserManager.BLL.Logic
 		{
 			var entities = GetAll();
 			entityDAO.UpdateFile(entities);
+			relationCache.UpdateDAO();
 		}
 
 		public bool Delete(TId id)

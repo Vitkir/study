@@ -47,10 +47,8 @@ namespace Vitkir.UserManadger.PL.Console
 			System.Console.WriteLine("success. User id: " + returned.ToString());
 		}
 
-		public void AddAward()
+		public void AddAward(int userId, int awardId)
 		{
-			var userId = GetIdFromConsole();
-			var awardId = GetIdFromConsole();
 			var relation = new Relation(userId, awardId);
 			Relation createdRelation = default;
 
@@ -67,16 +65,28 @@ namespace Vitkir.UserManadger.PL.Console
 				" and award " + createdRelation.AwardId + " created" : "unsuccessful");
 		}
 
-		public void RemoveAward()
+		public void RemoveAward(int userId, int awardId)
 		{
-			var userId = GetIdFromConsole();
-			var awardId = GetIdFromConsole();
 			var relation = new Relation(userId, awardId);
 			var returned = (entityLogic as IUserLogic).RemoveAward(relation);
 
 			System.Console.WriteLine(returned == true ?
 				"user " + userId.ToString() +
-				" and award " + awardId.ToString() + " relation deleted" : "unsuccessful");
+				" and award " + awardId.ToString() + " award deleted" : "unsuccessful");
+		}
+
+		public void RemoveAllAwardsUser(int userId)
+		{
+			var returned = (entityLogic as IUserLogic).RemoveAllAwardsUser(userId);
+			System.Console.WriteLine(returned == true ?
+				"Awards remove" : "unsuccessful");
+		}
+
+		public void RemoveAwardAllUsers(int awardId)
+		{
+			var returned = (entityLogic as IUserLogic).RemoveAwardAllUsers(awardId);
+			System.Console.WriteLine(returned == true ?
+				"Award remove" : "unsuccessful");
 		}
 	}
 }

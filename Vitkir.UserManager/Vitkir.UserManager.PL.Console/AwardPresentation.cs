@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.Common.Entities;
@@ -34,13 +35,19 @@ namespace Vitkir.UserManadger.PL.Console
 			System.Console.WriteLine("success. Award id: " + returned.ToString());
 		}
 
-		public void GetAwardsUser()
+		public void GetAwardsUser(int id)
 		{
-			var id = GetIdFromConsole();
-			var returnList = (entityLogic as IAwardLogic).GetAll(id);
-			foreach (var award in returnList)
+			try
 			{
-				award.ToString();
+				var returnList = (entityLogic as IAwardLogic).GetAll(id);
+				foreach (var award in returnList)
+				{
+					System.Console.WriteLine(award.ToString());
+				}
+			}
+			catch (KeyNotFoundException)
+			{
+				System.Console.WriteLine("Can't find award");
 			}
 		}
 	}

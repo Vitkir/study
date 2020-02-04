@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Vitkir.UserManadger.PL.Contracts;
 using Vitkir.UserManager.BLL.Contracts;
@@ -18,22 +19,20 @@ namespace Vitkir.UserManadger.PL.Console
 
 		public abstract void Create();
 
-		public void Delete()
+		public void Delete(int id)
 		{
-			int id = GetIdFromConsole();
 			var returned = entityLogic.Delete(id);
 			System.Console.WriteLine(returned == true ? nameof(TEntity) + " id " + returned.ToString() + " deleted" : "unsuccessful");
 		}
 
-		public void Get()
+		public void Get(int id)
 		{
-			int id = GetIdFromConsole();
 			try
 			{
 				var entity = entityLogic.Get(id);
 				System.Console.WriteLine(nameof(TEntity) + ": " + entity.ToString());
 			}
-			catch (IndexOutOfRangeException)
+			catch (KeyNotFoundException)
 			{
 				System.Console.WriteLine(nameof(TEntity) + " with such id does not exist");
 			}
@@ -55,23 +54,10 @@ namespace Vitkir.UserManadger.PL.Console
 		public void GetAll()
 		{
 			var etities = entityLogic.GetAll();
-			foreach (var entity in etities)
+			foreach (var entity in etities.Values)
 			{
 				System.Console.WriteLine(entity.ToString());
 			}
-		}
-
-		protected int GetIdFromConsole()
-		{
-			int id;
-			System.Console.WriteLine("Input id");
-			var input = System.Console.ReadLine();
-			while (!int.TryParse(input, out id))
-			{
-				System.Console.WriteLine("Incorrect input");
-				input = System.Console.ReadLine();
-			}
-			return id;
 		}
 	}
 }

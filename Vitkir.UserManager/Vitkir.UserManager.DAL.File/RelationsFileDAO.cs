@@ -12,7 +12,6 @@ namespace Vitkir.UserManager.DAL.File
 			"Cannot write data. UsersAwards data file is read only",
 			"UsersAwards data file missing")
 		{
-
 		}
 
 		public List<int> GetRelatedIdEntities(int userId)
@@ -35,7 +34,7 @@ namespace Vitkir.UserManager.DAL.File
 		public override Relation ParseString(string entityItem)
 		{
 			var entityFields = entityItem.Split(':');
-			return new Relation(int.Parse(entityFields[1]), int.Parse(entityFields[2]));
+			return new Relation(int.Parse(entityFields[0]), int.Parse(entityFields[1]));
 		}
 
 		protected override Relation ParseId(string currentLine)

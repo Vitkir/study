@@ -4,7 +4,7 @@ namespace Vitkir.UserManager.Common.Dependencies.ConfigurationSettings
 {
 	public class FilePathConfigSection : ConfigurationSection
 	{
-		[ConfigurationProperty("Paths")]
-		public PathsCollections PathsCollections => (PathsCollections)base["Paths"];
+		[ConfigurationProperty("FilePaths")]
+		public PathsCollections PathsCollections => (PathsCollections)base["FilePaths"];
 	}
 }

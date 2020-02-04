@@ -20,7 +20,7 @@ namespace Vitkir.UserManager.DAL.File
 		}
 		protected override int GetLastAvaliableId(TEntity entity)
 		{
-			return lastId++;
+			return ++lastId;
 		}
 	}
 }

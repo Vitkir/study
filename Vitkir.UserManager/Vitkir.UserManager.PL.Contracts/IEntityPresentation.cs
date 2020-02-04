@@ -4,11 +4,11 @@
 	{
 		void Create();
 
-		void Delete();
+		void Delete(int id);
 
 		void GetAll();
 
-		void Get();
+		void Get(int id);
 
 		void Update();
 	}

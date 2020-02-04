@@ -28,6 +28,24 @@ namespace Vitkir.UserManager.BLL.Logic
 			return relations.Remove(relation);
 		}
 
+		public bool DeleteAllForUser(int userId)
+		{
+			foreach (var item in relations.Where(e => e.Key.UserId == userId).ToList())
+			{
+				relations.Remove(item.Key);
+			}
+			return true;
+		}
+
+		public bool DeleteAllForAward(int awardId)
+		{
+			foreach (var item in relations.Where(e => e.Key.AwardId == awardId).ToList())
+			{
+				relations.Remove(item.Key);
+			}
+			return true;
+		}
+
 		public Dictionary<Relation, Relation> GetAll()
 		{
 			return relations;

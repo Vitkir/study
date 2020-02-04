@@ -12,7 +12,6 @@ namespace Vitkir.UserManager.DAL.File
 			"Cannot write data. User data file is read only",
 			"User data file missing")
 		{
-
 		}
 
 		public override User ParseString(string entityItem)

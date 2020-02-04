@@ -45,7 +45,7 @@ namespace Vitkir.UserManager.DAL.File
 			using (FileStream fileStream = new FileStream(entityFilePath, FileMode.Append))
 			{
 				currentPosition = fileStream.Position;
-				var byData = Encoding.Unicode.GetBytes(entityItem);
+				var byData = Encoding.ASCII.GetBytes(entityItem);
 				fileStream.Write(byData, 0, byData.Length);
 			}
 

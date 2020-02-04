@@ -20,7 +20,7 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public object Clone()
 		{
-			return new Award(Title);
+			return new Award(Title) { Id = Id };
 		}
 
 		public override bool Equals(object obj)

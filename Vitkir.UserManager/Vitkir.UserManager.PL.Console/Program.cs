@@ -8,9 +8,11 @@ namespace Vitkir.UserManager.PL.Console
 {
 	class Program
 	{
+		private static IKernel dependencyManager;
 		private static UserPresentation userPresentation;
 		private static AwardPresentation awardPresentation;
-		private static IKernel dependencyManager;
+
+		private static MainMenu main;
 		private static UserMakeIt user;
 		private static AwardMakeIt award;
 
@@ -21,7 +23,8 @@ namespace Vitkir.UserManager.PL.Console
 			awardPresentation = dependencyManager.Get<AwardPresentation>();
 			user = new UserMakeIt();
 			award = new AwardMakeIt();
-			ShowEnum(new MainMenu());
+			main = new MainMenu();
+			ShowEnum(main);
 			MainMenu();
 		}
 
@@ -47,7 +50,13 @@ namespace Vitkir.UserManager.PL.Console
 							ShowEnum(user);
 							UserMakeIt();
 							break;
+						case Enums.MainMenu.ConsoleClearing:
+							System.Console.Clear();
+							ShowEnum(main);
+							break;
 						case Enums.MainMenu.Exit:
+							userPresentation.Update();
+							awardPresentation.Update();
 							return;
 						default:
 							System.Console.WriteLine("Select an action");
@@ -78,25 +87,31 @@ namespace Vitkir.UserManager.PL.Console
 							userPresentation.Update();
 							break;
 						case Enums.UserMakeIt.Delete:
-							userPresentation.Delete();
+							var id = GetIdFromConsole();
+							userPresentation.RemoveAllAwardsUser(id);
+							userPresentation.Delete(id);
 							break;
 						case Enums.UserMakeIt.Get:
-							userPresentation.Get();
+							userPresentation.Get(GetIdFromConsole());
 							break;
 						case Enums.UserMakeIt.GetAll:
 							userPresentation.GetAll();
 							break;
 						case Enums.UserMakeIt.AddAward:
-							userPresentation.AddAward();
+							userPresentation.AddAward(
+								GetIdFromConsole(),
+								GetIdFromConsole());
+							break;
+						case Enums.UserMakeIt.RemoveAward:
+							userPresentation.RemoveAward(
+								GetIdFromConsole(),
+								GetIdFromConsole());
 							break;
 						case Enums.UserMakeIt.GetAwardsUser:
-							awardPresentation.GetAll();
-							break;
-						case Enums.UserMakeIt.ConsoleClearing:
-							System.Console.Clear();
-							UserMakeIt();
+							awardPresentation.GetAwardsUser(GetIdFromConsole());
 							break;
 						case Enums.UserMakeIt.Back:
+							ShowEnum(main);
 							return;
 						default:
 							System.Console.WriteLine("Select an action");
@@ -127,19 +142,18 @@ namespace Vitkir.UserManager.PL.Console
 							awardPresentation.Update();
 							break;
 						case Enums.AwardMakeIt.Delete:
-							awardPresentation.Delete();
+							var id = GetIdFromConsole();
+							userPresentation.RemoveAwardAllUsers(id);
+							awardPresentation.Delete(id);
 							break;
 						case Enums.AwardMakeIt.Get:
-							awardPresentation.Get();
+							awardPresentation.Get(GetIdFromConsole());
 							break;
 						case Enums.AwardMakeIt.GetAll:
 							awardPresentation.GetAll();
 							break;
-						case Enums.AwardMakeIt.ConsoleClearing:
-							System.Console.Clear();
-							AwardMakeIt();
-							break;
 						case Enums.AwardMakeIt.Back:
+							ShowEnum(main);
 							return;
 						default:
 							System.Console.WriteLine("Select an action");
@@ -158,6 +172,19 @@ namespace Vitkir.UserManager.PL.Console
 				System.Console.WriteLine($"{option.ToString()}: {name}");
 				option++;
 			}
+		}
+
+		private static int GetIdFromConsole()
+		{
+			int id;
+			System.Console.WriteLine("Input id");
+			var input = System.Console.ReadLine();
+			while (!int.TryParse(input, out id))
+			{
+				System.Console.WriteLine("Incorrect input");
+				input = System.Console.ReadLine();
+			}
+			return id;
 		}
 	}
 }

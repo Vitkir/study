@@ -9,6 +9,10 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		bool Delete(Relation relation);
 
+		bool DeleteAllForUser(int id);
+
+		bool DeleteAllForAward(int awardId);
+
 		Dictionary<Relation, Relation> GetAll();
 
 		void UpdateDAO();
