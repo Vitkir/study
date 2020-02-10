@@ -181,9 +181,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Vitkir.UserManager.BLL.Contracts\Vitkir.UserManager.BLL.Contracts.csproj">
+      <Project>{152220da-ab65-4c3c-8ed9-52eb93504159}</Project>
+      <Name>Vitkir.UserManager.BLL.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.BLL.Core\Vitkir.UserManager.BLL.Logic.csproj">
       <Project>{52234b5d-4264-404c-ab38-bf3d73ba9a78}</Project>
       <Name>Vitkir.UserManager.BLL.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vitkir.UserManager.Common.Contracts\Vitkir.UserManager.Common.Contracts.csproj">
+      <Project>{e87a08db-4914-449a-8438-67adc63bb70b}</Project>
+      <Name>Vitkir.UserManager.Common.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vitkir.UserManager.Common.Dependencies\Vitkir.UserManager.Common.Dependencies.csproj">
       <Project>{c7f783e4-69dc-44e4-a8fa-8a225df5a3c2}</Project>
@@ -192,6 +200,10 @@
     <ProjectReference Include="..\Vitkir.UserManager.Common.Entities\Vitkir.UserManager.Common.Entities.csproj">
       <Project>{2cde2477-15ae-4dd0-8bd2-01c65be99a71}</Project>
       <Name>Vitkir.UserManager.Common.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vitkir.UserManager.PL.Contracts\Vitkir.UserManager.PL.Contracts.csproj">
+      <Project>{cee87ba0-1108-4744-a210-39847be11cee}</Project>
+      <Name>Vitkir.UserManager.PL.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
