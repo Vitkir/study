@@ -1,5 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.PL.WebApp.Models;
 
 namespace Vitkir.UserManager.PL.WebApp.Controllers
 {
@@ -14,7 +16,15 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 
 		public ActionResult Users()
 		{
-			return View();
+			var model = userLogic.GetAll()
+				.Select(e => new UserModel()
+				{
+					Id = e.Value.Id,
+					Name = e.Value.Name,
+					Birthday = e.Value.Birthday,
+					RelatedAwards = e.Value.RelatedAwards,
+				});
+			return View(model);
 		}
 
 		public ActionResult Details(int id)
@@ -33,7 +43,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			try
 			{
 
-				return RedirectToAction("Index");
+				return RedirectToAction("Users");
 			}
 			catch
 			{
@@ -52,7 +62,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			try
 			{
 
-				return RedirectToAction("Index");
+				return RedirectToAction("Users");
 			}
 			catch
 			{
@@ -71,7 +81,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			try
 			{
 
-				return RedirectToAction("Index");
+				return RedirectToAction("Users");
 			}
 			catch
 			{

@@ -106,12 +106,12 @@ namespace Vitkir.UserManager.DAL.File
 				var currentLine = streamReader.ReadLine();
 				while (true)
 				{
-					currentLine = streamReader.ReadLine();
 					if (string.IsNullOrEmpty(currentLine))
 					{
 						break;
 					}
 					lastLine = currentLine;
+					currentLine = streamReader.ReadLine();
 				}
 				lastId = ParseId(lastLine);
 			}
