@@ -5,7 +5,7 @@ namespace Vitkir.UserManager.PL.WebApp.Models
 {
 	public class UserModel
 	{
-		public int id { get; set; }
+		public int Id { get; set; }
 
 		public string Name { get; }
 
@@ -17,8 +17,6 @@ namespace Vitkir.UserManager.PL.WebApp.Models
 
 		public UserModel(string name, DateTime birthday)
 		{
-
 		}
-
 	}
 }
