@@ -39,15 +39,5 @@ namespace Vitkir.UserManager.Common.Entities
 		{
 			return Title.GetHashCode();
 		}
-
-		public static bool operator ==(Award left, Award right)
-		{
-			return left.Equals(right);
-		}
-
-		public static bool operator !=(Award left, Award right)
-		{
-			return !(left == right);
-		}
 	}
 }

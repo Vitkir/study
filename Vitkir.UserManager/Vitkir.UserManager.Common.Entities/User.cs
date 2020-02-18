@@ -26,7 +26,7 @@ namespace Vitkir.UserManager.Common.Entities
 			}
 		}
 
-		public List<int> RelatedAwards { get; set; }
+		public List<int> RelatedAwards { get; set; }//rename
 
 		public User(string name, DateTime birthday)
 		{
@@ -68,16 +68,6 @@ namespace Vitkir.UserManager.Common.Entities
 			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
 			hashCode = hashCode * -1521134295 + Birthday.GetHashCode();
 			return hashCode;
-		}
-
-		public static bool operator ==(User left, User right)
-		{
-			return left.Equals(right);
-		}
-
-		public static bool operator !=(User left, User right)
-		{
-			return !(left == right);
 		}
 	}
 }

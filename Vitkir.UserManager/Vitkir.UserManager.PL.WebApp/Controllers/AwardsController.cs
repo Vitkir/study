@@ -1,21 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.Common.Entities;
+using Vitkir.UserManager.PL.WebApp.Models.Award;
 
 namespace Vitkir.UserManager.PL.WebApp.Controllers
 {
 	public class AwardsController : Controller
 	{
-		public ActionResult Awards()
+		private readonly IAwardLogic awardLogic;
+
+		public AwardsController(IAwardLogic awardLogic)
 		{
-			return View();
+			this.awardLogic = awardLogic;
 		}
 
-		public ActionResult Details(int id)
+		public ActionResult GetList()
 		{
-			return View();
+			var model = awardLogic.GetAll()
+				.Select(e => new AwardModel(
+					e.Value.Title,
+					e.Value.Id));
+			return View("AwardList", model);
 		}
 
 		public ActionResult Create()
@@ -24,54 +31,44 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(FormCollection collection)
+		public ActionResult Create(AwardModel creationModel)
 		{
-			try
+			if (ModelState.IsValid)
 			{
-
-				return RedirectToAction("Index");
+				var createdAward = new Award(creationModel.Title);
+				awardLogic.Create(createdAward);
+				return RedirectToAction("GetList");
 			}
-			catch
-			{
-				return View();
-			}
-		}
-
-		public ActionResult Edit(int id)
-		{
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult Edit(int id, FormCollection collection)
-		{
-			try
-			{
-
-				return RedirectToAction("Index");
-			}
-			catch
-			{
-				return View();
-			}
+			return View(creationModel);
 		}
 
 		public ActionResult Delete(int id)
 		{
-			return View();
+			try
+			{
+				var award = awardLogic.Get(id);
+				var awardModel = new AwardModel(award.Title, award.Id);
+				return View(awardModel);
+			}
+			catch (KeyNotFoundException)
+			{
+				return HttpNotFound();
+			}
 		}
 
-		[HttpPost]
-		public ActionResult Delete(int id, FormCollection collection)
+		[HttpPost, ActionName("Delete")]
+		public ActionResult DeleteConfirmed(int id)
 		{
 			try
 			{
-
-				return RedirectToAction("Index");
+				var award = awardLogic.Get(id);
+				awardLogic.Delete(id);
+				awardLogic.UpdateDAO();
+				return RedirectToAction("GetList");
 			}
-			catch
+			catch (KeyNotFoundException)
 			{
-				return View();
+				return HttpNotFound();
 			}
 		}
 	}

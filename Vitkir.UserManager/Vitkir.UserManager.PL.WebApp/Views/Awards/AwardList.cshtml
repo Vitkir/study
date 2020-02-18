@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Vitkir.UserManager.PL.WebApp.Models.Award.AwardModel>
+
+@{
+	ViewBag.Title = "AwardList";
+}
+
+<h2>AwardList</h2>
+
+<p>
+	<a href="@Url.Action("Create", "Awards")" class="btn btn-success">Create award</a>
+</p>
+<table class="table table-hover table-bordered">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Title)
+		</th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Title)
+			</td>
+			<td>
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+			</td>
+		</tr>
+	}
+
+</table>

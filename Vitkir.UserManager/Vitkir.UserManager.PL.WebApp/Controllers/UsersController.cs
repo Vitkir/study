@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Vitkir.UserManager.BLL.Contracts;
-using Vitkir.UserManager.PL.WebApp.Models;
+using Vitkir.UserManager.Common.Entities;
+using Vitkir.UserManager.PL.WebApp.Models.User;
 
 namespace Vitkir.UserManager.PL.WebApp.Controllers
 {
@@ -14,22 +16,14 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			this.userLogic = userLogic;
 		}
 
-		public ActionResult Users()
+		public ActionResult GetList()
 		{
 			var model = userLogic.GetAll()
-				.Select(e => new UserModel()
-				{
-					Id = e.Value.Id,
-					Name = e.Value.Name,
-					Birthday = e.Value.Birthday,
-					RelatedAwards = e.Value.RelatedAwards,
-				});
-			return View(model);
-		}
-
-		public ActionResult Details(int id)
-		{
-			return View();
+				.Select(e => new UserListModel(
+					e.Value.Id,
+					e.Value.Name,
+					e.Value.Age));
+			return View("UserList", model);
 		}
 
 		public ActionResult Create()
@@ -38,54 +32,44 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(FormCollection collection)
+		public ActionResult Create(UserCreationModel creationModel)
 		{
-			try
+			if (ModelState.IsValid)
 			{
-
-				return RedirectToAction("Users");
+				var createdUser = new User(creationModel.Name, creationModel.Birthday);
+				userLogic.Create(createdUser);
+				return RedirectToAction("GetList");
 			}
-			catch
-			{
-				return View();
-			}
-		}
-
-		public ActionResult Edit(int id)
-		{
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult Edit(int id, FormCollection collection)
-		{
-			try
-			{
-
-				return RedirectToAction("Users");
-			}
-			catch
-			{
-				return View();
-			}
+			return View(creationModel);
 		}
 
 		public ActionResult Delete(int id)
 		{
-			return View();
+			try
+			{
+				var user = userLogic.Get(id);
+				var userModel = new UserListModel(user.Id, user.Name, user.Age);
+				return View(userModel);
+			}
+			catch (KeyNotFoundException)
+			{
+				return HttpNotFound();
+			}
 		}
 
-		[HttpPost]
-		public ActionResult Delete(int id, FormCollection collection)
+		[HttpPost, ActionName("Delete")]
+		public ActionResult DeleteConfirmed(int id)
 		{
 			try
 			{
-
-				return RedirectToAction("Users");
+				var user = userLogic.Get(id);
+				userLogic.Delete(id);
+				userLogic.UpdateDAO();
+				return RedirectToAction("GetList");
 			}
-			catch
+			catch (KeyNotFoundException)
 			{
-				return View();
+				return HttpNotFound();
 			}
 		}
 	}

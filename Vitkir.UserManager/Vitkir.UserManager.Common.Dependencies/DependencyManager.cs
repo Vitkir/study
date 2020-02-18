@@ -15,15 +15,15 @@ namespace Vitkir.UserManager.Common.Dependencies
 
 		public override void Load()
 		{
-			Bind<IUserLogic>().To<UserLogic>();
-			Bind<IAwardLogic>().To<AwardLogic>();
+			Bind<IUserLogic>().To<UserLogic>().InSingletonScope();
+			Bind<IAwardLogic>().To<AwardLogic>().InSingletonScope();
 
 			Bind<ICache>().To<RelationCache>().InSingletonScope();
 
-			Bind<IDAO<int, User>>().To<UserFileDAO>()
+			Bind<IDAO<int, User>>().To<UserFileDAO>().InSingletonScope()
 				.WithConstructorArgument("entityFilePath", configSection.PathsCollections["usersDataFilePath"].Path)
 				.WithConstructorArgument("tmpFilePath", configSection.PathsCollections["userstmpFilePath"].Path);
-			Bind<IDAO<int, Award>>().To<AwardFileDAO>()
+			Bind<IDAO<int, Award>>().To<AwardFileDAO>().InSingletonScope()
 				.WithConstructorArgument("entityFilePath", configSection.PathsCollections["awardsDataFilePath"].Path)
 				.WithConstructorArgument("tmpFilePath", configSection.PathsCollections["awardstmpFilePath"].Path);
 			Bind<IRelationDAO>().To<RelationsFileDAO>().InSingletonScope()

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Vitkir.UserManager.Common.Entities
+﻿namespace Vitkir.UserManager.Common.Entities
 {
 	public interface IEntity<TId>
 	{

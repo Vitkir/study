@@ -1,0 +1,65 @@
+﻿@model Vitkir.UserManager.PL.WebApp.Models.ViewModels.UserAwardAddingModel
+
+@{
+	ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+	<h4>UserAwardAddingModel</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Name)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Name)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Birthday)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Birthday)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Age)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Age)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.RelatedAwards)
+		</dt>
+
+		<dd>
+			@foreach (var item in Model.RelatedAwards)
+			{
+				@Html.DisplayFor(modelItem => item.Title)<br />
+			}
+		</dd>
+
+	</dl>
+
+	@using (Html.BeginForm("AddAward", "UserDetails", Model))
+	{
+		@Html.AntiForgeryToken()
+
+		@Html.DropDownListFor(e => e.SelectedAward,
+		   new SelectList(Model.AvailableAwards, "Id", "Title"),
+		   new { @class = "form-control" })
+		<div class="form-actions no-color">
+			<input type="submit" value="AddAward" class="btn btn-success" /> |
+			<a href="@Url.Action("GetList", "Users")" class="btn btn-primary ">Back to list</a>
+		</div>
+	}
+</div>
+<p>
+
+</p>
