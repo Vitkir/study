@@ -18,8 +18,8 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		public Relation Create(Relation relation)
 		{
+			relations.Add(relation.Id, relation);
 			var returnEntity = relationDAO.CreateEntity(relation);
-			relations.Add(returnEntity.Id, returnEntity);
 			return returnEntity;
 		}
 

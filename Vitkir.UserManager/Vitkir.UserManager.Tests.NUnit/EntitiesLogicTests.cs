@@ -58,7 +58,7 @@ namespace Vitkir.UserManager.Tests.NUnit
 			var relation = new Relation(userId, awardId);
 
 			userLogic.AddAward(relation);
-			Assert.IsTrue(userLogic.Get(userId).RelatedAwards.Contains(awardId));
+			Assert.IsTrue(userLogic.Get(userId).Awards.Contains(awardId));
 		}
 
 		[TestMethod]

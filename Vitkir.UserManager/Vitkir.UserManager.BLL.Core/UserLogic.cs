@@ -15,7 +15,7 @@ namespace Vitkir.UserManager.BLL.Logic
 		public override User Get(int id)
 		{
 			var user = base.Get(id);
-			user.RelatedAwards = GetRelatedAwardIds(id);
+			user.Awards = GetRelatedAwardIds(id);
 			return user;
 		}
 
@@ -24,7 +24,7 @@ namespace Vitkir.UserManager.BLL.Logic
 			var users = base.GetAll();
 			foreach (var user in users.Values)
 			{
-				user.RelatedAwards = GetRelatedAwardIds(user.Id);
+				user.Awards = GetRelatedAwardIds(user.Id);
 			}
 			return users;
 		}

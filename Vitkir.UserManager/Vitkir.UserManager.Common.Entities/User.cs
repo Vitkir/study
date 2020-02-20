@@ -26,13 +26,15 @@ namespace Vitkir.UserManager.Common.Entities
 			}
 		}
 
-		public List<int> RelatedAwards { get; set; }//rename
+		public List<int> Awards { get; set; }
+
+		public int Picture { get; set; }
 
 		public User(string name, DateTime birthday)
 		{
 			Name = name;
 			Birthday = birthday;
-			RelatedAwards = new List<int>(0);
+			Awards = new List<int>(0);
 		}
 
 		public override string ToString()
@@ -46,7 +48,7 @@ namespace Vitkir.UserManager.Common.Entities
 			return new User(Name, Birthday)
 			{
 				Id = Id,
-				RelatedAwards = RelatedAwards
+				Awards = Awards
 			};
 		}
 

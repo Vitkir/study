@@ -13,7 +13,7 @@ namespace Vitkir.UserManager.PL.WebApp.Models.ViewModels
 
 		[DataType(DataType.Date)]
 		[Display(Name = "День рождения")]
-		public DateTime Birthday { get; }
+		public DateTime Birthday { get; set; }
 
 		[DataType(DataType.Text)]
 		[Display(Name = "Возраст")]
@@ -35,10 +35,10 @@ namespace Vitkir.UserManager.PL.WebApp.Models.ViewModels
 		[Display(Name = "Список наград пользователя")]
 		public List<AwardModel> RelatedAwards { get; set; }
 
-		[Display(Name = "Список наград")]
+		[Display(Name = "Список доступных наград")]
 		public List<AwardModel> AvailableAwards
 		{
-			get => availableAwards
+			get => availableAwards?
 				.Where(e => !RelatedAwards.Any(r => r.Id == e.Id))
 				.ToList();
 			set

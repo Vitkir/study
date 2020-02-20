@@ -45,8 +45,8 @@ namespace Vitkir.UserManager.DAL.File
 			using (FileStream fileStream = new FileStream(entityFilePath, FileMode.Append))
 			{
 				currentPosition = fileStream.Position;
-				var byData = Encoding.ASCII.GetBytes(entityItem);//typo
-				fileStream.Write(byData, 0, byData.Length);
+				var byteData = Encoding.ASCII.GetBytes(entityItem);
+				fileStream.Write(byteData, 0, byteData.Length);
 			}
 
 			using (StreamReader streamReader = new StreamReader(entityFilePath))
@@ -113,6 +113,9 @@ namespace Vitkir.UserManager.DAL.File
 					lastLine = currentLine;
 					currentLine = streamReader.ReadLine();
 				}
+			}
+			if (lastLine != null)
+			{
 				lastId = ParseId(lastLine);
 			}
 			return lastId;

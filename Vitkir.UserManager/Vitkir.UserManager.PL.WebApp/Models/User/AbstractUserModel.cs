@@ -5,7 +5,7 @@ namespace Vitkir.UserManager.PL.WebApp.Models.User
 	public abstract class AbstractUserModel
 	{
 		[ScaffoldColumn(false)]
-		public int Id { get; }
+		public int Id { get; set; }
 
 		[Required]
 		[Display(Name = "Имя")]

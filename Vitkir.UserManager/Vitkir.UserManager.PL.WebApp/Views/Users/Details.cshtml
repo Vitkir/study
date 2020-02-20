@@ -1,0 +1,72 @@
+﻿@model Vitkir.UserManager.PL.WebApp.Models.ViewModels.UserAwardAddingModel
+
+@{
+	ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+	<h4>UserAwardAddingModel</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Name)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Name)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Birthday)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Birthday)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Age)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Age)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.RelatedAwards)
+		</dt>
+
+		<dd>
+			@using (Html.BeginForm("RemoveAward", "Users", Model))
+			{
+				@Html.DropDownListFor(e => e.SelectedAward,
+				   new SelectList(Model.RelatedAwards, "Id", "Title"),
+				   new { @class = "form-control" })
+
+				<div class="form-actions no-color">
+					<input type="submit" value="Remove award" class="btn btn-warning" />
+				</div>
+			}
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.AvailableAwards)
+		</dt>
+
+		<dd>
+			@using (Html.BeginForm("AddAward", "Users", Model))
+			{
+				@Html.DropDownListFor(e => e.SelectedAward,
+				   new SelectList(Model.AvailableAwards, "Id", "Title"),
+				   new { @class = "form-control" })
+
+				<div class="form-actions no-color">
+					<input type="submit" value="Add award" class="btn btn-success" />
+				</div>
+			}
+		</dd>
+	</dl>
+	@Html.ActionLink("Back to list", "GetList", null, new { @class = "btn btn-primary" })
+</div>
