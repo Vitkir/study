@@ -83,6 +83,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			try
 			{
 				var user = userLogic.Get(id);
+				var img = userLogic.GetImage(user.ImgId);
 				var relatedAwards = user.Awards
 					.Select(e => awardLogic.Get(e))
 					.Select(e => new AwardModel(e.Title, e.Id))
@@ -93,6 +94,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 				var model = new UserAwardAddingModel(
 					user.Id,
 					user.Name,
+					img.ImgUrl,
 					user.Birthday,
 					relatedAwards,
 					availableAwards);

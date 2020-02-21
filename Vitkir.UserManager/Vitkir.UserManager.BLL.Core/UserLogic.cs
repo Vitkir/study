@@ -8,8 +8,14 @@ namespace Vitkir.UserManager.BLL.Logic
 {
 	public class UserLogic : AbstractLogic<int, User>, IUserLogic
 	{
-		public UserLogic(IDAO<int, User> userDAO, ICache relationCache) : base(userDAO, relationCache)
+
+		private readonly IDAO<int, Image> imgDAO;
+		private readonly Dictionary<int, Image> imgCache;
+
+		public UserLogic(IDAO<int, User> userDAO, ICache relationCache, IDAO<int, Image> imgDAO) : base(userDAO, relationCache)
 		{
+			this.imgDAO = imgDAO;
+			imgCache = imgDAO.GetEntities().ToDictionary(e => e.Id);
 		}
 
 		public override User Get(int id)
@@ -55,6 +61,22 @@ namespace Vitkir.UserManager.BLL.Logic
 		public bool RemoveAwardAllUsers(int id)
 		{
 			return relationCache.DeleteAllForAward(id);
+		}
+
+		public Image AddImg(Image image)
+		{
+			imgCache.Add(image.Id, image);
+			return imgDAO.CreateEntity(image);
+		}
+
+		public bool RemoveImg(Image image)
+		{
+			return imgCache.Remove(image.Id);
+		}
+
+		public Image GetImage(int imgId)
+		{
+			return imgCache[imgId];
 		}
 	}
 }

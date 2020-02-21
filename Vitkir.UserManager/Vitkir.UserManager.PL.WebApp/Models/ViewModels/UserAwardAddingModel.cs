@@ -56,9 +56,10 @@ namespace Vitkir.UserManager.PL.WebApp.Models.ViewModels
 		public UserAwardAddingModel(
 			int id,
 			string name,
+			string imgUrl,
 			DateTime birthday,
 			List<AwardModel> relatedAwards,
-			List<AwardModel> availableAwards) : base(name, id)
+			List<AwardModel> availableAwards) : base(name, id, imgUrl)
 		{
 			Birthday = birthday;
 			RelatedAwards = relatedAwards;

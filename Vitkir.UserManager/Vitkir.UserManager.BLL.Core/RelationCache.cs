@@ -10,17 +10,16 @@ namespace Vitkir.UserManager.BLL.Logic
 		private readonly IRelationDAO relationDAO;
 		private readonly Dictionary<Relation, Relation> relations;
 
-		public RelationCache(IRelationDAO relationsDAO)
+		public RelationCache(IRelationDAO relationDAO)
 		{
-			this.relationDAO = relationsDAO;
-			relations = relationsDAO.GetEntities().ToDictionary(e => e.Id);
+			this.relationDAO = relationDAO;
+			relations = relationDAO.GetEntities().ToDictionary(e => e.Id);
 		}
 
 		public Relation Create(Relation relation)
 		{
 			relations.Add(relation.Id, relation);
-			var returnEntity = relationDAO.CreateEntity(relation);
-			return returnEntity;
+			return relationDAO.CreateEntity(relation);
 		}
 
 		public bool Delete(Relation relation)

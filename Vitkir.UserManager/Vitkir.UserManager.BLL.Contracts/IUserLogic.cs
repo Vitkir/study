@@ -11,5 +11,7 @@ namespace Vitkir.UserManager.BLL.Contracts
 		bool RemoveAllAwardsUser(int id);
 
 		bool RemoveAwardAllUsers(int id);
+
+		Image GetImage(int imgId);
 	}
 }

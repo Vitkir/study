@@ -28,7 +28,7 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public List<int> Awards { get; set; }
 
-		public int Picture { get; set; }
+		public int ImgId { get; set; }
 
 		public User(string name, DateTime birthday)
 		{

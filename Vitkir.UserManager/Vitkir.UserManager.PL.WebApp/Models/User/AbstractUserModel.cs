@@ -10,13 +10,21 @@ namespace Vitkir.UserManager.PL.WebApp.Models.User
 		[Required]
 		[Display(Name = "Имя")]
 		[DataType(DataType.Text)]
-		[RegularExpression(@"[A-z]+", ErrorMessage = "Latin letters only"), StringLength(10, MinimumLength = 2, ErrorMessage = "Min length 3, max length 10")]
+		[RegularExpression(
+			@"[A-z]+", ErrorMessage = "Latin letters only"), 
+			StringLength(10, MinimumLength = 2, ErrorMessage = "Min length 3, max length 10")]
 		public string Name { get; set; }
 
-		public AbstractUserModel(string name, int id = 0)
+		public string ImgUrl { get; set; }
+
+		public AbstractUserModel(
+			string name, 
+			int id = 0, 
+			string imgUrl = "~/Content/Img/mock.jpg")
 		{
 			Id = id;
 			Name = name;
+			ImgUrl = imgUrl;
 		}
 
 		public AbstractUserModel()
