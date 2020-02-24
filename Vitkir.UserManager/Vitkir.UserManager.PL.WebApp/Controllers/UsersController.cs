@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.HtmlControls;
 using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.PL.WebApp.Models.Award;
@@ -27,7 +30,8 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 				.Select(e => new UserListModel(
 					e.Value.Id,
 					e.Value.Name,
-					e.Value.Age));
+					e.Value.Age,
+					e.Value.ImgId > 0 ? userLogic.GetImage(e.Value.ImgId).ImgUrl : null));
 			return View("UserList", model);
 		}
 
@@ -41,7 +45,19 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var createdUser = new User(creationModel.Name, creationModel.Birthday);
+				HttpPostedFileBase file = Request.Files["Picture"];
+				Image img = null;
+				if (file != null && file.ContentLength > 0)
+				{
+					var fileName = Path.GetFileName(file.FileName);
+					var path = "~/Content/Img/" + fileName;
+					file.SaveAs(Server.MapPath(path));
+					img = new Image(path);
+				}
+				var createdUser = new User(creationModel.Name, creationModel.Birthday)
+				{
+					ImgId = userLogic.AddImg(img)
+				};
 				userLogic.Create(createdUser);
 				return RedirectToAction("GetList");
 			}
@@ -53,7 +69,11 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			try
 			{
 				var user = userLogic.Get(id);
-				var userModel = new UserListModel(user.Id, user.Name, user.Age);
+				var userModel = new UserListModel(
+					user.Id,
+					user.Name,
+					user.Age,
+					user.ImgId > 0 ? userLogic.GetImage(user.ImgId).ImgUrl : null);
 				return View(userModel);
 			}
 			catch (KeyNotFoundException)
@@ -83,7 +103,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			try
 			{
 				var user = userLogic.Get(id);
-				var img = userLogic.GetImage(user.ImgId);
+				var img = user.ImgId > 0 ? userLogic.GetImage(user.ImgId).ImgUrl : null;
 				var relatedAwards = user.Awards
 					.Select(e => awardLogic.Get(e))
 					.Select(e => new AwardModel(e.Title, e.Id))
@@ -94,10 +114,10 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 				var model = new UserAwardAddingModel(
 					user.Id,
 					user.Name,
-					img.ImgUrl,
 					user.Birthday,
 					relatedAwards,
-					availableAwards);
+					availableAwards,
+					img);
 				return View(model);
 			}
 			catch (KeyNotFoundException)

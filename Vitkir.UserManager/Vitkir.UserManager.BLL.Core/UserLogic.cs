@@ -31,6 +31,7 @@ namespace Vitkir.UserManager.BLL.Logic
 			foreach (var user in users.Values)
 			{
 				user.Awards = GetRelatedAwardIds(user.Id);
+
 			}
 			return users;
 		}
@@ -63,10 +64,15 @@ namespace Vitkir.UserManager.BLL.Logic
 			return relationCache.DeleteAllForAward(id);
 		}
 
-		public Image AddImg(Image image)
+		public int AddImg(Image image)
 		{
-			imgCache.Add(image.Id, image);
-			return imgDAO.CreateEntity(image);
+			if (image == null)
+			{
+				return 0;
+			}
+			var returnedImage = imgDAO.CreateEntity(image);
+			imgCache.Add(returnedImage.Id, returnedImage);
+			return returnedImage.Id;
 		}
 
 		public bool RemoveImg(Image image)

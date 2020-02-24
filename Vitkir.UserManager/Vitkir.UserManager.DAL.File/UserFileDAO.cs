@@ -19,7 +19,8 @@ namespace Vitkir.UserManager.DAL.File
 			var entityFields = entityItem.Split(':');
 			return new User(entityFields[1], DateTime.ParseExact(entityFields[2], "dd.MM.yyyy", CultureInfo.InvariantCulture))
 			{
-				Id = int.Parse(entityFields[0])
+				Id = int.Parse(entityFields[0]),
+				ImgId = int.Parse(entityFields[3])
 			};
 		}
 	}

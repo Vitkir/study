@@ -19,12 +19,12 @@ namespace Vitkir.UserManager.PL.WebApp.Models.User
 
 		public AbstractUserModel(
 			string name, 
-			int id = 0, 
-			string imgUrl = "~/Content/Img/mock.jpg")
+			string imgUrl, 
+			int id = 0)
 		{
 			Id = id;
 			Name = name;
-			ImgUrl = imgUrl;
+			ImgUrl = imgUrl ?? "~/Content/Img/mock.jpg";
 		}
 
 		public AbstractUserModel()

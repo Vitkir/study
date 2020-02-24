@@ -39,8 +39,11 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return string.Format("{0}:{1}:{2}",
-				Id.ToString(), Name.ToString(), Birthday.ToString("dd.MM.yyyy"));
+			return string.Format("{0}:{1}:{2}:{3}",
+				Id.ToString(),
+				Name.ToString(),
+				Birthday.ToString("dd.MM.yyyy"),
+				ImgId.ToString());
 		}
 
 		public object Clone()
@@ -48,7 +51,8 @@ namespace Vitkir.UserManager.Common.Entities
 			return new User(Name, Birthday)
 			{
 				Id = Id,
-				Awards = Awards
+				Awards = Awards,
+				ImgId = ImgId
 			};
 		}
 

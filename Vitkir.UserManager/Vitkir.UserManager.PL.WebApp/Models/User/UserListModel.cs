@@ -8,7 +8,7 @@ namespace Vitkir.UserManager.PL.WebApp.Models.User
 		[Display(Name = "Возраст")]
 		public int Age { get; }
 
-		public UserListModel(int id, string name, int age) : base(name, id)
+		public UserListModel(int id, string name, int age, string imgUrl) : base(name, imgUrl, id)
 		{
 			Age = age;
 		}

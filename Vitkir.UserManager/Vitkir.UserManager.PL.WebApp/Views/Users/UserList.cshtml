@@ -12,6 +12,8 @@
 <table class="table table-hover table-bordered">
 	<tr>
 		<th>
+		</th>
+		<th>
 			@Html.DisplayNameFor(model => model.Name)
 		</th>
 		<th>
@@ -23,6 +25,9 @@
 	@foreach (var item in Model)
 	{
 		<tr>
+			<td>
+				<img width="100" height="auto" src="@Url.Content(item.ImgUrl)" />
+			</td>
 			<td>
 				@Html.DisplayFor(modelItem => item.Name)
 			</td>
