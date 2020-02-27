@@ -11,12 +11,13 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle btn btn-dark" data-toggle="collapse" data-target=".navbar-collapse">Menu
+				<button type="button" class="navbar-toggle btn btn-dark" data-toggle="collapse" data-target=".navbar-collapse">
+					Menu
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				@Html.ActionLink("User manager", "Main", "Home",null, new { @class = "btn btn-dark" })
+				@Html.ActionLink("User manager", "Main", "Home", null, new { @class = "btn btn-dark" })
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -24,6 +25,9 @@
 					<li>@Html.ActionLink("Users", "GetList", "Users")</li>
 					<li>@Html.ActionLink("Awards", "GetList", "Awards")</li>
 				</ul>
+			</div>
+			<div class=" pull-right">
+				@Html.Action("AccountInfo", "Account")
 			</div>
 		</div>
 	</div>

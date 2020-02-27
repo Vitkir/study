@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.HtmlControls;
 using Vitkir.UserManager.BLL.Contracts;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.PL.WebApp.Models.Award;
@@ -13,6 +12,7 @@ using Vitkir.UserManager.PL.WebApp.Models.ViewModels;
 
 namespace Vitkir.UserManager.PL.WebApp.Controllers
 {
+	[Authorize(Roles = "Admin")]
 	public class UsersController : Controller
 	{
 		private readonly IUserLogic userLogic;
@@ -24,6 +24,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			this.awardLogic = awardLogic;
 		}
 
+		[AllowAnonymous]
 		public ActionResult GetList()
 		{
 			var model = userLogic.GetAll()
@@ -31,16 +32,18 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 					e.Value.Id,
 					e.Value.Name,
 					e.Value.Age,
-					e.Value.ImgId > 0 ? userLogic.GetImage(e.Value.ImgId).ImgUrl : null));
+					e.Value.ImgId > 0 ? GetImgUrl(e.Value) : null));
 			return View("UserList", model);
 		}
 
+		[Authorize]
 		public ActionResult Create()
 		{
 			return View();
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Create(UserCreationModel creationModel)
 		{
 			if (ModelState.IsValid)
@@ -73,7 +76,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 					user.Id,
 					user.Name,
 					user.Age,
-					user.ImgId > 0 ? userLogic.GetImage(user.ImgId).ImgUrl : null);
+					user.ImgId > 0 ? GetImgUrl(user) : null);
 				return View(userModel);
 			}
 			catch (KeyNotFoundException)
@@ -98,12 +101,14 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			}
 		}
 
+		[OverrideAuthorization]
+		[Authorize(Roles = "Admin, User")]
 		public ActionResult Details(int id)
 		{
 			try
 			{
 				var user = userLogic.Get(id);
-				var img = user.ImgId > 0 ? userLogic.GetImage(user.ImgId).ImgUrl : null;
+				var img = user.ImgId > 0 ? GetImgUrl(user) : null;
 				var relatedAwards = user.Awards
 					.Select(e => awardLogic.Get(e))
 					.Select(e => new AwardModel(e.Title, e.Id))
@@ -162,6 +167,11 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			{
 				return HttpNotFound();
 			}
+		}
+
+		private string GetImgUrl(User user)
+		{
+			return userLogic.GetImage(user.ImgId).ImgUrl;
 		}
 	}
 }

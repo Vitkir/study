@@ -7,6 +7,7 @@ using Vitkir.UserManager.PL.WebApp.Models.Award;
 
 namespace Vitkir.UserManager.PL.WebApp.Controllers
 {
+	[Authorize(Roles ="Admin")]
 	public class AwardsController : Controller
 	{
 		private readonly IAwardLogic awardLogic;
@@ -16,6 +17,8 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 			this.awardLogic = awardLogic;
 		}
 
+		[OverrideAuthorization]
+		[Authorize(Roles ="Admin, User")]
 		public ActionResult GetList()
 		{
 			var model = awardLogic.GetAll()
@@ -31,6 +34,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Create(AwardModel creationModel)
 		{
 			if (ModelState.IsValid)
