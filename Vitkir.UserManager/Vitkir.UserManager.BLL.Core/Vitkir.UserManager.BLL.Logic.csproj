@@ -46,10 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountLogic.cs" />
     <Compile Include="AwardLogic.cs" />
     <Compile Include="AbstractLogic.cs" />
+    <Compile Include="Cache\RelationsCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelationCache.cs" />
+    <Compile Include="Cache\UsersAwardsRelationsCache.cs" />
     <Compile Include="UserLogic.cs" />
   </ItemGroup>
   <ItemGroup>

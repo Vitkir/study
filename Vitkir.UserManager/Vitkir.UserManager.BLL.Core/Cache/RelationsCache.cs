@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Vitkir.UserManager.BLL.Contracts.Cache;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 
-namespace Vitkir.UserManager.BLL.Logic
+namespace Vitkir.UserManager.BLL.Logic.Cache
 {
-	public class RelationCache : ICache
+	public class RelationsCache : ICache
 	{
-		private readonly IRelationDAO relationDAO;
-		private readonly Dictionary<Relation, Relation> relations;
+		protected readonly IRelationDAO relationDAO;
+		protected readonly Dictionary<Relation, Relation> relations;
 
-		public RelationCache(IRelationDAO relationDAO)
+		public RelationsCache(IRelationDAO relationDAO)
 		{
 			this.relationDAO = relationDAO;
 			relations = relationDAO.GetEntities().ToDictionary(e => e.Id);
@@ -25,24 +26,6 @@ namespace Vitkir.UserManager.BLL.Logic
 		public bool Delete(Relation relation)
 		{
 			return relations.Remove(relation);
-		}
-
-		public bool DeleteAllForUser(int userId)
-		{
-			foreach (var item in relations.Where(e => e.Key.UserId == userId).ToList())
-			{
-				relations.Remove(item.Key);
-			}
-			return true;
-		}
-
-		public bool DeleteAllForAward(int awardId)
-		{
-			foreach (var item in relations.Where(e => e.Key.AwardId == awardId).ToList())
-			{
-				relations.Remove(item.Key);
-			}
-			return true;
 		}
 
 		public Dictionary<Relation, Relation> GetAll()

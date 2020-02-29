@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.BLL.Contracts.Logic;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.PL.WebApp.Models.Award;
 using Vitkir.UserManager.PL.WebApp.Models.User;

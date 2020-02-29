@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.BLL.Contracts.Cache;
+using Vitkir.UserManager.BLL.Contracts.Logic;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 
@@ -12,7 +13,10 @@ namespace Vitkir.UserManager.BLL.Logic
 		private readonly IDAO<int, Image> imgDAO;
 		private readonly Dictionary<int, Image> imgCache;
 
-		public UserLogic(IDAO<int, User> userDAO, ICache relationCache, IDAO<int, Image> imgDAO) : base(userDAO, relationCache)
+		public UserLogic(
+			IDAO<int, User> userDAO,
+			IUsersAwardsRelationsCache relationCache,
+			IDAO<int, Image> imgDAO) : base(userDAO, relationCache)
 		{
 			this.imgDAO = imgDAO;
 			imgCache = imgDAO.GetEntities().ToDictionary(e => e.Id);
@@ -21,7 +25,7 @@ namespace Vitkir.UserManager.BLL.Logic
 		public override User Get(int id)
 		{
 			var user = base.Get(id);
-			user.Awards = GetRelatedAwardIds(id);
+			user.Awards = GetAwardIds(id);
 			return user;
 		}
 
@@ -30,17 +34,17 @@ namespace Vitkir.UserManager.BLL.Logic
 			var users = base.GetAll();
 			foreach (var user in users.Values)
 			{
-				user.Awards = GetRelatedAwardIds(user.Id);
+				user.Awards = GetAwardIds(user.Id);
 
 			}
 			return users;
 		}
 
-		private List<int> GetRelatedAwardIds(int id)
+		private List<int> GetAwardIds(int id)
 		{
 			return relationCache.GetAll()
-				.Where(relation => relation.Key.UserId == id)
-				.Select(relation => relation.Key.AwardId)
+				.Where(relation => relation.Key.FirstId == id)
+				.Select(relation => relation.Key.SecondId)
 				.ToList();
 		}
 
@@ -56,12 +60,12 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		public bool RemoveAllAwardsUser(int id)
 		{
-			return relationCache.DeleteAllForUser(id);
+			return (relationCache as IUsersAwardsRelationsCache).DeleteAllForUser(id);
 		}
 
 		public bool RemoveAwardAllUsers(int id)
 		{
-			return relationCache.DeleteAllForAward(id);
+			return (relationCache as IUsersAwardsRelationsCache).DeleteAllForAward(id);
 		}
 
 		public int AddImg(Image image)

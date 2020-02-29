@@ -1,6 +1,6 @@
 ﻿using System.Web.Security;
 
-namespace Vitkir.UserManager.PL.WebApp.Models.Common
+namespace Vitkir.UserManager.PL.WebApp.Models.Account
 {
 	public class DefaultRoleProvider : RoleProvider
 	{
@@ -21,6 +21,22 @@ namespace Vitkir.UserManager.PL.WebApp.Models.Common
 			throw new System.NotImplementedException();
 		}
 
+		#region NotImplemented
+
+		public override void CreateRole(string roleName)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public override bool RoleExists(string roleName)
+		{
+			throw new System.NotImplementedException();
+		}
 		public override string[] FindUsersInRole(string roleName, string usernameToMatch)
 		{
 			throw new System.NotImplementedException();
@@ -35,25 +51,7 @@ namespace Vitkir.UserManager.PL.WebApp.Models.Common
 		{
 			throw new System.NotImplementedException();
 		}
-
 		public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		#region NotImplemented
-
-		public override void CreateRole(string roleName)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public override bool RoleExists(string roleName)
 		{
 			throw new System.NotImplementedException();
 		}

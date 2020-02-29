@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Vitkir.UserManadger.PL.Contracts;
-using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.BLL.Contracts.Logic;
 using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManadger.PL.Console

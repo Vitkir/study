@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.BLL.Contracts.Cache;
+using Vitkir.UserManager.BLL.Contracts.Logic;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.DAL.Contracts;
 

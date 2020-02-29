@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Vitkir.UserManager.Common.Entities;
 
-namespace Vitkir.UserManager.PL.WebApp.Models.Common
+namespace Vitkir.UserManager.PL.WebApp.Models.Account
 {
 	public class AccountModel
 	{
+		[ScaffoldColumn(false)]
+		public int Id { get; set; }
+
 		[Required]
 		[DataType(DataType.Text)]
 		public string Login { get; set; }
@@ -11,6 +15,8 @@ namespace Vitkir.UserManager.PL.WebApp.Models.Common
 		[Required]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
+
+		public Role Role { get; set; }
 
 		public AccountModel()
 		{

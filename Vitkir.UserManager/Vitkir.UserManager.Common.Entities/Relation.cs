@@ -6,38 +6,38 @@ namespace Vitkir.UserManager.Common.Entities
 	{
 		public Relation Id { get => this; set { this = value; } }
 
-		public int UserId { get; }
+		public int FirstId { get; }
 
-		public int AwardId { get; }
+		public int SecondId { get; }
 
-		public Relation(int userId, int awardId)
+		public Relation(int firstId, int secondId)
 		{
-			UserId = userId;
-			AwardId = awardId;
+			FirstId = firstId;
+			SecondId = secondId;
 		}
 
 		public override string ToString()
 		{
-			return UserId.ToString() + ":" + AwardId.ToString();
+			return FirstId.ToString() + ":" + SecondId.ToString();
 		}
 
 		public override bool Equals(object obj)
 		{
 			return obj is Relation relation &&
-				(UserId, AwardId) == (relation.UserId, relation.AwardId);
+				(FirstId, SecondId) == (relation.FirstId, relation.SecondId);
 		}
 
 		public override int GetHashCode()
 		{
 			var hashCode = -940031710;
-			hashCode = hashCode * -1521134295 + UserId.GetHashCode();
-			hashCode = hashCode * -1521134295 + AwardId.GetHashCode();
+			hashCode = hashCode * -1521134295 + FirstId.GetHashCode();
+			hashCode = hashCode * -1521134295 + SecondId.GetHashCode();
 			return hashCode;
 		}
 
 		public bool Equals(Relation other)
 		{
-			return (UserId, AwardId) == (other.UserId, other.AwardId);
+			return (FirstId, SecondId) == (other.FirstId, other.SecondId);
 		}
 
 		public static bool operator ==(Relation left, Relation right)

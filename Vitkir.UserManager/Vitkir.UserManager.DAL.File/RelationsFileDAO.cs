@@ -22,9 +22,9 @@ namespace Vitkir.UserManager.DAL.File
 
 			foreach (var entity in entities)
 			{
-				if (entity.UserId == userId)
+				if (entity.FirstId == userId)
 				{
-					relatedAwards.Add(entity.AwardId);
+					relatedAwards.Add(entity.SecondId);
 				}
 			}
 			if (relatedAwards.Count == 0) return null;

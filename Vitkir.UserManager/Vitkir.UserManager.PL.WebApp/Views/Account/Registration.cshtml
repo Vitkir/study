@@ -1,10 +1,10 @@
 ﻿@model Vitkir.UserManager.PL.WebApp.Models.Account.AccountModel
 
 @{
-	ViewBag.Title = "Login";
+	ViewBag.Title = "Registration";
 }
 
-<h2>Login</h2>
+<h2>Registration</h2>
 
 @if (TempData.ContainsKey("Error"))
 {
@@ -45,7 +45,7 @@
 }
 
 <div>
-	@Html.ActionLink("Registration", "Registration", null, new { @class = "btn btn-default" })
+	@Html.ActionLink("Login", "Login", null, new { @class = "btn btn-default" })
 	<a href="@Url.Action("Main", "Home")" class="btn btn-default"></a>
 </div>
 

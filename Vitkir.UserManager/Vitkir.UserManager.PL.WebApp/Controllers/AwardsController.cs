@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.BLL.Contracts.Logic;
 using Vitkir.UserManager.Common.Entities;
 using Vitkir.UserManager.PL.WebApp.Models.Award;
 
 namespace Vitkir.UserManager.PL.WebApp.Controllers
 {
-	[Authorize(Roles ="Admin")]
+	[Authorize(Roles = "Admin")]
 	public class AwardsController : Controller
 	{
 		private readonly IAwardLogic awardLogic;
@@ -18,7 +18,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 		}
 
 		[OverrideAuthorization]
-		[Authorize(Roles ="Admin, User")]
+		[Authorize(Roles = "Admin, User")]
 		public ActionResult GetList()
 		{
 			var model = awardLogic.GetAll()

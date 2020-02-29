@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
-using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.BLL.Contracts.Logic;
 using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManadger.PL.Console
@@ -61,8 +61,8 @@ namespace Vitkir.UserManadger.PL.Console
 				System.Console.WriteLine(e.Message + ". Close file and try again.");
 			}
 			System.Console.WriteLine(createdRelation != null ?
-				"Relation user " + createdRelation.UserId +
-				" and award " + createdRelation.AwardId + " created" : "unsuccessful");
+				"Relation user " + createdRelation.FirstId +
+				" and award " + createdRelation.SecondId + " created" : "unsuccessful");
 		}
 
 		public void RemoveAward(int userId, int awardId)

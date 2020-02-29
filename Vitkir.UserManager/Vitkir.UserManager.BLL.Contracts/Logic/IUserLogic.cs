@@ -1,6 +1,6 @@
 ﻿using Vitkir.UserManager.Common.Entities;
 
-namespace Vitkir.UserManager.BLL.Contracts
+namespace Vitkir.UserManager.BLL.Contracts.Logic
 {
 	public interface IUserLogic : ILogic<int, User>
 	{

@@ -1,12 +1,43 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
-using Vitkir.UserManager.PL.WebApp.Models.Common;
+using Vitkir.UserManager.BLL.Contracts.Logic;
+using Vitkir.UserManager.Common.Entities;
+using Vitkir.UserManager.PL.WebApp.Models.Account;
 
 namespace Vitkir.UserManager.PL.WebApp.Controllers
 {
 	public class AccountController : Controller
 	{
-		//private readonly IAccountLogic accountLogic;
+		private readonly IAccountLogic accountLogic;
+
+		public AccountController(IAccountLogic accountLogic)
+		{
+			this.accountLogic = accountLogic;
+		}
+
+		public ActionResult Registration(string returnUrl)
+		{
+			if (!string.IsNullOrWhiteSpace(returnUrl))
+			{
+				ViewBag.returnUrl = returnUrl;
+			}
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Registration(AccountModel model, string returnUrl)
+		{
+			if (ModelState.IsValid && !accountLogic.AccountExist(model.Id))
+			{
+				var account = new Account(model.Login, model.Password);
+				accountLogic.Create(account);
+
+				return RedirectToAction("Login", routeValues: returnUrl);
+			}
+			TempData["Error message"] = "Such login exist";
+			return View(model);
+		}
 
 		public ActionResult Login(string returnUrl)
 		{
@@ -21,14 +52,18 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult Login(AccountModel model, string returnUrl)
 		{
-			if (ModelState.IsValid/* && accountLogic.Login*/)
+			if (ModelState.IsValid && accountLogic.AccountExist(model.Id))
 			{
-				FormsAuthentication.SetAuthCookie(model.Login, true);
-				if (string.IsNullOrWhiteSpace(returnUrl))
+				var account = accountLogic.Get(model.Id);
+				if ((account.Login, account.Password) == (model.Login, model.Password))
 				{
-					return Redirect("~");
+					FormsAuthentication.SetAuthCookie(model.Login, true);
+					if (string.IsNullOrWhiteSpace(returnUrl))
+					{
+						return Redirect("~");
+					}
+					return Redirect(returnUrl);
 				}
-				return Redirect(returnUrl);
 			}
 			TempData["Error message"] = "Uncorrect login or password";
 			return View(model);

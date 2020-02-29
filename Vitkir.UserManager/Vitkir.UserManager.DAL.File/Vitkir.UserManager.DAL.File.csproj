@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AbstractFileDAO.cs" />
     <Compile Include="AbstractIntIdFileDAO.cs" />
+    <Compile Include="AccountFileDAO.cs" />
     <Compile Include="AwardFileDAO.cs" />
     <Compile Include="ImgFileDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
