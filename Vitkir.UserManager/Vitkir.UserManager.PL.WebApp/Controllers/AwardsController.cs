@@ -61,6 +61,7 @@ namespace Vitkir.UserManager.PL.WebApp.Controllers
 		}
 
 		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
 		public ActionResult DeleteConfirmed(int id)
 		{
 			try

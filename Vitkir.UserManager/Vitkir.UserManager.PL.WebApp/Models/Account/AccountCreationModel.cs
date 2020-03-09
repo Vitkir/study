@@ -3,11 +3,8 @@ using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManager.PL.WebApp.Models.Account
 {
-	public class AccountModel
+	public class AccountCreationModel
 	{
-		[ScaffoldColumn(false)]
-		public int Id { get; set; }
-
 		[Required]
 		[DataType(DataType.Text)]
 		public string Login { get; set; }
@@ -18,11 +15,11 @@ namespace Vitkir.UserManager.PL.WebApp.Models.Account
 
 		public Role Role { get; set; }
 
-		public AccountModel()
+		public AccountCreationModel()
 		{
 		}
 
-		public AccountModel(string login, string password)
+		public AccountCreationModel(string login, string password)
 		{
 			Login = login;
 			Password = password;

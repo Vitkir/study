@@ -19,7 +19,10 @@ namespace Vitkir.UserManager.BLL.Logic.Cache
 
 		public Relation Create(Relation relation)
 		{
-			relations.Add(relation.Id, relation);
+			if (!relations.ContainsKey(relation.Id))
+			{
+				relations.Add(relation.Id, relation);
+			}
 			return relationDAO.CreateEntity(relation);
 		}
 

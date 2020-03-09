@@ -1,11 +1,19 @@
 ﻿@model string
-
-@using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { @class = "form-inline" }))
-{
-	<span class="navbar navbar-text">
-		<i class="glyphicon glyphicon-user"></i>
-		@Model
-	</span>
-	@Html.AntiForgeryToken();
-	<button class="btn btn-danger navbar-btn">Logout</button>
-}
+<div class="container">
+	<div class="row">
+		@if (User.IsInRole("Admin"))
+		{
+			@Html.ActionLink("Admin page", "ChangeRole", null, new { @class = "btn btn-success" });
+		}
+	</div>
+	<div class="row">
+		@using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { @class = "form-inline" }))
+		{
+			@Html.AntiForgeryToken()
+			<span>
+				@Model (@string.Join(", ", @Roles.GetRolesForUser()))
+			</span>
+			<button class="btn btn-danger navbar-btn">Logout</button>
+		}
+	</div>
+</div>

@@ -165,11 +165,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Account\AccountModel.cs" />
+    <Compile Include="Models\Account\AccountCreationModel.cs" />
+    <Compile Include="Models\Account\AccountListModel.cs" />
     <Compile Include="Models\Award\AwardModel.cs" />
     <Compile Include="Models\Account\DefaultRoleProvider.cs" />
     <Compile Include="Models\User\AbstractUserModel.cs" />
     <Compile Include="Models\User\UserCreationModel.cs" />
+    <Compile Include="Models\ViewModels\AccountRoleAddingModel.cs" />
     <Compile Include="Models\ViewModels\UserAwardAddingModel.cs" />
     <Compile Include="Models\User\UserListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,6 +203,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Scripts\Custom\AccountDetails.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -220,6 +223,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -329,6 +334,8 @@
     <Content Include="Views\Account\_AuthenticatedAccountPartial.cshtml" />
     <Content Include="Views\Account\_GuestAccountPartial.cshtml" />
     <Content Include="Views\Account\Registration.cshtml" />
+    <Content Include="Views\Account\AdminPage.cshtml" />
+    <Content Include="Views\Account\_DetailsAccountPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

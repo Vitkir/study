@@ -30,12 +30,15 @@ namespace Vitkir.UserManager.Common.Dependencies
 			Bind<IDAO<int, Award>>().To<AwardFileDAO>().InSingletonScope()
 				.WithConstructorArgument("entityFilePath", configSection.PathsCollections["awardsDataFilePath"].Path)
 				.WithConstructorArgument("tmpFilePath", configSection.PathsCollections["awardstmpFilePath"].Path);
-			Bind<IRelationDAO>().To<RelationsFileDAO>().InSingletonScope()
-				.WithConstructorArgument("entityFilePath", configSection.PathsCollections["relationsFilePath"].Path)
-				.WithConstructorArgument("tmpFilePath", configSection.PathsCollections["relationstmpFilePath"].Path);
 			Bind<IDAO<int, Image>>().To<ImgFileDAO>().InSingletonScope()
 				.WithConstructorArgument("entityFilePath", configSection.PathsCollections["imgsUrlFilePath"].Path)
 				.WithConstructorArgument("tmpFilePath", configSection.PathsCollections["imgsUrltmpFilePath"].Path);
+			Bind<IDAO<int, Account>>().To<AccountFileDAO>().InSingletonScope()
+				.WithConstructorArgument("entityFilePath", configSection.PathsCollections["accountsDataFilePath"].Path)
+				.WithConstructorArgument("tmpFilePath", configSection.PathsCollections["accountstmpFilePath"].Path);
+			Bind<IRelationDAO>().To<RelationsFileDAO>().InSingletonScope()
+				.WithConstructorArgument("entityFilePath", configSection.PathsCollections["relationsFilePath"].Path)
+				.WithConstructorArgument("tmpFilePath", configSection.PathsCollections["relationstmpFilePath"].Path);
 		}
 	}
 }

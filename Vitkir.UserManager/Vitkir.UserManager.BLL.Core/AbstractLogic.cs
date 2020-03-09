@@ -24,6 +24,12 @@ namespace Vitkir.UserManager.BLL.Logic
 
 		public TEntity Create(TEntity entity)
 		{
+			if (cache.ContainsKey(entity.Id) && cache[entity.Id].Equals(entity))
+			{
+				cache[entity.Id] = entity;
+				UpdateDAO();
+				return entity;
+			}
 			TEntity createdEntity;
 			createdEntity = entityDAO.CreateEntity(entity);
 			cache.Add(createdEntity.Id, createdEntity);

@@ -21,7 +21,7 @@ namespace Vitkir.UserManager.Common.Entities
 
 		public override string ToString()
 		{
-			return string.Format("{0}:{1}:{2}:{3}", Id.ToString(), Login, Password, Role.ToString());
+			return string.Format("{0}:{1}:{2}:{3}", Id.ToString(), Login, Password, ((int)Role).ToString());
 		}
 
 		public object Clone()
@@ -29,6 +29,7 @@ namespace Vitkir.UserManager.Common.Entities
 			return new Account(Login, Password)
 			{
 				Id = Id,
+				Role = Role,
 			};
 		}
 

@@ -1,0 +1,29 @@
+﻿@model Vitkir.UserManager.PL.WebApp.Models.Account.AccountListModel
+
+<dl class="dl-horizontal">
+	<dt>
+		@Html.DisplayNameFor(model => model.Login)
+	</dt>
+
+	<dd>
+		@Html.DisplayFor(model => model.Login)
+	</dd>
+
+	<dt>
+		@Html.DisplayNameFor(model => model.Role)
+	</dt>
+
+	<dd>
+		@Html.DisplayFor(model => model.Role)
+	</dd>
+
+	<dt>
+		@using (Html.BeginForm("ChangeRole", "Account", Model))
+		{
+			@Html.AntiForgeryToken()
+			@Html.EnumDropDownListFor(e => e.Role, "Roles")
+			<input type="submit" value="Select" />
+		}
+	</dt>
+
+</dl>

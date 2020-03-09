@@ -6,6 +6,8 @@ namespace Vitkir.UserManager.BLL.Contracts.Logic
 	{
 		Relation ChangeRole(Relation relation);
 
-		bool AccountExist(int id);
+		bool AccountExist(string login);
+
+		Account Get(string login);
 	}
 }

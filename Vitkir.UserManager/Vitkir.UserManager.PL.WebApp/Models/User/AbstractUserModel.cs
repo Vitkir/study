@@ -4,9 +4,6 @@ namespace Vitkir.UserManager.PL.WebApp.Models.User
 {
 	public abstract class AbstractUserModel
 	{
-		[ScaffoldColumn(false)]
-		public int Id { get; set; }
-
 		[Required]
 		[Display(Name = "Имя")]
 		[DataType(DataType.Text)]
@@ -19,10 +16,8 @@ namespace Vitkir.UserManager.PL.WebApp.Models.User
 
 		public AbstractUserModel(
 			string name, 
-			string imgUrl, 
-			int id = 0)
+			string imgUrl)
 		{
-			Id = id;
 			Name = name;
 			ImgUrl = imgUrl ?? "~/Content/Img/mock.jpg";
 		}

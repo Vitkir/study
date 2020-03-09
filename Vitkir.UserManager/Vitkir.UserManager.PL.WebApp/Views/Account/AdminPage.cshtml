@@ -1,0 +1,28 @@
+﻿@model Vitkir.UserManager.PL.WebApp.Models.ViewModels.AccountRoleAddingModel
+
+@{
+	ViewBag.Title = "Admin page";
+}
+
+<h2>@ViewBag.Title</h2>
+<div>
+	<div>
+		@using (Ajax.BeginForm("Details", "Account", Model, new AjaxOptions
+		{
+			HttpMethod = "get",
+			UpdateTargetId = "result"
+		}))
+		{
+			@Html.DropDownListFor(e => e.SelectedId,
+		   new SelectList(Model.Accounts, "Id", "Login"),
+		   new { @class = "form-control" })
+			<input type="submit" value="Select" />
+		}
+		<div id="result">
+			@{
+				Html.Partial("_DetailsAccountPartial", Model.Accounts.First());
+			}
+		</div>
+	</div>
+</div>
+

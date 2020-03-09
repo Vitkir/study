@@ -11,6 +11,9 @@ namespace Vitkir.UserManager.PL.WebApp.Models.ViewModels
 	{
 		private List<AwardModel> availableAwards;
 
+		[ScaffoldColumn(false)]
+		public int Id { get; set; }
+
 		[DataType(DataType.Date)]
 		[Display(Name = "День рождения")]
 		public DateTime Birthday { get; set; }
@@ -59,8 +62,9 @@ namespace Vitkir.UserManager.PL.WebApp.Models.ViewModels
 			DateTime birthday,
 			List<AwardModel> relatedAwards,
 			List<AwardModel> availableAwards,
-			string imgUrl) : base(name,imgUrl , id)
+			string imgUrl) : base(name, imgUrl)
 		{
+			Id = id;
 			Birthday = birthday;
 			RelatedAwards = relatedAwards;
 			AvailableAwards = availableAwards;

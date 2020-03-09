@@ -1,4 +1,4 @@
-﻿@model Vitkir.UserManager.PL.WebApp.Models.Account.AccountModel
+﻿@model Vitkir.UserManager.PL.WebApp.Models.Account.AccountCreationModel
 
 @{
 	ViewBag.Title = "Registration";
@@ -45,8 +45,8 @@
 }
 
 <div>
-	@Html.ActionLink("Login", "Login", null, new { @class = "btn btn-default" })
-	<a href="@Url.Action("Main", "Home")" class="btn btn-default"></a>
+	@Html.ActionLink("Login", "Login", null, new { @class = "btn btn-primary" })
+	@Html.ActionLink("Go to Main page","Main", "Home", new { @class = "btn btn-primary" })
 </div>
 
 @section Scripts {

@@ -11,10 +11,9 @@ namespace Vitkir.UserManager.PL.WebApp.Models.User
 		public DateTime Birthday { get; set; }
 
 		public UserCreationModel(
-			int id, 
 			string name, 
 			DateTime birthday, 
-			string imgUrl) : base(name, imgUrl, id)
+			string imgUrl) : base(name, imgUrl)
 		{
 			Birthday = birthday;
 		}

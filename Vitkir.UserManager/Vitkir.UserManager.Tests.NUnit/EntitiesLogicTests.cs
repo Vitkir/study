@@ -2,7 +2,7 @@
 using Ninject;
 using System;
 using System.Linq;
-using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.BLL.Contracts.Logic;
 using Vitkir.UserManager.Common.Dependencies;
 using Vitkir.UserManager.Common.Entities;
 

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using Vitkir.UserManager.BLL.Contracts;
+using Vitkir.UserManager.BLL.Contracts.Logic;
 using Vitkir.UserManager.Common.Entities;
 
 namespace Vitkir.UserManadger.PL.Console
